@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/Logo.svg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Форма планування ігрового часу: дисципліна, години та період тренувань.">
+
+  <title>Калькулятор ігрового часу | КіберЛьвів</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Tailwind CDN згідно з методичкою -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Назви класів пов’язані з наявними CSS-змінними проєкту -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: "var(--color-ink)",
+            "ink-soft": "var(--color-ink-soft)",
+            copy: "var(--color-body)",
+            muted: "var(--color-muted-text)",
+            page: "var(--color-page)",
+            surface: "var(--color-surface)",
+            accent: "var(--color-accent)",
+            "accent-dark": "var(--color-accent-dark)",
+            line: "var(--color-line)",
+            placeholder: "var(--color-placeholder)"
+          },
+          fontFamily: {
+            inter: ["Inter", "sans-serif"]
+          },
+          fontSize: {
+            caption: "var(--font-size-xs)",
+            small: "var(--font-size-sm)",
+            copy: "var(--font-size-base)",
+            lead: "var(--font-size-lead)",
+            brand: "var(--font-size-brand)"
+          },
+          spacing: {
+            "ui-1": "var(--space-1)",
+            "ui-2": "var(--space-2)",
+            "ui-3": "var(--space-3)",
+            "ui-4": "var(--space-4)",
+            "ui-5": "var(--space-5)",
+            "ui-6": "var(--space-6)",
+            "ui-7": "var(--space-7)",
+            "ui-8": "var(--space-8)"
+          },
+          borderRadius: {
+            "ui-sm": "var(--radius-sm)",
+            "ui-md": "var(--radius-md)"
+          },
+          boxShadow: {
+            card: "var(--shadow-card)"
+          },
+          transitionDuration: {
+            180: "180ms"
+          },
+          screens: {
+            nav: "901px"
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- CSS-змінні, типографіка та специфічні стилі проєкту -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/motion.css">
+
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body class="font-inter calculator-page">
+<header class="sticky top-0 z-50 bg-surface text-ink">
+    <div
+      class="site-container header-layout"
+    >
+      <a
+        href="index.html"
+        aria-label="КіберЛьвів — головна сторінка"
+        class="inline-flex shrink-0 items-center gap-ui-2
+               text-brand font-bold text-ink no-underline
+               transition-colors duration-180 hover:text-ink-soft"
+      >
+        <img
+          src="assets/icons/Logo.svg"
+          alt=""
+          aria-hidden="true"
+          width="50"
+          height="50"
+          class="h-[50px] w-[50px] shrink-0 object-contain"
+          loading="lazy"
+        >
+
+        <span class="whitespace-nowrap">КіберЛьвів</span>
+      </a>
+
+      <!-- Навігація широкої версії -->
+      <nav
+        aria-label="Головна навігація"
+        class="header-desktop-nav"
+      >
+        <a class="nav-motion-link" href="index.html#process">Як це працює</a>
+        <a class="nav-motion-link" href="index.html#parents">Для батьків</a>
+        <a class="nav-motion-link" href="coaches.html">Каталог тренерів</a>
+        <a class="nav-motion-link" href="index.html#blog">Поради</a>
+        <a class="nav-motion-link nav-calculator-cta arrow-link" href="calculator.html" aria-current="page">Калькулятор <span aria-hidden="true">→</span></a>
+      </nav>
+
+      <!-- Мобільне меню: відкривається без JavaScript -->
+      <details class="header-mobile-menu">
+        <summary class="header-menu-toggle"
+        >
+          <span class="menu-toggle-icon" aria-hidden="true"><span></span></span>
+          <span>Меню</span>
+        </summary>
+
+        <nav
+          aria-label="Мобільна навігація"
+          class="header-mobile-nav"
+        >
+          <a class="nav-motion-link" href="index.html#process">Як це працює</a>
+          <a class="nav-motion-link" href="index.html#parents">Для батьків</a>
+          <a class="nav-motion-link" href="coaches.html">Каталог тренерів</a>
+          <a class="nav-motion-link" href="index.html#blog">Поради</a>
+          <a class="nav-motion-link nav-calculator-cta arrow-link" href="calculator.html" aria-current="page">Калькулятор <span aria-hidden="true">→</span></a>
+        </nav>
+      </details>
+    </div>
+  </header>
+<main id="top">
+
+<section class="page-section section-light" aria-labelledby="calculator-page-title">
+ <div class="site-container">
+  <div class="calculator-card">
+   <h1 class="page-title page-title-rule" id="calculator-page-title">Розрахуй ігровий час</h1>
+   <p class="page-muted">Обери гру, вкажи години та період. Поля з * обов’язкові. Без реєстрації.</p>
+   <!-- Статична форма: submit стане доступним після додавання логіки розрахунку. -->
+   <form id="calculator-form" action="results.html" method="get" aria-describedby="calculator-availability">
+    <fieldset class="page-fieldset"><legend>Гра <span aria-hidden="true">*</span></legend>
+     <div class="game-choices"><label class="page-choice"><input class="page-choice-input" type="radio" name="game" value="CS2" required><span>CS2</span></label><label class="page-choice"><input class="page-choice-input" type="radio" name="game" value="Dota 2" required><span>Dota 2</span></label><label class="page-choice"><input class="page-choice-input" type="radio" name="game" value="Valorant" required><span>Valorant</span></label></div>
+    </fieldset>
+    <fieldset class="page-fieldset"><legend>Години тренувань та період <span aria-hidden="true">*</span></legend>
+     <div class="hours-choices">
+      <div><label class="visually-hidden" for="training-hours">Години тренувань</label><input class="page-input" id="training-hours" name="hours" type="number" min="0" max="168" step="any" inputmode="decimal" placeholder="Наприклад, 4" required aria-describedby="hours-help"></div>
+      <label class="page-choice"><input class="page-choice-input" type="radio" name="period" value="day" checked><span>На день</span></label>
+      <label class="page-choice"><input class="page-choice-input" type="radio" name="period" value="week"><span>На тиждень</span></label>
+     </div>
+     <p class="page-field-help" id="hours-help">Від 0 до 24 годин на день або від 0 до 168 на тиждень. Дробові значення дозволені.</p>
+    </fieldset>
+    <div class="page-field"><label for="player-name">Нікнейм (необов’язково)</label><input class="page-input" id="player-name" name="nickname" type="text" maxlength="40" autocomplete="nickname" placeholder="Наприклад, Player_01"></div>
+    <div class="page-field"><label for="player-age">Вік (необов’язково)</label><input class="page-input" id="player-age" name="age" type="number" min="1" max="120" step="1" inputmode="numeric" placeholder="Наприклад, 16"></div>
+    <div class="page-form-actions"><p id="calculator-availability" class="page-field-help">Розрахунок поки недоступний. Введені дані не надсилаються.</p><button class="page-button" type="submit" disabled>Розрахувати</button></div>
+   </form>
+  </div>
+  <div class="page-actions"><a class="arrow-link text-link" href="results.html">Переглянути приклад результатів <span aria-hidden="true">→</span></a></div>
+  <details class="page-notes"><summary>Стани форми</summary><div class="state-grid">
+   <article class="state-card"><h3>Початковий стан</h3><p>Заповни гру, години та період тренувань.</p></article>
+   <article class="state-card state-error"><h3>Помилка введення</h3><p>Помилка має пояснювати, яке значення потрібно виправити, без очищення полів.</p></article>
+   <article class="state-card state-pending"><h3>Розрахунок</h3><p>Після запуску розрахунку тут буде повідомлення про очікування.</p></article>
+   <article class="state-card state-error"><h3>Недоступність сервісу</h3><p>Майбутній стан помилки: повторити спробу зі збереженням введення.</p></article>
+  </div></details>
+ </div>
+</section>
+<section class="page-section section-dark page-accent-top" aria-labelledby="after-calculation-title"><div class="site-container">
+ <h2 id="after-calculation-title" class="page-title-rule">Після розрахунку</h2>
+ <div class="page-two-columns"><div class="page-info-card"><p>На сторінці результатів будуть підсумок введеного часу, пояснення та структура тижневого плану.</p></div><div class="page-info-card"><p>Налаштування можна буде змінити й виконати розрахунок повторно. Рівень навантаження та оцінка балансу потребують окремих правил.</p></div></div>
+</div></section>
+</main>
+<footer id="footer" class="bg-ink py-ui-6 text-surface">
+    <div class="site-container">
+
+      <div
+        class="flex flex-col items-start justify-between
+               gap-ui-5 border-b border-white/15 pb-ui-5
+               min-[701px]:flex-row min-[701px]:flex-wrap
+               min-[701px]:items-center"
+      >
+        <a
+          href="index.html#top"
+          class="text-lead font-bold text-surface no-underline
+                 decoration-accent decoration-2 underline-offset-8
+                 transition-colors duration-180
+                 hover:text-accent hover:underline"
+        >
+          КіберЛьвів
+        </a>
+
+        <nav
+          aria-label="Навігація в підвалі"
+          class="flex flex-wrap items-center gap-x-ui-4 gap-y-2
+                 [&_a]:inline-flex [&_a]:min-h-[44px]
+                 [&_a]:items-center [&_a]:text-caption
+                 [&_a]:text-white/70 [&_a]:no-underline
+                 [&_a]:transition-colors [&_a]:duration-180
+                 [&_a:hover]:text-accent
+                 [&_a:focus-visible]:text-accent"
+        >
+          <a href="index.html#top">Головна</a>
+          <a href="index.html#process">Як це працює</a>
+          <a href="index.html#parents">Для батьків</a>
+          <a href="coaches.html">Каталог тренерів</a>
+          <a href="index.html#blog">Поради</a>
+          <a href="calculator.html" aria-current="page">Калькулятор</a>
+          <a href="results.html">Приклад результатів</a>
+        </nav>
+      </div>
+
+      <div
+        class="flex flex-wrap items-center justify-between
+               gap-ui-4 pt-ui-4"
+      >
+        <p class="m-0 text-caption text-white/70">
+          © 2025 КіберЛьвів. Усі права захищено.
+        </p>
+
+        <div class="flex flex-wrap gap-x-ui-4 gap-y-2 text-caption text-white/70" aria-label="Правова інформація">
+          <span>Політика конфіденційності</span>
+          <span>Умови використання</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

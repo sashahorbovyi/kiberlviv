@@ -1,0 +1,249 @@
+/* CSS-only motion. Static layout and Hero are unchanged. */
+.coach-photo-frame {
+    flex-shrink: 0;
+    min-width: 0;
+    overflow: hidden;
+}
+
+/* Arrow links share one interaction; keyboard focus outlines are retained. */
+a.arrow-link, button.arrow-link { text-decoration: none; }
+a.arrow-link:is(:hover, :focus-visible, :active),
+button.arrow-link:is(:hover, :focus-visible, :active) { text-decoration: none; }
+
+/* Header links: blue text with a palette-gold underline. */
+header nav a.nav-motion-link { position: relative; }
+header nav a.nav-motion-link::after {
+    content: "";
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 6px;
+    height: 2px;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-accent);
+    pointer-events: none;
+    transform: scaleX(0);
+    transform-origin: left center;
+}
+header nav a.nav-motion-link[aria-current]::after,
+header nav a.nav-motion-link:is(:focus-visible, :active)::after {
+    transform: scaleX(1);
+}
+@media (hover: hover) and (pointer: fine) {
+    header nav a.nav-motion-link:hover::after { transform: scaleX(1); }
+}
+
+/* Three decorative CSS bars; native summary retains its visible name. */
+header .menu-toggle-icon {
+    position: relative;
+    display: inline-block;
+    width: 18px;
+    height: 16px;
+    flex: 0 0 18px;
+    pointer-events: none;
+}
+header .menu-toggle-icon::before,
+header .menu-toggle-icon::after,
+header .menu-toggle-icon > span {
+    position: absolute;
+    left: 0;
+    width: 18px;
+    height: 2px;
+    border-radius: var(--radius-pill);
+    background-color: currentColor;
+}
+header .menu-toggle-icon::before { content: ""; top: 1px; }
+header .menu-toggle-icon::after { content: ""; bottom: 1px; }
+header .menu-toggle-icon > span { top: 7px; }
+header details[open] .menu-toggle-icon::before {
+    transform: translateY(6px) rotate(45deg);
+}
+header details[open] .menu-toggle-icon::after {
+    transform: translateY(-6px) rotate(-45deg);
+}
+header details[open] .menu-toggle-icon > span {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    header nav a.nav-motion-link::after { transition: transform 180ms ease; }
+    header .menu-toggle-icon::before,
+    header .menu-toggle-icon::after,
+    header .menu-toggle-icon > span {
+        transition: transform 180ms ease, opacity 120ms ease;
+    }
+
+    body .motion-button {
+        transition: color 180ms ease, background-color 180ms ease,
+                    border-color 180ms ease, box-shadow 180ms ease,
+                    transform 180ms ease;
+    }
+
+    body .motion-button:focus-visible { transform: translateY(-2px); }
+    body .motion-button:active { transform: translateY(0); }
+
+    .arrow-link > span[aria-hidden="true"] {
+        display: inline-block;
+        transition: transform 180ms ease;
+    }
+    .arrow-link:focus-visible > span[aria-hidden="true"] {
+        transform: translateX(4px);
+    }
+
+    :is(#coaches, #blog) article {
+        transition: border-color 180ms ease, transform 220ms ease;
+    }
+    :is(#coaches, #blog) article:focus-within { transform: translateY(-4px); }
+
+    #coaches .coach-photo-frame > img { transition: transform 240ms ease; }
+    #coaches article:focus-within .coach-photo-frame > img { transform: scale(1.025); }
+
+    #process article img { transition: transform 200ms ease; }
+    #process article:focus-within img { transform: translateY(-3px) scale(1.04); }
+
+    :is(#planning, #parents) .feature-item:focus-within .feature-icon img {
+        animation: feature-icon-nudge 320ms ease-out;
+    }
+
+    #weekly .time-balance-legend li { transition: background-color 180ms ease; }
+    #weekly .time-balance-marker { transition: transform 180ms ease; }
+
+    /* Native details still opens/closes without JavaScript; animate entry only. */
+    header details[open] > nav {
+        animation: mobile-menu-enter 180ms ease-out;
+    }
+
+    header details[open] > nav > a {
+        animation: mobile-menu-item-enter 180ms ease-out both;
+    }
+    header details[open] > nav > a:nth-child(2) { animation-delay: 35ms; }
+    header details[open] > nav > a:nth-child(3) { animation-delay: 70ms; }
+    header details[open] > nav > a:nth-child(4) { animation-delay: 105ms; }
+    header details[open] > nav > a:nth-child(5) { animation-delay: 140ms; }
+    header details[open] > nav > a:is(:focus-visible, :active) {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+        body .motion-button:hover:not(:active) { transform: translateY(-2px); }
+
+        .arrow-link:hover > span[aria-hidden="true"] {
+            transform: translateX(4px);
+        }
+
+        :is(#coaches, #blog) article:hover { transform: translateY(-4px); }
+        #coaches article:hover .coach-photo-frame > img { transform: scale(1.025); }
+        #process article:hover img { transform: translateY(-3px) scale(1.04); }
+
+        :is(#planning, #parents) .feature-item:hover .feature-icon img {
+            animation: feature-icon-nudge 320ms ease-out;
+        }
+
+        #weekly .time-balance-legend li:hover {
+            background-color: rgba(217, 180, 49, 0.12);
+        }
+        #weekly .time-balance-legend li:hover .time-balance-marker {
+            transform: scale(1.25);
+        }
+    }
+
+    /* Touch feedback: press instead of hover; release restores the static state.
+       Menus and view timelines above/below already apply to all screen sizes. */
+    @media (hover: none), (pointer: coarse) {
+        body .motion-button:active { transform: translateY(1px); }
+
+        .arrow-link:active > span[aria-hidden="true"] {
+            transform: translateX(4px);
+        }
+
+        /* A touch may leave a child focused. Do not leave the card lifted. */
+        :is(#coaches, #blog) article:focus-within { transform: none; }
+        #coaches article:focus-within .coach-photo-frame > img { transform: none; }
+        :is(#coaches, #blog) article:active {
+            transform: translateY(-2px);
+            border-color: var(--color-accent);
+        }
+        #coaches article:active .coach-photo-frame > img { transform: scale(1.025); }
+
+        #process article:active img { transform: translateY(-3px) scale(1.04); }
+        :is(#planning, #parents) .feature-item:active .feature-icon img {
+            animation: feature-icon-nudge 320ms ease-out;
+        }
+        #weekly .time-balance-legend li:active {
+            background-color: rgba(217, 180, 49, 0.12);
+        }
+        #weekly .time-balance-legend li:active .time-balance-marker {
+            transform: scale(1.25);
+        }
+    }
+
+    /* Progressive enhancement: no hidden content in unsupported browsers.
+       Translate is separate from hover transform, so both effects compose. */
+    @supports (animation-timeline: view()) and (translate: 0 12px) {
+        :is(#process, #weekly, #location) .section-heading,
+        #coaches .coaches-heading,
+        #blog .blog-heading,
+        :is(#process, #coaches, #blog) article,
+        #calculator .section-copy,
+        #calculator .calculator-preview,
+        #weekly .time-balance,
+        :is(#planning, #parents) .feature-item,
+        #weekly .weekly-detail,
+        #location aside {
+            animation: section-enter 1ms linear both;
+            animation-timeline: view();
+            animation-range: entry 0% entry 70%;
+        }
+
+        /* Keyboard and anchor navigation must never wait for a scroll reveal. */
+        :is(#process, #coaches, #blog) article:focus-within,
+        #blog .blog-heading:focus-within,
+        #calculator .section-copy:focus-within,
+        #calculator .calculator-preview:focus-within,
+        :is(#planning, #parents) .feature-item:focus-within,
+        #location aside:focus-within {
+            animation: none;
+            opacity: 1;
+            translate: none;
+        }
+        main > section:target .section-heading {
+            animation: none;
+            opacity: 1;
+            translate: none;
+        }
+    }
+}
+
+@keyframes feature-icon-nudge {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+}
+
+@keyframes mobile-menu-enter {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes mobile-menu-item-enter {
+    from { opacity: 0; transform: translateX(6px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes section-enter {
+    from { opacity: 0.25; translate: 0 12px; }
+    to { opacity: 1; translate: 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+        animation: none !important;
+        transition-duration: 0s !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+
