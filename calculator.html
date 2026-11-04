@@ -1,10 +1,27 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <link rel="icon" type="image/svg+xml" href="assets/icons/Logo.svg">
+  <link rel="icon" type="image/svg+xml" sizes="any" href="assets/icons/favicon.svg">
   <meta charset="UTF-8">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src &#x27;self&#x27;; script-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app https://widget.time.is; style-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app &#x27;unsafe-inline&#x27; https://fonts.googleapis.com; font-src &#x27;self&#x27; https://fonts.gstatic.com; img-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app data: https://widget.time.is https://time.is; media-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://www.google.com https://maps.google.com; connect-src &#x27;self&#x27; https://widget.time.is https://time.is https://gilded-rabanadas-6b2d18.netlify.app; object-src &#x27;none&#x27;; base-uri &#x27;self&#x27;; form-action &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app">
+  <link rel="canonical" href="https://gilded-rabanadas-6b2d18.netlify.app/calculator.html">
+  <meta name="robots" content="index, follow">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:site_name" content="КіберЛьвів">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Калькулятор ігрового часу | КіберЛьвів">
+  <meta property="og:description" content="Калькулятор тренувань: вправи, повні матчі, аналіз, очікування та перерви.">
+  <meta property="og:url" content="https://gilded-rabanadas-6b2d18.netlify.app/calculator.html">
+  <meta property="og:image" content="https://gilded-rabanadas-6b2d18.netlify.app/assets/images/hero-optimized.webp">
+  <meta property="og:image:alt" content="Промоілюстрація КіберЛьвів: команда піднімає кубок">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Калькулятор ігрового часу | КіберЛьвів">
+  <meta name="twitter:description" content="Калькулятор тренувань: вправи, повні матчі, аналіз, очікування та перерви.">
+  <meta name="twitter:image" content="https://gilded-rabanadas-6b2d18.netlify.app/assets/images/hero-optimized.webp">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Форма планування ігрового часу: дисципліна, години та період тренувань.">
+<meta name="description" content="Калькулятор тренувань: вправи, повні матчі, аналіз, очікування та перерви.">
 
   <title>Калькулятор ігрового часу | КіберЛьвів</title>
 
@@ -16,63 +33,8 @@
     rel="stylesheet"
   >
 
-  <!-- Tailwind CDN згідно з методичкою -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Назви класів пов’язані з наявними CSS-змінними проєкту -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            ink: "var(--color-ink)",
-            "ink-soft": "var(--color-ink-soft)",
-            copy: "var(--color-body)",
-            muted: "var(--color-muted-text)",
-            page: "var(--color-page)",
-            surface: "var(--color-surface)",
-            accent: "var(--color-accent)",
-            "accent-dark": "var(--color-accent-dark)",
-            line: "var(--color-line)",
-            placeholder: "var(--color-placeholder)"
-          },
-          fontFamily: {
-            inter: ["Inter", "sans-serif"]
-          },
-          fontSize: {
-            caption: "var(--font-size-xs)",
-            small: "var(--font-size-sm)",
-            copy: "var(--font-size-base)",
-            lead: "var(--font-size-lead)",
-            brand: "var(--font-size-brand)"
-          },
-          spacing: {
-            "ui-1": "var(--space-1)",
-            "ui-2": "var(--space-2)",
-            "ui-3": "var(--space-3)",
-            "ui-4": "var(--space-4)",
-            "ui-5": "var(--space-5)",
-            "ui-6": "var(--space-6)",
-            "ui-7": "var(--space-7)",
-            "ui-8": "var(--space-8)"
-          },
-          borderRadius: {
-            "ui-sm": "var(--radius-sm)",
-            "ui-md": "var(--radius-md)"
-          },
-          boxShadow: {
-            card: "var(--shadow-card)"
-          },
-          transitionDuration: {
-            180: "180ms"
-          },
-          screens: {
-            nav: "901px"
-          }
-        }
-      }
-    };
-  </script>
+  <!-- Локально зібрані утиліти Tailwind CSS -->
+  <link rel="stylesheet" href="css/tailwind.css">
 
   <!-- CSS-змінні, типографіка та специфічні стилі проєкту -->
   <link rel="stylesheet" href="css/style.css">
@@ -81,6 +43,7 @@
   <link rel="stylesheet" href="css/pages.css">
 </head>
 <body class="font-inter calculator-page">
+<a class="skip-link" href="#main-content">Перейти до вмісту</a>
 <header class="sticky top-0 z-50 bg-surface text-ink">
     <div
       class="site-container header-layout"
@@ -93,13 +56,13 @@
                transition-colors duration-180 hover:text-ink-soft"
       >
         <img
-          src="assets/icons/Logo.svg"
+          src="assets/icons/logo-nav.svg"
           alt=""
           aria-hidden="true"
-          width="50"
-          height="50"
+          width="58"
+          height="64"
           class="h-[50px] w-[50px] shrink-0 object-contain"
-          loading="lazy"
+          loading="eager"
         >
 
         <span class="whitespace-nowrap">КіберЛьвів</span>
@@ -110,10 +73,10 @@
         aria-label="Головна навігація"
         class="header-desktop-nav"
       >
-        <a class="nav-motion-link" href="index.html#process">Як це працює</a>
-        <a class="nav-motion-link" href="index.html#parents">Для батьків</a>
+        <a class="nav-motion-link" href="about.html">Про проєкт</a>
+        <a class="nav-motion-link" href="parents.html">Для батьків</a>
         <a class="nav-motion-link" href="coaches.html">Каталог тренерів</a>
-        <a class="nav-motion-link" href="index.html#blog">Поради</a>
+        <a class="nav-motion-link" href="tips.html">Поради</a>
         <a class="nav-motion-link nav-calculator-cta arrow-link" href="calculator.html" aria-current="page">Калькулятор <span aria-hidden="true">→</span></a>
       </nav>
 
@@ -129,53 +92,66 @@
           aria-label="Мобільна навігація"
           class="header-mobile-nav"
         >
-          <a class="nav-motion-link" href="index.html#process">Як це працює</a>
-          <a class="nav-motion-link" href="index.html#parents">Для батьків</a>
+          <a class="nav-motion-link" href="about.html">Про проєкт</a>
+          <a class="nav-motion-link" href="parents.html">Для батьків</a>
           <a class="nav-motion-link" href="coaches.html">Каталог тренерів</a>
-          <a class="nav-motion-link" href="index.html#blog">Поради</a>
+          <a class="nav-motion-link" href="tips.html">Поради</a>
           <a class="nav-motion-link nav-calculator-cta arrow-link" href="calculator.html" aria-current="page">Калькулятор <span aria-hidden="true">→</span></a>
         </nav>
       </details>
     </div>
   </header>
-<main id="top">
-
+<main id="main-content" tabindex="-1"><div class="site-container"><p id="app-load-status" class="training-notice" role="status">Завантаження інтерактивної частини… Якщо вона не з’явиться, оновіть сторінку. <a href="about.html#methodology">Формула та приклад</a> доступні окремо.</p></div><span id="top" class="page-top-anchor" aria-hidden="true"></span>
 <section class="page-section section-light" aria-labelledby="calculator-page-title">
  <div class="site-container">
   <div class="calculator-card">
-   <h1 class="page-title page-title-rule" id="calculator-page-title">Розрахуй ігровий час</h1>
-   <p class="page-muted">Обери гру, вкажи години та період. Поля з * обов’язкові. Без реєстрації.</p>
-   <!-- Статична форма: submit стане доступним після додавання логіки розрахунку. -->
-   <form id="calculator-form" action="results.html" method="get" aria-describedby="calculator-availability">
-    <fieldset class="page-fieldset"><legend>Гра <span aria-hidden="true">*</span></legend>
-     <div class="game-choices"><label class="page-choice"><input class="page-choice-input" type="radio" name="game" value="CS2" required><span>CS2</span></label><label class="page-choice"><input class="page-choice-input" type="radio" name="game" value="Dota 2" required><span>Dota 2</span></label><label class="page-choice"><input class="page-choice-input" type="radio" name="game" value="Valorant" required><span>Valorant</span></label></div>
-    </fieldset>
-    <fieldset class="page-fieldset"><legend>Години тренувань та період <span aria-hidden="true">*</span></legend>
-     <div class="hours-choices">
-      <div><label class="visually-hidden" for="training-hours">Години тренувань</label><input class="page-input" id="training-hours" name="hours" type="number" min="0" max="168" step="any" inputmode="decimal" placeholder="Наприклад, 4" required aria-describedby="hours-help"></div>
-      <label class="page-choice"><input class="page-choice-input" type="radio" name="period" value="day" checked><span>На день</span></label>
-      <label class="page-choice"><input class="page-choice-input" type="radio" name="period" value="week"><span>На тиждень</span></label>
+   <span class="page-eyebrow">Тренування з конкретною метою</span>
+   <h1 class="page-title page-title-rule" id="calculator-page-title">Сплануй тренування</h1>
+   <p class="page-muted">Визнач час для вправ, повних матчів і розбору. Обери, що вже знаєш: скільки матчів хочеш зіграти чи скільки часу маєш.</p>
+   <noscript><p class="training-notice">Для розрахунку потрібен JavaScript. Увімкни його в браузері та онови сторінку.</p></noscript>
+   <form id="calculator-form" action="results.html" method="get" aria-describedby="calculator-method-note">
+    <fieldset class="page-fieldset"><legend>Режим розрахунку</legend>
+     <div class="training-mode-choices">
+      <label class="page-choice"><input class="page-choice-input" type="radio" name="mode" value="matches" checked><span>Знаю кількість матчів</span></label>
+      <label class="page-choice"><input class="page-choice-input" type="radio" name="mode" value="budget"><span>Маю обмежений час</span></label>
      </div>
-     <p class="page-field-help" id="hours-help">Від 0 до 24 годин на день або від 0 до 168 на тиждень. Дробові значення дозволені.</p>
     </fieldset>
-    <div class="page-field"><label for="player-name">Нікнейм (необов’язково)</label><input class="page-input" id="player-name" name="nickname" type="text" maxlength="40" autocomplete="nickname" placeholder="Наприклад, Player_01"></div>
-    <div class="page-field"><label for="player-age">Вік (необов’язково)</label><input class="page-input" id="player-age" name="age" type="number" min="1" max="120" step="1" inputmode="numeric" placeholder="Наприклад, 16"></div>
-    <div class="page-form-actions"><p id="calculator-availability" class="page-field-help">Розрахунок поки недоступний. Введені дані не надсилаються.</p><button class="page-button" type="submit" disabled>Розрахувати</button></div>
+    <fieldset class="page-fieldset"><legend>Гра</legend>
+     <div class="game-choices">
+      <label class="page-choice"><input class="page-choice-input" type="radio" name="game" value="CS2" checked required><span>CS2</span></label>
+      <label class="page-choice"><input class="page-choice-input" type="radio" name="game" value="Dota 2" required><span>Dota 2</span></label>
+      <label class="page-choice"><input class="page-choice-input" type="radio" name="game" value="Valorant" required><span>Valorant</span></label>
+     </div>
+    </fieldset>
+    <div class="training-form-grid">
+     <div class="page-field"><label for="training-focus">Фокус тренування</label><select class="page-input" id="training-focus" name="focus" required><option value="mechanics">Стрільба та рух</option></select></div>
+     <div class="page-field"><label for="days">Занять на тиждень</label><input class="page-input" id="days" name="days" type="number" min="1" max="7" step="1" inputmode="numeric" value="4" required aria-describedby="days-help"><p class="page-field-help" id="days-help">Від 1 до 7. Конкретні дні обираєш самостійно.</p></div>
+     <div id="matches-field"><div class="page-field"><label for="matches">Матчів за одне заняття</label><input class="page-input" id="matches" name="matches" type="number" min="1" max="50" step="1" inputmode="numeric" value="2" required></div></div>
+     <div id="budget-field" hidden><div class="page-field"><label for="budget">Доступний час на заняття, хв</label><input class="page-input" id="budget" name="budget" type="number" min="1" max="1440" step="1" inputmode="numeric" value="145" required aria-describedby="budget-help"><p class="page-field-help" id="budget-help">Разом із підготовкою, очікуванням та перервами.</p></div></div>
+    </div>
+    <details class="training-settings">
+     <summary>Налаштувати тривалість блоків</summary>
+     <p class="page-muted">Початкові значення — редагований приклад. Тривалість матчу залежить від режиму гри; це оцінка для планування, а не обмеження матчу.</p>
+     <div class="training-form-grid">
+      <div class="page-field"><label for="warmup">Розминка, хв</label><input class="page-input" id="warmup" name="warmup" type="number" min="0" max="180" step="1" inputmode="numeric" value="10" required></div> <div class="page-field"><label for="drills">Цільові вправи, хв</label><input class="page-input" id="drills" name="drills" type="number" min="0" max="360" step="1" inputmode="numeric" value="20" required></div> <div class="page-field"><label for="matchLength">Один матч, хв</label><input class="page-input" id="matchLength" name="matchLength" type="number" min="5" max="180" step="1" inputmode="numeric" value="40" required aria-describedby="matchLength-help"><p class="page-field-help" id="matchLength-help">Початково: CS2 і Valorant — 40 хв, Dota 2 — 45 хв. Заміни власною оцінкою.</p></div> <div class="page-field"><label for="queue">Очікування перед кожним матчем, хв</label><input class="page-input" id="queue" name="queue" type="number" min="0" max="120" step="1" inputmode="numeric" value="5" required></div> <div class="page-field"><label for="review">Аналіз після заняття, хв</label><input class="page-input" id="review" name="review" type="number" min="0" max="180" step="1" inputmode="numeric" value="15" required></div> <div class="page-field"><label for="breakMinutes">Перерва між матчами, хв</label><input class="page-input" id="breakMinutes" name="breakMinutes" type="number" min="0" max="120" step="1" inputmode="numeric" value="10" required aria-describedby="breakMinutes-help"><p class="page-field-help" id="breakMinutes-help">Дві гри — одна перерва. Без матчів цей блок не додається.</p></div>
+     </div>
+    </details>
+    <p class="training-error" id="calculator-error" role="alert" tabindex="-1" hidden></p>
+    <div class="page-form-actions">
+     <p class="page-field-help" id="calculator-method-note">Повний час включає очікування та перерви. Розрахунок виконується у браузері, без реєстрації.</p>
+     <button class="motion-button page-button" id="calculator-submit" type="submit" disabled>Розрахувати час</button>
+    </div>
    </form>
   </div>
-  <div class="page-actions"><a class="arrow-link text-link" href="results.html">Переглянути приклад результатів <span aria-hidden="true">→</span></a></div>
-  <details class="page-notes"><summary>Стани форми</summary><div class="state-grid">
-   <article class="state-card"><h3>Початковий стан</h3><p>Заповни гру, години та період тренувань.</p></article>
-   <article class="state-card state-error"><h3>Помилка введення</h3><p>Помилка має пояснювати, яке значення потрібно виправити, без очищення полів.</p></article>
-   <article class="state-card state-pending"><h3>Розрахунок</h3><p>Після запуску розрахунку тут буде повідомлення про очікування.</p></article>
-   <article class="state-card state-error"><h3>Недоступність сервісу</h3><p>Майбутній стан помилки: повторити спробу зі збереженням введення.</p></article>
-  </div></details>
+  <div class="page-actions"><a class="arrow-link text-link" href="results.html?example=1">Переглянути приклад плану <span aria-hidden="true">→</span></a></div>
  </div>
 </section>
-<section class="page-section section-dark page-accent-top" aria-labelledby="after-calculation-title"><div class="site-container">
- <h2 id="after-calculation-title" class="page-title-rule">Після розрахунку</h2>
- <div class="page-two-columns"><div class="page-info-card"><p>На сторінці результатів будуть підсумок введеного часу, пояснення та структура тижневого плану.</p></div><div class="page-info-card"><p>Налаштування можна буде змінити й виконати розрахунок повторно. Рівень навантаження та оцінка балансу потребують окремих правил.</p></div></div>
-</div></section>
+<section class="page-section section-dark page-accent-top" aria-labelledby="calculator-method-title">
+ <div class="site-container page-two-columns training-method-layout">
+  <div><span class="page-eyebrow">Як рахуємо</span><h2 id="calculator-method-title">Кожен блок має свій час</h2><p>Розминка + вправи + повні матчі + очікування + аналіз + перерви між матчами. Тижневий підсумок — сума однакових занять.</p><a class="arrow-link text-link" href="about.html#methodology">Формула та приклад розрахунку <span aria-hidden="true">→</span></a></div>
+  <div class="page-info-card"><h3>План, який можна змінювати</h3><p>Модель не визначає необхідні години для нового рангу й не оцінює безпечність навантаження. Якщо матч не вміщується, запропонуємо заняття без матчів або зміну налаштувань.</p></div>
+ </div>
+</section>
 </main>
 <footer id="footer" class="bg-ink py-ui-6 text-surface">
     <div class="site-container">
@@ -207,12 +183,14 @@
                  [&_a:focus-visible]:text-accent"
         >
           <a href="index.html#top">Головна</a>
+          <a href="about.html">Про проєкт</a>
+          <a href="contact.html">Контакти</a>
           <a href="index.html#process">Як це працює</a>
-          <a href="index.html#parents">Для батьків</a>
+          <a href="parents.html">Для батьків</a>
           <a href="coaches.html">Каталог тренерів</a>
-          <a href="index.html#blog">Поради</a>
+          <a href="tips.html">Поради</a>
           <a href="calculator.html" aria-current="page">Калькулятор</a>
-          <a href="results.html">Приклад результатів</a>
+          <a href="results.html?example=1">Приклад результатів</a>
         </nav>
       </div>
 
@@ -221,15 +199,18 @@
                gap-ui-4 pt-ui-4"
       >
         <p class="m-0 text-caption text-white/70">
-          © 2025 КіберЛьвів. Усі права захищено.
+          © 2025–2026 КіберЛьвів. Усі права захищено.
         </p>
 
         <div class="flex flex-wrap gap-x-ui-4 gap-y-2 text-caption text-white/70" aria-label="Правова інформація">
-          <span>Політика конфіденційності</span>
-          <span>Умови використання</span>
+          <a href="privacy.html">Політика конфіденційності</a>
+          <a href="terms.html">Умови використання</a>
         </div>
       </div>
     </div>
   </footer>
+<script src="js/app-status.js" defer></script>
+<script src="js/training-model.js" defer></script>
+<script src="js/calculator.js" defer></script>
 </body>
 </html>

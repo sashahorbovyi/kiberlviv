@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gilded-rabanadas-6b2d18.netlify.app/sitemap.xml

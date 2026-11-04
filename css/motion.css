@@ -247,3 +247,33 @@ header details[open] .menu-toggle-icon > span {
 }
 
 
+
+/* Parents: one short entrance per element; no looping decoration. */
+@media (prefers-reduced-motion: no-preference) {
+ .parents-page :is(.parents-icon,.parents-game-mark) { transition: transform 200ms ease; }
+ .parents-page :is(.parents-game-card,.parents-video-card) { transition: border-color 200ms ease, box-shadow 200ms ease; }
+ .parents-page :is(.parents-disclosure,.parents-faq-item)[open] > div { animation: parents-detail-enter 200ms ease-out; }
+ .parents-page .parents-game-card:focus-within, .parents-page .parents-video-card:focus-within { border-color: var(--color-accent); box-shadow: var(--shadow-card); }
+ @media (hover: hover) and (pointer: fine) {
+  .parents-info-card:hover .parents-icon { transform: translateY(-3px) rotate(-4deg); }
+  .parents-game-card:hover .parents-game-mark { transform: translateY(-2px); }
+  .parents-page :is(.parents-game-card,.parents-video-card):hover { border-color: var(--color-accent); box-shadow: var(--shadow-card); }
+ }
+ @supports (animation-timeline: view()) and (translate: 0 12px) {
+  .parents-page :is(.parents-section-heading,.parents-info-card,.parents-game-card,.parents-myth-card,.parents-video-card,.parents-steps li,.parents-agreement-example,.parents-attention-card) {
+   animation: section-enter 1ms linear both; animation-timeline: view(); animation-range: entry 0% entry 65%;
+  }
+  .parents-page :is(.parents-game-card,.parents-video-card,.parents-myth-card,.parents-agreement-example):focus-within,
+  .parents-page section:target :is(.parents-section-heading,.parents-info-card,.parents-game-card,.parents-myth-card,.parents-video-card,.parents-steps li,.parents-agreement-example,.parents-attention-card) { animation: none; opacity: 1; translate: none; }
+ }
+}
+@keyframes parents-detail-enter { from { opacity: .5; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (prefers-reduced-motion: no-preference) {
+ .about-page .about-details[open] > div { animation: parents-detail-enter 200ms ease-out; }
+ @supports (animation-timeline: view()) and (translate: 0 12px) {
+  .about-page :is(.about-heading,.about-card,.about-workflow li,.about-research-card,.about-status-card) { animation: section-enter 1ms linear both; animation-timeline: view(); animation-range: entry 0% entry 65%; }
+  .about-page :is(.about-card,.about-research-card):focus-within { animation: none; opacity: 1; translate: none; }
+  .about-page section:target :is(.about-heading,.about-card,.about-workflow li,.about-research-card,.about-status-card) { animation: none; opacity: 1; translate: none; }
+ }
+}

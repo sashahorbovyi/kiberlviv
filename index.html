@@ -1,14 +1,31 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <link rel="icon" type="image/svg+xml" href="assets/icons/Logo.svg">
+  <link rel="icon" type="image/svg+xml" sizes="any" href="assets/icons/favicon.svg">
   <meta charset="UTF-8">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src &#x27;self&#x27;; script-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app https://widget.time.is; style-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app &#x27;unsafe-inline&#x27; https://fonts.googleapis.com; font-src &#x27;self&#x27; https://fonts.gstatic.com; img-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app data: https://widget.time.is https://time.is; media-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://www.google.com https://maps.google.com; connect-src &#x27;self&#x27; https://widget.time.is https://time.is https://gilded-rabanadas-6b2d18.netlify.app; object-src &#x27;none&#x27;; base-uri &#x27;self&#x27;; form-action &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app">
+  <link rel="canonical" href="https://gilded-rabanadas-6b2d18.netlify.app/">
+  <meta name="robots" content="index, follow">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:site_name" content="КіберЛьвів">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="КіберЛьвів — калькулятор тренувань і практичні поради">
+  <meta property="og:description" content="Навчальний проєкт КіберЛьвів: калькулятор тренувань у CS2, Dota 2 та Valorant, практичні статті й гід для батьків.">
+  <meta property="og:url" content="https://gilded-rabanadas-6b2d18.netlify.app/">
+  <meta property="og:image" content="https://gilded-rabanadas-6b2d18.netlify.app/assets/images/hero-optimized.webp">
+  <meta property="og:image:alt" content="Промоілюстрація КіберЛьвів: команда піднімає кубок">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="КіберЛьвів — калькулятор тренувань і практичні поради">
+  <meta name="twitter:description" content="Навчальний проєкт КіберЛьвів: калькулятор тренувань у CS2, Dota 2 та Valorant, практичні статті й гід для батьків.">
+  <meta name="twitter:image" content="https://gilded-rabanadas-6b2d18.netlify.app/assets/images/hero-optimized.webp">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preload" href="assets/images/hero-optimized.webp" as="image" type="image/webp" fetchpriority="high">
 
-  <meta name="description" content="КіберЛьвів — концепція кіберспортивного хабу у Львові. Планування тренувань у CS2 та Dota 2, приклад тижневого розкладу й інформація для батьків.">
+  <meta name="description" content="Навчальний проєкт КіберЛьвів: калькулятор тренувань у CS2, Dota 2 та Valorant, практичні статті й гід для батьків.">
 
-  <title>Кіберспортивна академія у Львові | КіберЛьвів</title>
+  <title>КіберЛьвів — калькулятор тренувань і практичні поради</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,63 +35,8 @@
     rel="stylesheet"
   >
 
-  <!-- Tailwind CDN згідно з методичкою -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Назви класів пов’язані з наявними CSS-змінними проєкту -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            ink: "var(--color-ink)",
-            "ink-soft": "var(--color-ink-soft)",
-            copy: "var(--color-body)",
-            muted: "var(--color-muted-text)",
-            page: "var(--color-page)",
-            surface: "var(--color-surface)",
-            accent: "var(--color-accent)",
-            "accent-dark": "var(--color-accent-dark)",
-            line: "var(--color-line)",
-            placeholder: "var(--color-placeholder)"
-          },
-          fontFamily: {
-            inter: ["Inter", "sans-serif"]
-          },
-          fontSize: {
-            caption: "var(--font-size-xs)",
-            small: "var(--font-size-sm)",
-            copy: "var(--font-size-base)",
-            lead: "var(--font-size-lead)",
-            brand: "var(--font-size-brand)"
-          },
-          spacing: {
-            "ui-1": "var(--space-1)",
-            "ui-2": "var(--space-2)",
-            "ui-3": "var(--space-3)",
-            "ui-4": "var(--space-4)",
-            "ui-5": "var(--space-5)",
-            "ui-6": "var(--space-6)",
-            "ui-7": "var(--space-7)",
-            "ui-8": "var(--space-8)"
-          },
-          borderRadius: {
-            "ui-sm": "var(--radius-sm)",
-            "ui-md": "var(--radius-md)"
-          },
-          boxShadow: {
-            card: "var(--shadow-card)"
-          },
-          transitionDuration: {
-            180: "180ms"
-          },
-          screens: {
-            nav: "901px"
-          }
-        }
-      }
-    };
-  </script>
+  <!-- Локально зібрані утиліти Tailwind CSS -->
+  <link rel="stylesheet" href="css/tailwind.css">
 
   <!-- CSS-змінні, типографіка та специфічні стилі проєкту -->
   <link rel="stylesheet" href="css/style.css">
@@ -83,9 +45,11 @@
   <script src="https://widget.time.is/t.js" defer></script>
   <script src="js/time-widget.js" defer></script>
   <!-- Кінець підключення Time.is -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "КіберЛьвів", "url": "https://gilded-rabanadas-6b2d18.netlify.app/", "inLanguage": "uk", "description": "Навчальний проєкт КіберЛьвів: калькулятор тренувань у CS2, Dota 2 та Valorant, практичні статті й гід для батьків."}</script>
 </head>
 
 <body class="font-inter">
+<a class="skip-link" href="#main-content">Перейти до вмісту</a>
 
   <!-- ШАПКА САЙТУ -->
   <header class="sticky top-0 z-50 bg-surface text-ink">
@@ -100,13 +64,13 @@
                transition-colors duration-180 hover:text-ink-soft"
       >
         <img
-          src="assets/icons/Logo.svg"
+          src="assets/icons/logo-nav.svg"
           alt=""
           aria-hidden="true"
-          width="50"
-          height="50"
+          width="58"
+          height="64"
           class="h-[50px] w-[50px] shrink-0 object-contain"
-          loading="lazy"
+          loading="eager"
         >
 
         <span class="whitespace-nowrap">КіберЛьвів</span>
@@ -117,10 +81,10 @@
         aria-label="Головна навігація"
         class="header-desktop-nav"
       >
-        <a class="nav-motion-link" href="#process">Як це працює</a>
-        <a class="nav-motion-link" href="#parents">Для батьків</a>
+        <a class="nav-motion-link" href="about.html">Про проєкт</a>
+        <a class="nav-motion-link" href="parents.html">Для батьків</a>
         <a class="nav-motion-link" href="coaches.html">Каталог тренерів</a>
-        <a class="nav-motion-link" href="#blog">Поради</a>
+        <a class="nav-motion-link" href="tips.html">Поради</a>
         <a class="nav-motion-link nav-calculator-cta arrow-link" href="calculator.html">Калькулятор <span aria-hidden="true">→</span></a>
       </nav>
 
@@ -136,20 +100,26 @@
           aria-label="Мобільна навігація"
           class="header-mobile-nav"
         >
-          <a class="nav-motion-link" href="#process">Як це працює</a>
-          <a class="nav-motion-link" href="#parents">Для батьків</a>
+          <a class="nav-motion-link" href="about.html">Про проєкт</a>
+          <a class="nav-motion-link" href="parents.html">Для батьків</a>
           <a class="nav-motion-link" href="coaches.html">Каталог тренерів</a>
-          <a class="nav-motion-link" href="#blog">Поради</a>
+          <a class="nav-motion-link" href="tips.html">Поради</a>
           <a class="nav-motion-link nav-calculator-cta arrow-link" href="calculator.html">Калькулятор <span aria-hidden="true">→</span></a>
         </nav>
       </details>
     </div>
   </header>
 
-  <main id="top">
+  <main id="main-content" tabindex="-1"><span id="top" class="page-top-anchor" aria-hidden="true"></span>
 
     <!-- ГОЛОВНИЙ ЕКРАН -->
-    <section class="hero" aria-labelledby="hero-title">
+    <section class="hero hero-with-video" aria-labelledby="hero-title">
+      <video class="hero-background-video" id="hero-promo" muted loop playsinline preload="none" poster="assets/images/hero-optimized.webp" aria-hidden="true" tabindex="-1">
+        <source data-src="assets/video/promo-background.mp4" type="video/mp4">
+      </video>
+      <button class="hero-video-toggle" type="button" aria-controls="hero-promo" hidden>
+        <span class="hero-video-toggle-icon" aria-hidden="true"></span><span class="hero-video-toggle-label">Увімкнути відеофон</span>
+      </button>
       <div class="site-container hero-content min-w-0">
         <div class="hero-text min-w-0 w-full">
           <h1 id="hero-title" class="text-[clamp(1.75rem,4vw,3.5rem)] [overflow-wrap:anywhere]">
@@ -163,6 +133,7 @@
             наставниками та прозорі звіти прогресу для батьків
             у єдиній екосистемі.
           </p>
+          <p class="hero-project-note">Навчальна концепція. Зараз доступні калькулятор часу й практичні матеріали; AI-плани, звіти прогресу та заняття з наставниками — напрями подальшого розвитку.</p>
 
           <div class="flex flex-wrap items-center gap-ui-3">
             <a
@@ -183,7 +154,7 @@
               <span aria-hidden="true">→</span>
             </a>
           </div>
-          
+
         </div>
       </div>
     </section>
@@ -219,8 +190,8 @@
               class="grid min-h-[92px] place-items-center
                      bg-ink min-[701px]:min-h-[118px]"
             >
-              <img
-                src="assets/icons/Ігровий%20таймер%20із%20контролером%201%20(Traced)%20(1).svg"
+              <img loading="lazy"
+                src="assets/icons/training-timer.svg"
                 alt=""
                 aria-hidden="true"
                 width="38"
@@ -235,7 +206,7 @@
               </h3>
 
               <p class="mb-0 text-sm text-muted">
-                Вкажи дисципліну та скільки годин готовий тренуватися.
+                Обери гру, фокус практики та кількість матчів або доступний час.
               </p>
             </div>
           </article>
@@ -250,7 +221,7 @@
                      bg-ink-soft min-[701px]:min-h-[118px]"
             >
               <img
-                src="assets/icons/Мінімалістична%20іконка%20геймера%20з%20гарнітурою%201%20(Traced)%20(1).svg"
+                src="assets/icons/headset.svg"
                 alt=""
                 aria-hidden="true"
                 width="38"
@@ -262,11 +233,11 @@
 
             <div class="p-ui-4">
               <h3 class="mb-ui-2 text-copy font-bold">
-                Отримай аналіз навантаження
+                Переглянь розрахунок часу
               </h3>
 
               <p class="mb-0 text-sm text-muted">
-                Система оцінить розподіл часу та виявить слабкі місця.
+                Побачиш тривалість вправ, матчів, очікування, аналізу та перерв.
               </p>
             </div>
           </article>
@@ -280,8 +251,8 @@
               class="grid min-h-[92px] place-items-center
                      bg-ink min-[701px]:min-h-[118px]"
             >
-              <img
-                src="assets/icons/Зростання%20до%20золотої%20нагороди%201%20(Traced)%20(1).svg"
+              <img loading="lazy"
+                src="assets/icons/progress.svg"
                 alt=""
                 aria-hidden="true"
                 width="38"
@@ -296,8 +267,7 @@
               </h3>
 
               <p class="mb-0 text-sm text-muted">
-                Отримай рекомендації та самостійно відмічай
-                виконання плану.
+                Скоригуй параметри або завантаж план. Висновки після заняття записуй самостійно.
               </p>
             </div>
           </article>
@@ -338,11 +308,11 @@
           <h2 id="calculator-title">Знайди баланс між грою та життям</h2>
 
           <p>
-            Поглянь, як можна розподілити тиждень між грою, тренуваннями, навчанням і відпочинком.
+            Порахуй час одного заняття та тижня: вправи, повні матчі, аналіз, очікування й перерви.
           </p>
 
           <div class="inline-actions">
-            
+
 
             <a class="arrow-link text-link transition-shadow duration-180" href="#process">
               Як це працює
@@ -353,33 +323,15 @@
 
         <!-- Статичне прев’ю: власні значення вводяться на calculator.html. -->
         <article class="calculator-preview" aria-labelledby="calculator-preview-title">
-          <div class="preview-heading">
-            <span class="preview-eyebrow">Приклад заповнення</span>
-            <h3 id="calculator-preview-title">Розрахуй ігровий час</h3>
-            <p>Гра та час тренувань — основа твого плану.</p>
-          </div>
-          <dl class="preview-fields">
-            <div>
-              <dt>Гра</dt>
-              <dd class="preview-games">
-                <span class="preview-choice is-selected">CS2</span>
-                <span class="preview-choice">Dota 2</span>
-                <span class="preview-choice">Valorant</span>
-              </dd>
-            </div>
-            <div>
-              <dt>Години тренувань та період</dt>
-              <dd class="preview-hours">
-                <span class="preview-value"><strong>4</strong><span>години</span></span>
-                <span class="preview-period"><span class="preview-choice is-selected">На день</span><span class="preview-choice">На тиждень</span></span>
-              </dd>
-            </div>
-          </dl>
-          <div class="preview-footer">
-            <p>Це приклад. Вкажи свої дані на сторінці калькулятора.</p>
-            <a href="calculator.html" class="motion-button inline-flex min-h-[44px] items-center justify-center rounded-ui-sm bg-accent px-4 py-2 text-small font-semibold text-ink no-underline transition-colors duration-180 hover:bg-accent-dark">Відкрити калькулятор</a>
-          </div>
-        </article>
+ <div class="preview-heading"><span class="preview-eyebrow">Приклад за початковими параметрами</span><h3 id="calculator-preview-title">Одне заняття у CS2</h3><p>За кількістю матчів або за доступним часом — обери свій режим у калькуляторі.</p></div>
+ <dl class="preview-fields preview-current-fields">
+  <div><dt>Матчів за заняття</dt><dd><strong>2</strong><span>по 40 хвилин</span></dd></div>
+  <div><dt>Розминка, вправи й аналіз</dt><dd><strong>45 хв</strong></dd></div>
+  <div><dt>Очікування й перерва</dt><dd><strong>20 хв</strong></dd></div>
+ </dl>
+ <p class="preview-total"><strong>2 год 25 хв</strong><span>повна тривалість одного заняття</span></p>
+ <div class="preview-footer"><p>Редагований приклад. Власні значення задаються у формі.</p><a href="calculator.html" class="motion-button page-button">Відкрити калькулятор</a></div>
+</article>
       </div>
     </section>
 
@@ -398,8 +350,8 @@
 
           <article class="feature-item">
             <span class="feature-icon shrink-0">
-              <img
-                src="assets/icons/Мінімалістична%20іконка%20геймера%20з%20гарнітурою%201%20(Traced)%20(1).svg"
+              <img width="32" height="32"
+                src="assets/icons/headset.svg"
                 alt=""
                 aria-hidden="true"
                 loading="lazy"
@@ -407,18 +359,17 @@
             </span>
 
             <div>
-              <h3>Персональний план</h3>
+              <h3>Структура під твій час</h3>
               <p class="text-sm">
-                Тренування будуються під твою гру і твій час.
-                Жодних шаблонів.
+                Обери фокус практики та задай тривалість блоків. Структуру можна змінити перед наступним заняттям.
               </p>
             </div>
           </article>
 
           <article class="feature-item">
             <span class="feature-icon shrink-0">
-              <img
-                src="assets/icons/Ігровий%20таймер%20із%20контролером%201%20(Traced)%20(1).svg"
+              <img width="32" height="32"
+                src="assets/icons/training-timer.svg"
                 alt=""
                 aria-hidden="true"
                 loading="lazy"
@@ -428,16 +379,15 @@
             <div>
               <h3>Аналіз часу</h3>
               <p class="text-sm">
-                Бачиш, куди йдуть години.
-                Слабкі місця стають очевидними.
+                Порівнюй повний час із часом вправ, матчів та аналізу. Очікування й перерви враховані окремо.
               </p>
             </div>
           </article>
 
           <article class="feature-item">
             <span class="feature-icon shrink-0">
-              <img
-                src="assets/icons/Зростання%20до%20золотої%20нагороди%201%20(Traced)%20(1).svg"
+              <img width="32" height="32"
+                src="assets/icons/progress.svg"
                 alt=""
                 aria-hidden="true"
                 loading="lazy"
@@ -445,10 +395,9 @@
             </span>
 
             <div>
-              <h3>Відстеження прогресу</h3>
+              <h3>Перегляд і коригування</h3>
               <p class="text-sm">
-                Кожен тиждень показує зміни.
-                Легше порівнювати заплановане й виконане.
+                Повернися до параметрів після практики й уточни свій план. Історія виконання на сайті не зберігається.
               </p>
             </div>
           </article>
@@ -522,8 +471,8 @@
 
           <article class="feature-item">
             <span class="feature-icon shrink-0">
-              <img
-                src="assets/icons/Щит%20конфіденційності%20з%20оком%20сканування%201%20(Traced).svg"
+              <img width="32" height="32"
+                src="assets/icons/shield-eye.svg"
                 alt=""
                 aria-hidden="true"
                 loading="lazy"
@@ -531,19 +480,18 @@
             </span>
 
             <div>
-              <h3>Контроль навантаження</h3>
+              <h3>Зрозуміти захоплення</h3>
 
               <p class="text-sm">
-                Ти бачиш, скільки дитина грає.
-                Жодних прихованих годин.
+                Пояснюємо ігри та кіберспорт простою мовою. Без обіцянок швидкої кар’єри.
               </p>
             </div>
           </article>
 
           <article class="feature-item">
             <span class="feature-icon shrink-0">
-              <img
-                src="assets/icons/Ігровий%20таймер%20із%20контролером%201%20(Traced)%20(1).svg"
+              <img width="32" height="32"
+                src="assets/icons/training-timer.svg"
                 alt=""
                 aria-hidden="true"
                 loading="lazy"
@@ -551,19 +499,18 @@
             </span>
 
             <div>
-              <h3>Рекомендації щодо відпочинку</h3>
+              <h3>Домовитися про правила</h3>
 
               <p class="text-sm">
-                Система підказує, коли зробити паузу.
-                Баланс важливіший за рекорди.
+                Час завершення, паузи, покупки й чат. Спільні домовленості починаються з розмови.
               </p>
             </div>
           </article>
 
           <article class="feature-item">
             <span class="feature-icon shrink-0">
-              <img
-                src="assets/icons/Зростання%20до%20золотої%20нагороди%201%20(Traced)%20(1).svg"
+              <img width="32" height="32"
+                src="assets/icons/progress.svg"
                 alt=""
                 aria-hidden="true"
                 loading="lazy"
@@ -571,18 +518,17 @@
             </span>
 
             <div>
-              <h3>Огляд прогресу</h3>
+              <h3>Обговорити тренування</h3>
 
               <p class="text-sm">
-                Ти бачиш розвиток дитини.
-                Цифри говорять самі за себе.
+                Запитайте про мету заняття й висновки після нього. Результат матчу — лише частина історії.
               </p>
             </div>
           </article>
 
           <div class="inline-actions">
-            <a class="arrow-link text-link transition-shadow duration-180" href="#weekly">
-              Приклад розподілу часу
+            <a class="arrow-link text-link transition-shadow duration-180" href="parents.html">
+              Відкрити гід для батьків
               <span aria-hidden="true">→</span>
             </a>
           </div>
@@ -694,11 +640,11 @@
 
       <h2 id="coaches-title">Знайди свого наставника</h2>
 
-      <p class="coaches-description">Каталог тренерів допоможе обрати фахівця під твою дисципліну. Картки показують основну інформацію.</p>
+      <p class="coaches-description">Демонстраційні профілі показують вигляд майбутнього каталогу. Наявність тренерських послуг і співпрацю з проєктом не підтверджено; доступні посилання на ігрові канали.</p>
     </div>
 
     <!-- Одна колонка на мобільному, дві від sm, чотири від lg -->
-    
+
         <div class="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4">
 
       <!-- ARTHAS -->
@@ -743,12 +689,7 @@
           <p class="mb-4 text-sm leading-relaxed text-white/80">Стример і автор ігрового контенту, відомий під ніком Папич. Став популярним завдяки трансляціям Dota 2.</p>
 
           <div class="mt-auto flex flex-col gap-2">
-            <button
-              type="button" disabled
-              class="inline-flex min-h-[44px] items-center justify-center rounded-ui-sm border border-transparent bg-accent px-4 py-2 text-center text-small font-semibold text-ink transition-colors duration-180 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-            >
-              Надіслати запит тренеру
-            </button>
+
             <a
               href="https://www.youtube.com/@SpitefulDick"
               target="_blank"
@@ -805,12 +746,7 @@
           <p class="mb-4 text-sm leading-relaxed text-white/80">Стример Counter-Strike. На каналі — матчі, спілкування з глядачами та контент навколо змагальної гри.</p>
 
           <div class="mt-auto flex flex-col gap-2">
-            <button
-              type="button" disabled
-              class="inline-flex min-h-[44px] items-center justify-center rounded-ui-sm border border-transparent bg-accent px-4 py-2 text-center text-small font-semibold text-ink transition-colors duration-180 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-            >
-              Надіслати запит тренеру
-            </button>
+
             <a
               href="https://www.twitch.tv/inkmate0"
               target="_blank"
@@ -842,12 +778,7 @@
           <p class="mb-3 text-sm text-white/70">stariy_bog</p>
           <p class="mb-4 text-sm leading-relaxed text-white/80">Стример Dota 2. Транслює власні матчі та коментує події на кіберспортивній сцені.</p>
           <div class="mt-auto flex flex-col gap-2">
-            <button
-              type="button" disabled
-              class="inline-flex min-h-[44px] items-center justify-center rounded-ui-sm border border-transparent bg-accent px-4 py-2 text-center text-small font-semibold text-ink transition-colors duration-180 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-            >
-              Надіслати запит тренеру
-            </button>
+
             <a
               href="https://www.twitch.tv/stariy_bog"
               target="_blank"
@@ -878,12 +809,7 @@
           <p class="mb-3 text-sm text-white/70">Михайло Лебіга · leb1ga</p>
           <p class="mb-4 text-sm leading-relaxed text-white/80">Український стример Михайло Лебіга. Створює розмовний контент і проводить спільні з глядачами перегляди матчів Counter-Strike 2.</p>
           <div class="mt-auto flex flex-col gap-2">
-            <button
-              type="button" disabled
-              class="inline-flex min-h-[44px] items-center justify-center rounded-ui-sm border border-transparent bg-accent px-4 py-2 text-center text-small font-semibold text-ink transition-colors duration-180 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-            >
-              Надіслати запит тренеру
-            </button>
+
             <a
               href="https://www.twitch.tv/leb1ga"
               target="_blank"
@@ -926,7 +852,7 @@
           </div>
 
           <a
-            href="#blog"
+            href="tips.html"
             class="motion-button inline-flex min-h-[44px] items-center justify-center
                    rounded-ui-sm border border-muted
                    bg-transparent px-ui-5 py-ui-2
@@ -955,7 +881,7 @@
 
             <div class="flex flex-1 flex-col p-ui-4">
               <span class="text-caption text-muted">
-                5 хв читання
+                3 хв читання
               </span>
 
               <h3 class="mb-ui-2 mt-ui-2 text-lead font-bold">
@@ -968,7 +894,7 @@
               </p>
 
               <a
-                href="#blog"
+                href="article-training.html"
                 class="arrow-link mt-auto inline-flex min-h-[44px] items-center gap-ui-1 self-start text-small font-semibold text-ink no-underline transition-colors duration-180 hover:text-ink-soft"
               >
                 Читати далі
@@ -993,11 +919,11 @@
 
             <div class="flex flex-1 flex-col p-ui-4">
               <span class="text-caption text-muted">
-                4 хв читання
+                3 хв читання
               </span>
 
               <h3 class="mb-ui-2 mt-ui-2 text-lead font-bold">
-                Гра і відпочинок як знайти рівновагу
+                Гра і відпочинок: як знайти рівновагу
               </h3>
 
               <p class="text-small text-muted">
@@ -1006,13 +932,13 @@
               </p>
 
               <a
-                href="#blog"
+                href="article-balance.html"
                 class="arrow-link mt-auto inline-flex min-h-[44px] items-center gap-ui-1 self-start text-small font-semibold text-ink no-underline transition-colors duration-180 hover:text-ink-soft"
               >
                 Читати далі
                 <span aria-hidden="true">→</span>
                 <span class="sr-only">
-                  : Гра і відпочинок як знайти рівновагу
+                  : Гра і відпочинок: як знайти рівновагу
                 </span>
               </a>
             </div>
@@ -1031,7 +957,7 @@
 
             <div class="flex flex-1 flex-col p-ui-4">
               <span class="text-caption text-muted">
-                6 хв читання
+                3 хв читання
               </span>
 
               <h3 class="mb-ui-2 mt-ui-2 text-lead font-bold">
@@ -1044,7 +970,7 @@
               </p>
 
               <a
-                href="#blog"
+                href="article-parents.html"
                 class="arrow-link mt-auto inline-flex min-h-[44px] items-center gap-ui-1 self-start text-small font-semibold text-ink no-underline transition-colors duration-180 hover:text-ink-soft"
               >
                 Читати далі
@@ -1181,12 +1107,14 @@
                  [&_a:focus-visible]:text-accent"
         >
           <a href="#top">Головна</a>
+          <a href="about.html">Про проєкт</a>
+          <a href="contact.html">Контакти</a>
           <a href="#process">Як це працює</a>
-          <a href="#parents">Для батьків</a>
+          <a href="parents.html">Для батьків</a>
           <a href="coaches.html">Каталог тренерів</a>
-          <a href="#blog">Поради</a>
+          <a href="tips.html">Поради</a>
           <a href="calculator.html">Калькулятор</a>
-          <a href="results.html">Приклад результатів</a>
+          <a href="results.html?example=1">Приклад результатів</a>
         </nav>
       </div>
 
@@ -1195,15 +1123,16 @@
                gap-ui-4 pt-ui-4"
       >
         <p class="m-0 text-caption text-white/70">
-          © 2025 КіберЛьвів. Усі права захищено.
+          © 2025–2026 КіберЛьвів. Усі права захищено.
         </p>
 
         <div class="flex flex-wrap gap-x-ui-4 gap-y-2 text-caption text-white/70" aria-label="Правова інформація">
-          <span>Політика конфіденційності</span>
-          <span>Умови використання</span>
+          <a href="privacy.html">Політика конфіденційності</a>
+          <a href="terms.html">Умови використання</a>
         </div>
       </div>
     </div>
   </footer>
+  <script src="js/hero-video.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <link rel="icon" type="image/svg+xml" sizes="any" href="assets/icons/favicon.svg">
+  <meta charset="UTF-8">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src &#x27;self&#x27;; script-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app https://widget.time.is; style-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app &#x27;unsafe-inline&#x27; https://fonts.googleapis.com; font-src &#x27;self&#x27; https://fonts.gstatic.com; img-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app data: https://widget.time.is https://time.is; media-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://www.google.com https://maps.google.com; connect-src &#x27;self&#x27; https://widget.time.is https://time.is https://gilded-rabanadas-6b2d18.netlify.app; object-src &#x27;none&#x27;; base-uri &#x27;self&#x27;; form-action &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app">
+  <link rel="canonical" href="https://gilded-rabanadas-6b2d18.netlify.app/about.html">
+  <meta name="robots" content="index, follow">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:site_name" content="КіберЛьвів">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Про проєкт і методологію калькулятора | КіберЛьвів">
+  <meta property="og:description" content="Що таке КіберЛьвів, для кого створено сайт і як працює калькулятор тренувань: формула, приклад, джерела та можливості проєкту.">
+  <meta property="og:url" content="https://gilded-rabanadas-6b2d18.netlify.app/about.html">
+  <meta property="og:image" content="https://gilded-rabanadas-6b2d18.netlify.app/assets/images/hero-optimized.webp">
+  <meta property="og:image:alt" content="Промоілюстрація КіберЛьвів: команда піднімає кубок">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Про проєкт і методологію калькулятора | КіберЛьвів">
+  <meta name="twitter:description" content="Що таке КіберЛьвів, для кого створено сайт і як працює калькулятор тренувань: формула, приклад, джерела та можливості проєкту.">
+  <meta name="twitter:image" content="https://gilded-rabanadas-6b2d18.netlify.app/assets/images/hero-optimized.webp">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Що таке КіберЛьвів, для кого створено сайт і як працює калькулятор тренувань: формула, приклад, джерела та можливості проєкту.">
+
+  <title>Про проєкт і методологію калькулятора | КіберЛьвів</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Локально зібрані утиліти Tailwind CSS -->
+  <link rel="stylesheet" href="css/tailwind.css">
+
+  <!-- CSS-змінні, типографіка та специфічні стилі проєкту -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/motion.css">
+
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body class="font-inter about-page">
+<a class="skip-link" href="#main-content">Перейти до вмісту</a>
+<header class="sticky top-0 z-50 bg-surface text-ink">
+    <div
+      class="site-container header-layout"
+    >
+      <a
+        href="index.html"
+        aria-label="КіберЛьвів — головна сторінка"
+        class="inline-flex shrink-0 items-center gap-ui-2
+               text-brand font-bold text-ink no-underline
+               transition-colors duration-180 hover:text-ink-soft"
+      >
+        <img
+          src="assets/icons/logo-nav.svg"
+          alt=""
+          aria-hidden="true"
+          width="58"
+          height="64"
+          class="h-[50px] w-[50px] shrink-0 object-contain"
+          loading="eager"
+        >
+
+        <span class="whitespace-nowrap">КіберЛьвів</span>
+      </a>
+
+      <!-- Навігація широкої версії -->
+      <nav
+        aria-label="Головна навігація"
+        class="header-desktop-nav"
+      >
+        <a class="nav-motion-link" href="about.html" aria-current="page">Про проєкт</a>
+        <a class="nav-motion-link" href="parents.html">Для батьків</a>
+        <a class="nav-motion-link" href="coaches.html">Каталог тренерів</a>
+        <a class="nav-motion-link" href="tips.html">Поради</a>
+        <a class="nav-motion-link nav-calculator-cta arrow-link" href="calculator.html">Калькулятор <span aria-hidden="true">→</span></a>
+      </nav>
+
+      <!-- Мобільне меню: відкривається без JavaScript -->
+      <details class="header-mobile-menu">
+        <summary class="header-menu-toggle"
+        >
+          <span class="menu-toggle-icon" aria-hidden="true"><span></span></span>
+          <span>Меню</span>
+        </summary>
+
+        <nav
+          aria-label="Мобільна навігація"
+          class="header-mobile-nav"
+        >
+          <a class="nav-motion-link" href="about.html" aria-current="page">Про проєкт</a>
+          <a class="nav-motion-link" href="parents.html">Для батьків</a>
+          <a class="nav-motion-link" href="coaches.html">Каталог тренерів</a>
+          <a class="nav-motion-link" href="tips.html">Поради</a>
+          <a class="nav-motion-link nav-calculator-cta arrow-link" href="calculator.html">Калькулятор <span aria-hidden="true">→</span></a>
+        </nav>
+      </details>
+    </div>
+  </header>
+<main id="main-content" tabindex="-1">
+<span id="top" class="page-top-anchor" aria-hidden="true"></span>
+<section class="page-section section-light about-hero" aria-labelledby="about-title">
+ <div class="site-container">
+  <nav class="tips-breadcrumbs" aria-label="Навігаційний шлях"><a href="index.html">Головна</a><span aria-hidden="true">/</span><span aria-current="page">Про проєкт</span></nav>
+  <div class="about-intro"><span class="page-eyebrow">Ідея та підхід</span>
+   <h1 class="page-title" id="about-title">КіберЛьвів — усвідомлений підхід до ігрових тренувань</h1>
+   <p class="about-lead">Визначте мету заняття, розкладіть практику на зрозумілі блоки й оцініть, скільки часу вони займуть.</p>
+   <p class="page-muted">«КіберЛьвів» — навчальний вебпроєкт про організацію тренувань у CS2, Dota 2 та Valorant. Він поєднує калькулятор часу, практичні статті та матеріали для батьків і поступово розвивається.</p>
+   <a class="arrow-link text-link" href="#methodology">Як працює розрахунок <span aria-hidden="true">↓</span></a>
+  </div>
+ </div>
+</section>
+
+<section class="page-section page-surface" aria-labelledby="about-audience-title"><div class="site-container">
+ <div class="about-heading"><span class="page-eyebrow">Для кого</span><h2 id="about-audience-title">Один проєкт — різні відправні точки</h2></div>
+ <div class="about-three-grid">
+  <article class="about-card"><span class="about-card-number" aria-hidden="true">01</span><h3>Гравцям</h3><p>Оцінити тривалість заняття, виділити час на вправи й аналіз та підлаштувати структуру під свій ритм.</p></article>
+  <article class="about-card"><span class="about-card-number" aria-hidden="true">02</span><h3>Батькам</h3><p>Розібратися в іграх і кіберспорті та знайти основу для спокійної розмови про захоплення дитини.</p><a class="arrow-link text-link" href="parents.html">Гід для батьків <span aria-hidden="true">→</span></a></article>
+  <article class="about-card"><span class="about-card-number" aria-hidden="true">03</span><h3>Початківцям</h3><p>Почати з конкретного завдання, дізнатися про підходи до практики та поступово уточнювати власні цілі.</p><a class="arrow-link text-link" href="tips.html">Практичні статті <span aria-hidden="true">→</span></a></article>
+ </div>
+</div></section>
+
+<section class="page-section section-dark" aria-labelledby="about-workflow-title"><div class="site-container">
+ <div class="about-heading"><span class="page-eyebrow">Як користуватися</span><h2 id="about-workflow-title">Від параметрів до зрозумілого заняття</h2><p>Калькулятор зосереджений на тренуваннях і практиці. Повний розклад життя користувача він не складає.</p></div>
+ <ol class="about-workflow">
+  <li><span class="about-step-number" aria-hidden="true">01</span><h3>Задайте параметри</h3><p>Оберіть гру, фокус практики, кількість занять і режим: за кількістю матчів або за доступним часом.</p></li>
+  <li><span class="about-step-number" aria-hidden="true">02</span><h3>Перегляньте структуру</h3><p>Отримайте тривалість блоків, підсумок одного заняття й тижня та загальну підказку для обраного фокуса.</p></li>
+  <li><span class="about-step-number" aria-hidden="true">03</span><h3>Уточніть свій план</h3><p>Поверніться до параметрів, змініть тривалості або завантажте текстовий план. Після практики запишіть один висновок самостійно.</p></li>
+ </ol>
+</div></section>
+
+<section id="methodology" class="page-section section-light" aria-labelledby="about-method-title"><div class="site-container">
+ <div class="about-heading"><span class="page-eyebrow">Методологія калькулятора</span><h2 id="about-method-title">Кожен блок має свій час</h2><p>Модель підсумовує введені тривалості. Ви можете змінити початкові значення відповідно до свого формату гри.</p></div>
+ <div class="about-method-grid">
+  <div class="about-method-copy">
+   <div class="about-formula"><h3>Формула одного заняття</h3><p>Розминка + вправи + матчі × (тривалість матчу + очікування) + аналіз + перерви між матчами.</p><p class="about-formula-note">Кількість перерв: кількість матчів мінус один, але не менше нуля. Перерву після завершення заняття формула не додає.</p></div>
+   <details class="about-details" open><summary>Два режими розрахунку</summary><div><h3>За кількістю матчів</h3><p>Вкажіть кількість матчів — отримаєте час для них разом із підготовкою, очікуванням, аналізом і перервами.</p><h3>За доступним часом</h3><p>Вкажіть бюджет одного заняття — модель підбере найбільшу кількість цілих матчів, яка вміщується разом з іншими блоками. Невикористаний залишок показується окремо.</p></div></details>
+   <details class="about-details"><summary>Що відбувається, якщо матч не вміщується?</summary><div><p>Формується заняття без матчів, очікування та перерв між ними. Якщо не вміщується навіть підготовка, бюджет заповнюється послідовно: спочатку розминка, потім вправи, потім аналіз. Останні блоки можуть скоротитися або бути пропущені.</p><p>Якщо за налаштуваннями не вміщується жоден тренувальний блок, калькулятор запропонує змінити параметри.</p></div></details>
+   <details class="about-details"><summary>Як рахується тиждень та активний час?</summary><div><p>Тижневий підсумок — тривалість одного заняття, помножена на кількість занять за тиждень. Це повторення тієї самої структури, без призначення конкретних днів.</p><p>Активний час охоплює розминку, вправи, матчі й аналіз. Повна тривалість додатково враховує очікування та перерви.</p></div></details>
+   <details class="about-details"><summary>Чому фактичний час може відрізнятися?</summary><div><p>Тривалість матчу й черги — ваші оцінки: реальна гра може завершитися раніше або пізніше. Фокус тренування змінює текст підказки, а час визначають задані тривалості та кількість матчів.</p></div></details>
+  </div>
+  <aside class="about-example" aria-labelledby="about-example-title">
+   <span class="page-eyebrow">Приклад, а не норма</span><h3 id="about-example-title">Одне заняття у CS2</h3>
+   <p>Початкові налаштування калькулятора: два матчі по 40 хвилин.</p>
+   <table class="about-time-table"><caption class="visually-hidden">Складові прикладу заняття та їхня тривалість</caption><thead><tr><th scope="col">Блок</th><th scope="col">Час</th></tr></thead><tbody>
+    <tr><th scope="row">Розминка</th><td>10 хв</td></tr><tr><th scope="row">Вправи</th><td>20 хв</td></tr><tr><th scope="row">Два матчі</th><td>80 хв</td></tr><tr><th scope="row">Очікування двох матчів</th><td>10 хв</td></tr><tr><th scope="row">Аналіз</th><td>15 хв</td></tr><tr><th scope="row">Одна перерва</th><td>10 хв</td></tr>
+   </tbody><tfoot><tr><th scope="row">Разом</th><td>145 хв</td></tr></tfoot></table>
+   <p class="about-example-total">2 год 25 хв<span>повна тривалість заняття</span></p>
+   <p class="about-example-note">Із них 2 год 5 хв — активний час. Чотири такі заняття: 9 год 40 хв на тиждень загалом, зокрема 8 год 20 хв активного часу.</p>
+  </aside>
+ </div>
+ <p class="about-limits">Калькулятор не прогнозує зростання рангу, не оцінює здоров’я та не створює персональний AI-план. Початкові тривалості — редагований приклад, а не науково встановлена норма навантаження.</p>
+</div></section>
+
+<section id="approach" class="page-section page-surface" aria-labelledby="about-approach-title"><div class="site-container">
+ <div class="about-heading"><span class="page-eyebrow">На чому ґрунтується підхід</span><h2 id="about-approach-title">Мета, повторення, зворотний зв’язок</h2><p>Принципи практики допомагають визначити зміст заняття. Формула калькулятора відповідає за підрахунок його часу.</p></div>
+ <div class="about-two-grid">
+  <article class="about-research-card"><h3>Грати й тренуватися — різні завдання</h3><p>Nagorsky та Wiemeyer розрізняють загальний ігровий час і систематичну роботу над навичками. Їхнє опитування також показує відмінності тренувальних пріоритетів між дисциплінами.</p><p>Наше практичне застосування цього підходу — окремі блоки вправ, матчів і аналізу. Дослідження не встановлює використані в калькуляторі тривалості.</p><a class="text-link" href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0237584" target="_blank" rel="noopener noreferrer">Nagorsky &amp; Wiemeyer, 2020 · PLOS ONE <span aria-hidden="true">↗</span></a></article>
+  <article class="about-research-card"><h3>Практиці потрібна конкретна мета</h3><p>Теоретична робота про тренерство в кіберспорті описує чітку мету заняття, повторні спроби та дієвий зворотний зв’язок серед критеріїв цілеспрямованої практики.</p><p>Тому ми пропонуємо обрати один фокус і залишити час на розбір. Це застосування загального принципу; ефективність саме нашої моделі окремо не перевірялася.</p><a class="text-link" href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2023.1191801/full" target="_blank" rel="noopener noreferrer">Coaching and talent development in esports, 2023 · Frontiers <span aria-hidden="true">↗</span></a></article>
+ </div>
+</div></section>
+
+<section class="page-section section-light" aria-labelledby="about-status-title"><div class="site-container">
+ <div class="about-heading"><span class="page-eyebrow">Стан проєкту</span><h2 id="about-status-title">Що доступно зараз і куди рухаємося</h2></div>
+ <div class="about-two-grid">
+  <article class="about-status-card"><span class="about-status-label">Уже працює</span><h3>Інструменти для першого кроку</h3><ul><li>Калькулятор із двома режимами та редагуванням параметрів.</li><li>Результати, структура заняття й завантаження текстового плану.</li><li>Статті з практичними порадами та джерелами.</li><li>Гід для батьків із поясненнями й відео.</li><li>Демонстраційний каталог із фільтром за грою.</li><li><a href="contact.html">Форма звернення до автора проєкту.</a></li></ul></article>
+  <article class="about-status-card about-status-planned"><span class="about-status-label">Напрями розвитку</span><h3>Наступні можливості</h3><ul><li>Описи форматів занять і умов співпраці.</li><li>Описи навчальних програм за дисциплінами.</li><li>Уточнення каталогу та перевірені профілі тренерів.</li></ul><p>Каталог містить демонстраційні профілі. Доступні фільтр за грою та посилання на канали; тренерські послуги не підтверджено, запису й бронювання немає.</p></article>
+ </div>
+</div></section>
+
+<section class="page-section section-dark page-accent-top" aria-labelledby="about-next-title"><div class="site-container about-next">
+ <span class="page-eyebrow">Від пояснення до практики</span><h2 id="about-next-title">Почніть з одного зрозумілого заняття</h2><p>Задайте власні тривалості та перегляньте, як вони складаються в тренувальний план.</p><div class="page-actions"><a class="motion-button page-button" href="calculator.html">Перейти до калькулятора</a></div>
+</div></section>
+</main>
+<footer id="footer" class="bg-ink py-ui-6 text-surface">
+    <div class="site-container">
+
+      <div
+        class="flex flex-col items-start justify-between
+               gap-ui-5 border-b border-white/15 pb-ui-5
+               min-[701px]:flex-row min-[701px]:flex-wrap
+               min-[701px]:items-center"
+      >
+        <a
+          href="index.html#top"
+          class="text-lead font-bold text-surface no-underline
+                 decoration-accent decoration-2 underline-offset-8
+                 transition-colors duration-180
+                 hover:text-accent hover:underline"
+        >
+          КіберЛьвів
+        </a>
+
+        <nav
+          aria-label="Навігація в підвалі"
+          class="flex flex-wrap items-center gap-x-ui-4 gap-y-2
+                 [&_a]:inline-flex [&_a]:min-h-[44px]
+                 [&_a]:items-center [&_a]:text-caption
+                 [&_a]:text-white/70 [&_a]:no-underline
+                 [&_a]:transition-colors [&_a]:duration-180
+                 [&_a:hover]:text-accent
+                 [&_a:focus-visible]:text-accent"
+        >
+          <a href="index.html#top">Головна</a>
+          <a href="about.html" aria-current="page">Про проєкт</a>
+          <a href="contact.html">Контакти</a>
+          <a href="index.html#process">Як це працює</a>
+          <a href="parents.html">Для батьків</a>
+          <a href="coaches.html">Каталог тренерів</a>
+          <a href="tips.html">Поради</a>
+          <a href="calculator.html">Калькулятор</a>
+          <a href="results.html?example=1">Приклад результатів</a>
+        </nav>
+      </div>
+
+      <div
+        class="flex flex-wrap items-center justify-between
+               gap-ui-4 pt-ui-4"
+      >
+        <p class="m-0 text-caption text-white/70">
+          © 2025–2026 КіберЛьвів. Усі права захищено.
+        </p>
+
+        <div class="flex flex-wrap gap-x-ui-4 gap-y-2 text-caption text-white/70" aria-label="Правова інформація">
+          <a href="privacy.html">Політика конфіденційності</a>
+          <a href="terms.html">Умови використання</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+</body>
+</html>

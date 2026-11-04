@@ -1,0 +1,13 @@
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://gilded-rabanadas-6b2d18.netlify.app https://widget.time.is; style-src 'self' https://gilded-rabanadas-6b2d18.netlify.app 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://gilded-rabanadas-6b2d18.netlify.app data: https://widget.time.is https://time.is; media-src 'self' https://gilded-rabanadas-6b2d18.netlify.app; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://www.google.com https://maps.google.com; connect-src 'self' https://widget.time.is https://time.is https://gilded-rabanadas-6b2d18.netlify.app; object-src 'none'; base-uri 'self'; form-action 'self' https://gilded-rabanadas-6b2d18.netlify.app; frame-ancestors 'self'
+
+/css/*
+  Cache-Control: public, max-age=0, must-revalidate
+/js/*
+  Cache-Control: public, max-age=0, must-revalidate
+/assets/*
+  Cache-Control: public, max-age=86400

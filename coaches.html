@@ -1,10 +1,27 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <link rel="icon" type="image/svg+xml" href="assets/icons/Logo.svg">
+  <link rel="icon" type="image/svg+xml" sizes="any" href="assets/icons/favicon.svg">
   <meta charset="UTF-8">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src &#x27;self&#x27;; script-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app https://widget.time.is; style-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app &#x27;unsafe-inline&#x27; https://fonts.googleapis.com; font-src &#x27;self&#x27; https://fonts.gstatic.com; img-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app data: https://widget.time.is https://time.is; media-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://www.google.com https://maps.google.com; connect-src &#x27;self&#x27; https://widget.time.is https://time.is https://gilded-rabanadas-6b2d18.netlify.app; object-src &#x27;none&#x27;; base-uri &#x27;self&#x27;; form-action &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app">
+  <link rel="canonical" href="https://gilded-rabanadas-6b2d18.netlify.app/coaches.html">
+  <meta name="robots" content="index, follow">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:site_name" content="КіберЛьвів">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Каталог тренерів | КіберЛьвів">
+  <meta property="og:description" content="Демонстраційні профілі каталогу КіберЛьвів із фільтром за грою та посиланнями на ігрові канали. Запису на заняття немає.">
+  <meta property="og:url" content="https://gilded-rabanadas-6b2d18.netlify.app/coaches.html">
+  <meta property="og:image" content="https://gilded-rabanadas-6b2d18.netlify.app/assets/images/hero-optimized.webp">
+  <meta property="og:image:alt" content="Промоілюстрація КіберЛьвів: команда піднімає кубок">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Каталог тренерів | КіберЛьвів">
+  <meta name="twitter:description" content="Демонстраційні профілі каталогу КіберЛьвів із фільтром за грою та посиланнями на ігрові канали. Запису на заняття немає.">
+  <meta name="twitter:image" content="https://gilded-rabanadas-6b2d18.netlify.app/assets/images/hero-optimized.webp">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Каталог наставників КіберЛьвів: Arthas, inkmate0, Старий Бог та Лебіга.">
+<meta name="description" content="Демонстраційні профілі каталогу КіберЛьвів із фільтром за грою та посиланнями на ігрові канали. Запису на заняття немає.">
 
   <title>Каталог тренерів | КіберЛьвів</title>
 
@@ -16,63 +33,8 @@
     rel="stylesheet"
   >
 
-  <!-- Tailwind CDN згідно з методичкою -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Назви класів пов’язані з наявними CSS-змінними проєкту -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            ink: "var(--color-ink)",
-            "ink-soft": "var(--color-ink-soft)",
-            copy: "var(--color-body)",
-            muted: "var(--color-muted-text)",
-            page: "var(--color-page)",
-            surface: "var(--color-surface)",
-            accent: "var(--color-accent)",
-            "accent-dark": "var(--color-accent-dark)",
-            line: "var(--color-line)",
-            placeholder: "var(--color-placeholder)"
-          },
-          fontFamily: {
-            inter: ["Inter", "sans-serif"]
-          },
-          fontSize: {
-            caption: "var(--font-size-xs)",
-            small: "var(--font-size-sm)",
-            copy: "var(--font-size-base)",
-            lead: "var(--font-size-lead)",
-            brand: "var(--font-size-brand)"
-          },
-          spacing: {
-            "ui-1": "var(--space-1)",
-            "ui-2": "var(--space-2)",
-            "ui-3": "var(--space-3)",
-            "ui-4": "var(--space-4)",
-            "ui-5": "var(--space-5)",
-            "ui-6": "var(--space-6)",
-            "ui-7": "var(--space-7)",
-            "ui-8": "var(--space-8)"
-          },
-          borderRadius: {
-            "ui-sm": "var(--radius-sm)",
-            "ui-md": "var(--radius-md)"
-          },
-          boxShadow: {
-            card: "var(--shadow-card)"
-          },
-          transitionDuration: {
-            180: "180ms"
-          },
-          screens: {
-            nav: "901px"
-          }
-        }
-      }
-    };
-  </script>
+  <!-- Локально зібрані утиліти Tailwind CSS -->
+  <link rel="stylesheet" href="css/tailwind.css">
 
   <!-- CSS-змінні, типографіка та специфічні стилі проєкту -->
   <link rel="stylesheet" href="css/style.css">
@@ -81,6 +43,7 @@
   <link rel="stylesheet" href="css/pages.css">
 </head>
 <body class="font-inter catalog-page">
+<a class="skip-link" href="#main-content">Перейти до вмісту</a>
 <header class="sticky top-0 z-50 bg-surface text-ink">
     <div
       class="site-container header-layout"
@@ -93,13 +56,13 @@
                transition-colors duration-180 hover:text-ink-soft"
       >
         <img
-          src="assets/icons/Logo.svg"
+          src="assets/icons/logo-nav.svg"
           alt=""
           aria-hidden="true"
-          width="50"
-          height="50"
+          width="58"
+          height="64"
           class="h-[50px] w-[50px] shrink-0 object-contain"
-          loading="lazy"
+          loading="eager"
         >
 
         <span class="whitespace-nowrap">КіберЛьвів</span>
@@ -110,10 +73,10 @@
         aria-label="Головна навігація"
         class="header-desktop-nav"
       >
-        <a class="nav-motion-link" href="index.html#process">Як це працює</a>
-        <a class="nav-motion-link" href="index.html#parents">Для батьків</a>
+        <a class="nav-motion-link" href="about.html">Про проєкт</a>
+        <a class="nav-motion-link" href="parents.html">Для батьків</a>
         <a class="nav-motion-link" href="coaches.html" aria-current="page">Каталог тренерів</a>
-        <a class="nav-motion-link" href="index.html#blog">Поради</a>
+        <a class="nav-motion-link" href="tips.html">Поради</a>
         <a class="nav-motion-link nav-calculator-cta arrow-link" href="calculator.html">Калькулятор <span aria-hidden="true">→</span></a>
       </nav>
 
@@ -129,35 +92,34 @@
           aria-label="Мобільна навігація"
           class="header-mobile-nav"
         >
-          <a class="nav-motion-link" href="index.html#process">Як це працює</a>
-          <a class="nav-motion-link" href="index.html#parents">Для батьків</a>
+          <a class="nav-motion-link" href="about.html">Про проєкт</a>
+          <a class="nav-motion-link" href="parents.html">Для батьків</a>
           <a class="nav-motion-link" href="coaches.html" aria-current="page">Каталог тренерів</a>
-          <a class="nav-motion-link" href="index.html#blog">Поради</a>
+          <a class="nav-motion-link" href="tips.html">Поради</a>
           <a class="nav-motion-link nav-calculator-cta arrow-link" href="calculator.html">Калькулятор <span aria-hidden="true">→</span></a>
         </nav>
       </details>
     </div>
   </header>
-<main id="top">
+<main id="main-content" tabindex="-1"><span id="top" class="page-top-anchor" aria-hidden="true"></span>
 
 <section class="page-section section-dark" aria-labelledby="catalog-title"><div class="site-container">
  <h1 class="page-title page-title-rule" id="catalog-title">Каталог тренерів</h1>
- <p class="page-intro">Знайди свого наставника: знайомся з профілями та переглядай ігрові канали.</p>
- <fieldset class="catalog-filters" disabled aria-describedby="catalog-availability"><legend class="visually-hidden">Фільтри каталогу</legend>
-  <label for="filter-game">Гра<select id="filter-game" class="page-input" name="game"><option>Усі</option><option>CS2</option><option>Dota 2</option><option>Valorant</option></select></label>
-  <label for="filter-level">Рівень<select id="filter-level" class="page-input" name="level"><option>Усі</option><option>Початковий</option><option>Середній</option></select></label>
-  <label for="filter-format">Формат<select id="filter-format" class="page-input" name="format"><option>Усі</option><option>Індивідуально</option><option>У команді</option></select></label>
-  <button class="page-button page-button-secondary" type="button">Скинути фільтри</button>
- </fieldset>
- <p class="page-field-help" id="catalog-availability">Зараз показано всі 4 профілі. Фільтрація та надсилання запитів поки недоступні; посилання на канали працюють.</p>
+ <p class="page-intro">Демонстраційні профілі майбутнього каталогу. Тренерські послуги та співпрацю з проєктом не підтверджено. Посилання ведуть на ігрові канали; запису на заняття немає.</p>
+ <form id="catalog-form" action="coaches.html" method="get">
+ <fieldset class="catalog-filters catalog-live-filters" id="catalog-controls" disabled aria-describedby="catalog-availability"><legend class="visually-hidden">Фільтр демонстраційних профілів</legend>
+  <label for="filter-game">Гра<select id="filter-game" class="page-input" name="game"><option value="all">Усі ігри</option><option value="CS2">CS2</option><option value="Dota 2">Dota 2</option><option value="Valorant">Valorant</option></select></label>
+  <button class="page-button page-button-secondary" type="reset">Скинути фільтр</button>
+ </fieldset></form><noscript><p>Для фільтрації потрібен JavaScript. Нижче доступні всі профілі.</p></noscript>
+ <p class="page-field-help" id="catalog-availability" role="status" aria-live="polite">Показано 4 демонстраційні профілі. Оберіть гру, щоб звузити список.</p>
 </div></section>
 <section id="coaches" class="coaches-section section-light" aria-labelledby="catalog-grid-title"><div class="site-container">
- <h2 id="catalog-grid-title" class="visually-hidden">Усі тренери</h2>
+ <h2 id="catalog-grid-title" class="visually-hidden">Усі тренери</h2><p id="catalog-empty" class="training-notice" hidden>Профілів для цієї гри поки немає. Оберіть іншу гру або скиньте фільтр.</p>
  <div class="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4"><article
         class="flex min-w-0 flex-col overflow-hidden
                rounded-ui-md border border-white/20
                bg-ink-soft shadow-card transition-colors duration-180 hover:border-accent focus-within:border-accent"
-        aria-labelledby="arthas-name"
+        aria-labelledby="arthas-name" data-game="Dota 2"
       >
         <div class="coach-photo-frame">
         <img
@@ -194,12 +156,7 @@
           <p class="mb-4 text-sm leading-relaxed text-white/80">Стример і автор ігрового контенту, відомий під ніком Папич. Став популярним завдяки трансляціям Dota 2.</p>
 
           <div class="mt-auto flex flex-col gap-2">
-            <button disabled aria-describedby="catalog-availability"
-              type="button"
-              class="inline-flex min-h-[44px] items-center justify-center rounded-ui-sm border border-transparent bg-accent px-4 py-2 text-center text-small font-semibold text-ink transition-colors duration-180 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-            >
-              Надіслати запит тренеру
-            </button>
+
             <a
               href="https://www.youtube.com/@SpitefulDick"
               target="_blank"
@@ -216,7 +173,7 @@
         class="flex min-w-0 flex-col overflow-hidden
                rounded-ui-md border border-white/20
                bg-ink-soft shadow-card transition-colors duration-180 hover:border-accent focus-within:border-accent"
-        aria-labelledby="inkmate-name"
+        aria-labelledby="inkmate-name" data-game="CS2"
       >
         <div class="coach-photo-frame">
         <img
@@ -253,12 +210,7 @@
           <p class="mb-4 text-sm leading-relaxed text-white/80">Стример Counter-Strike. На каналі — матчі, спілкування з глядачами та контент навколо змагальної гри.</p>
 
           <div class="mt-auto flex flex-col gap-2">
-            <button disabled aria-describedby="catalog-availability"
-              type="button"
-              class="inline-flex min-h-[44px] items-center justify-center rounded-ui-sm border border-transparent bg-accent px-4 py-2 text-center text-small font-semibold text-ink transition-colors duration-180 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-            >
-              Надіслати запит тренеру
-            </button>
+
             <a
               href="https://www.twitch.tv/inkmate0"
               target="_blank"
@@ -274,7 +226,7 @@
       </article><article
         class="flex min-w-0 flex-col overflow-hidden rounded-ui-md
                border border-white/20 bg-ink-soft shadow-card transition-colors duration-180 hover:border-accent focus-within:border-accent"
-        aria-labelledby="staryi-boh-name"
+        aria-labelledby="staryi-boh-name" data-game="Dota 2"
       >
         <div class="coach-photo-frame">
         <img src="assets/images/staryi-bog.jpg" alt="Стример Старий Бог" width="736" height="758" loading="lazy" class="coach-photo w-full shrink-0 object-cover object-top">
@@ -287,12 +239,7 @@
           <p class="mb-3 text-sm text-white/70">stariy_bog</p>
           <p class="mb-4 text-sm leading-relaxed text-white/80">Стример Dota 2. Транслює власні матчі та коментує події на кіберспортивній сцені.</p>
           <div class="mt-auto flex flex-col gap-2">
-            <button disabled aria-describedby="catalog-availability"
-              type="button"
-              class="inline-flex min-h-[44px] items-center justify-center rounded-ui-sm border border-transparent bg-accent px-4 py-2 text-center text-small font-semibold text-ink transition-colors duration-180 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-            >
-              Надіслати запит тренеру
-            </button>
+
             <a
               href="https://www.twitch.tv/stariy_bog"
               target="_blank"
@@ -308,7 +255,7 @@
       </article><article
         class="flex min-w-0 flex-col overflow-hidden rounded-ui-md
                border border-white/20 bg-ink-soft shadow-card transition-colors duration-180 hover:border-accent focus-within:border-accent"
-        aria-labelledby="lebiga-name"
+        aria-labelledby="lebiga-name" data-game="CS2"
       >
         <div class="coach-photo-frame">
         <img src="assets/images/lebiga.jpg" alt="Стример Лебіга" width="760" height="485" loading="lazy" class="coach-photo w-full shrink-0 object-cover object-top">
@@ -321,12 +268,7 @@
           <p class="mb-3 text-sm text-white/70">Михайло Лебіга · leb1ga</p>
           <p class="mb-4 text-sm leading-relaxed text-white/80">Український стример Михайло Лебіга. Створює розмовний контент і проводить спільні з глядачами перегляди матчів Counter-Strike 2.</p>
           <div class="mt-auto flex flex-col gap-2">
-            <button disabled aria-describedby="catalog-availability"
-              type="button"
-              class="inline-flex min-h-[44px] items-center justify-center rounded-ui-sm border border-transparent bg-accent px-4 py-2 text-center text-small font-semibold text-ink transition-colors duration-180 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-            >
-              Надіслати запит тренеру
-            </button>
+
             <a
               href="https://www.twitch.tv/leb1ga"
               target="_blank"
@@ -341,7 +283,7 @@
         </div>
       </article></div>
 </div></section>
-<section class="page-section section-dark page-centered page-accent-top" aria-labelledby="catalog-cta-title"><div class="site-container"><h2 id="catalog-cta-title">Заплануй час тренувань</h2><p>Вкажи гру, години та період на сторінці калькулятора.</p><div class="page-actions"><a class="motion-button page-button" href="calculator.html">Перейти до калькулятора</a></div></div></section>
+<section class="page-section section-dark page-centered page-accent-top" aria-labelledby="catalog-cta-title"><div class="site-container"><h2 id="catalog-cta-title">Заплануй час тренувань</h2><p>Обери гру та кількість матчів або доступний час одного заняття.</p><div class="page-actions"><a class="motion-button page-button" href="calculator.html">Перейти до калькулятора</a></div></div></section>
 </main>
 <footer id="footer" class="bg-ink py-ui-6 text-surface">
     <div class="site-container">
@@ -373,12 +315,14 @@
                  [&_a:focus-visible]:text-accent"
         >
           <a href="index.html#top">Головна</a>
+          <a href="about.html">Про проєкт</a>
+          <a href="contact.html">Контакти</a>
           <a href="index.html#process">Як це працює</a>
-          <a href="index.html#parents">Для батьків</a>
+          <a href="parents.html">Для батьків</a>
           <a href="coaches.html" aria-current="page">Каталог тренерів</a>
-          <a href="index.html#blog">Поради</a>
+          <a href="tips.html">Поради</a>
           <a href="calculator.html">Калькулятор</a>
-          <a href="results.html">Приклад результатів</a>
+          <a href="results.html?example=1">Приклад результатів</a>
         </nav>
       </div>
 
@@ -387,15 +331,16 @@
                gap-ui-4 pt-ui-4"
       >
         <p class="m-0 text-caption text-white/70">
-          © 2025 КіберЛьвів. Усі права захищено.
+          © 2025–2026 КіберЛьвів. Усі права захищено.
         </p>
 
         <div class="flex flex-wrap gap-x-ui-4 gap-y-2 text-caption text-white/70" aria-label="Правова інформація">
-          <span>Політика конфіденційності</span>
-          <span>Умови використання</span>
+          <a href="privacy.html">Політика конфіденційності</a>
+          <a href="terms.html">Умови використання</a>
         </div>
       </div>
     </div>
   </footer>
+<script src="js/catalog.js" defer></script>
 </body>
 </html>

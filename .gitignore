@@ -10,3 +10,6 @@ node_modules/
 *.log
 Thumbs.db
 .DS_Store
+
+# Generated Netlify deployment
+dist/

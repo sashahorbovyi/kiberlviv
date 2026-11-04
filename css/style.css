@@ -20,7 +20,7 @@
 
     /* Typography */
     --font-family-base: "Inter", sans-serif;
-    --font-size-xs: 0.68rem;
+    --font-size-xs: 0.75rem;
     --font-size-sm: 0.82rem;
     --font-size-base: 0.95rem;
     --font-size-lead: 1.05rem;
@@ -53,7 +53,7 @@
     --border-width: 1px;
     --border-width-strong: 2px;
     --outline-width: 3px;
-    --size-logo: 50px;
+    --size-logo: 64px;
     --size-icon-small: 32px;
     --size-panel-basis: 500px;
 
@@ -73,7 +73,7 @@
 *::after { box-sizing: border-box; }
 
 /* Keep anchor targets below the sticky navigation. */
-html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+html { scroll-behavior: smooth; scroll-padding-top: 100px; }
 body {
     margin: 0;
     color: var(--color-body);
@@ -319,6 +319,7 @@ img, svg { max-width: 100%; }
 body > header { box-shadow: 0 1px 0 var(--color-line), 0 4px 12px rgba(11, 27, 50, 0.06); }
 .header-layout { display: flex; min-height: 64px; align-items: center; justify-content: space-between; gap: 12px; padding-block: 8px; }
 .header-layout > a { display: inline-flex; align-items: center; align-self: center; flex-shrink: 0; line-height: 1.2; }
+.header-layout > a img { width: 58px; height: var(--size-logo); object-fit: contain; }
 .header-desktop-nav { display: none; flex: 1 1 auto; min-width: 0; align-items: center; justify-content: flex-start; gap: 4px; margin-left: 20px; }
 header nav a.nav-motion-link {
     display: inline-flex; min-height: 44px; max-width: 100%; align-items: center;
@@ -346,7 +347,7 @@ header nav a.nav-motion-link:is(:hover, :focus-visible, :active) { color: var(--
     background: var(--color-surface); box-shadow: var(--shadow-card);
 }
 .header-mobile-menu:not([open]) > .header-mobile-nav { display: none; }
-@media (min-width: 960px) {
+@media (min-width: 1100px) {
     .header-desktop-nav { display: flex; }
     .header-mobile-menu { display: none; }
     .header-desktop-nav a { white-space: nowrap; }
@@ -354,7 +355,7 @@ header nav a.nav-motion-link:is(:hover, :focus-visible, :active) { color: var(--
 @media (max-width: 400px) {
     .header-layout { gap: 8px; }
     .header-layout > a { gap: 8px; font-size: 18px; }
-    .header-layout > a img { width: 40px; height: 40px; }
+    .header-layout > a img { width: 48px; height: 54px; }
 }
 /* Content must wrap within cards instead of relying on clipped overflow. */
 .motion-button { max-width: 100%; overflow-wrap: anywhere; white-space: normal; }
@@ -433,3 +434,38 @@ body button:disabled {
     color: var(--color-ink-soft); background: var(--color-line); border-color: var(--color-line);
     opacity: 1; cursor: not-allowed; box-shadow: none; transform: none;
 }
+
+/* Keyboard users can bypass repeated site navigation on every page. */
+.skip-link { position: fixed; top: 12px; left: 12px; z-index: 1000; max-width: calc(100vw - 24px); padding: 12px 18px; border: 2px solid var(--color-ink); border-radius: var(--radius-sm); background: var(--color-accent); color: var(--color-ink); font-weight: 700; text-decoration: none; transform: translateY(calc(-100% - 24px)); }
+.skip-link:focus { transform: translateY(0); }
+.page-top-anchor { display: block; height: 0; }
+main:focus { outline: none; }
+
+/* Muted promotional background; the existing image is the no-script fallback. */
+.hero.hero-with-video { position: relative; isolation: isolate; padding-bottom: max(var(--space-section), 88px); background-image: url("../assets/images/hero-optimized.webp"); }
+.hero-background-video { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.hero-with-video::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(90deg, rgba(5,16,33,.88) 0%, rgba(5,16,33,.72) 43%, rgba(5,16,33,.28) 100%); }
+.hero-video-toggle { position: absolute; right: var(--container-gutter); bottom: 18px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 44px; max-width: calc(100% - 2 * var(--container-gutter)); padding: 10px 16px; border: 1px solid rgba(255,255,255,.6); border-radius: var(--radius-sm); background: var(--color-ink); color: var(--color-surface); font: inherit; font-size: 13px; cursor: pointer; }
+.hero-video-toggle[hidden] { display: none; }
+.hero-video-toggle:hover { border-color: var(--color-accent); }
+.hero-video-toggle-icon { flex: 0 0 12px; width: 12px; height: 14px; border-left: 12px solid currentColor; border-top: 7px solid transparent; border-bottom: 7px solid transparent; }
+.hero-video-toggle[data-playing="true"] .hero-video-toggle-icon { border: 0; border-inline: 4px solid currentColor; }
+@media (max-width: 649px) {
+ .hero-background-video { object-position: 61% center; }
+ .hero-with-video::before { background: linear-gradient(90deg, rgba(5,16,33,.9), rgba(5,16,33,.68)); }
+}
+
+/* Audit fixes: consistent hidden states, current preview and clear secondary content. */
+[hidden] { display: none !important; }
+.hero-project-note { max-width: 450px; margin: 0 0 24px; padding-left: 14px; border-left: 2px solid var(--color-accent); color: rgba(255,255,255,.8); font-size: 13px; line-height: 1.6; }
+header nav a.nav-motion-link[aria-current] { font-weight: 700; }
+#calculator .preview-current-fields { display: grid; gap: 0; }
+#calculator .preview-current-fields > div { padding-block: 12px; border-bottom: 1px solid var(--color-line); }
+#calculator .preview-current-fields dt { margin-bottom: 6px; }
+#calculator .preview-current-fields dd { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
+#calculator .preview-current-fields dd > span { color: var(--color-muted-text); font-size: 13px; }
+#calculator .preview-total { margin-top: 22px; color: var(--color-ink); }
+#calculator .preview-total strong { display: block; font-size: 28px; line-height: 1.3; }
+#calculator .preview-total > span { display: block; margin-top: 4px; color: var(--color-muted-text); font-size: 13px; }
+footer [aria-label="Правова інформація"] a { display: inline-flex; min-height: 44px; align-items: center; color: inherit; text-underline-offset: 4px; }
+footer [aria-label="Правова інформація"] a:hover { color: var(--color-accent); }
