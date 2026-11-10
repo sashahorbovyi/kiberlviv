@@ -34,6 +34,7 @@
   >
 
   <!-- Локально зібрані утиліти Tailwind CSS -->
+  <script src="js/theme.js"></script>
   <link rel="stylesheet" href="css/tailwind.css">
 
   <!-- CSS-змінні, типографіка та специфічні стилі проєкту -->
@@ -81,6 +82,10 @@
       </nav>
 
       <!-- Мобільне меню: відкривається без JavaScript -->
+      <button class="header-theme-toggle" type="button" data-theme-toggle aria-label="Темна тема" aria-pressed="false" hidden>
+        <svg class="theme-icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.9 13.35A9 9 0 0 1 10.65 3.1 9 9 0 1 0 20.9 13.35Z"/></svg>
+        <svg class="theme-icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4m0-14.2-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>
+      </button>
       <details class="header-mobile-menu">
         <summary class="header-menu-toggle"
         >
@@ -152,8 +157,16 @@
   <div class="page-info-card"><h3>План, який можна змінювати</h3><p>Модель не визначає необхідні години для нового рангу й не оцінює безпечність навантаження. Якщо матч не вміщується, запропонуємо заняття без матчів або зміну налаштувань.</p></div>
  </div>
 </section>
+<section class="page-section page-surface" id="calculator-examples" aria-labelledby="calculator-examples-title"><div class="site-container">
+ <div class="about-heading"><span class="page-eyebrow">Приклади розрахунку</span><h2 id="calculator-examples-title">Що вміститься у твій час?</h2><p>Два варіанти для CS2 з однаковими початковими параметрами. Відкрий приклад і зміни тривалості під себе.</p></div>
+ <div class="about-two-grid">
+  <article class="about-card"><span class="badge">30 хв</span><h3>Відпрацювати одну дію</h3><p>10 хв розминки та 20 хв вправ. Повний матч не вміщується, а час на розбір скорочується до нуля. Якщо хочеш залишити 5 хв на висновок, зменш вправи до 15 хв і задай 5 хв розбору.</p><div class="page-actions"><a class="text-link practice-link" href="calculator.html?mode=budget&amp;game=CS2&amp;focus=mechanics&amp;days=1&amp;matches=1&amp;budget=30&amp;warmup=10&amp;drills=20&amp;matchLength=40&amp;queue=5&amp;review=15&amp;breakMinutes=10">Спробувати бюджет 30 хв →</a></div></article>
+  <article class="about-card"><span class="badge">90 хв</span><h3>Перевірити навичку в матчі</h3><p>10 хв розминки, 20 хв вправ, 40 хв на матч, 5 хв очікування та 15 хв розбору. Це приклад із плановою тривалістю матчу: якщо потрібен запас часу, врахуй його у своїй оцінці.</p><div class="page-actions"><a class="text-link practice-link" href="calculator.html?mode=budget&amp;game=CS2&amp;focus=mechanics&amp;days=1&amp;matches=1&amp;budget=90&amp;warmup=10&amp;drills=20&amp;matchLength=40&amp;queue=5&amp;review=15&amp;breakMinutes=10">Спробувати бюджет 90 хв →</a></div></article>
+ </div>
+ <div class="page-actions"><a class="text-link practice-link" href="training.html">Обрати вправу для заняття →</a></div>
+</div></section>
 </main>
-<footer id="footer" class="bg-ink py-ui-6 text-surface">
+<footer id="footer" class="bg-navy py-ui-6 text-on-navy">
     <div class="site-container">
 
       <div
@@ -164,7 +177,7 @@
       >
         <a
           href="index.html#top"
-          class="text-lead font-bold text-surface no-underline
+          class="text-lead font-bold text-on-navy no-underline
                  decoration-accent decoration-2 underline-offset-8
                  transition-colors duration-180
                  hover:text-accent hover:underline"
@@ -188,6 +201,7 @@
           <a href="index.html#process">Як це працює</a>
           <a href="parents.html">Для батьків</a>
           <a href="coaches.html">Каталог тренерів</a>
+          <a href="training.html">Тренування</a>
           <a href="tips.html">Поради</a>
           <a href="calculator.html" aria-current="page">Калькулятор</a>
           <a href="results.html?example=1">Приклад результатів</a>

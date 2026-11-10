@@ -3,6 +3,10 @@ const config = {
         extend: {
           colors: {
             ink: "var(--color-ink)",
+            navy: "var(--color-navy)",
+            "navy-soft": "var(--color-navy-soft)",
+            "on-navy": "var(--color-on-navy)",
+            "on-accent": "var(--color-on-accent)",
             "ink-soft": "var(--color-ink-soft)",
             copy: "var(--color-body)",
             muted: "var(--color-muted-text)",

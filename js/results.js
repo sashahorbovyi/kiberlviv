@@ -19,6 +19,11 @@
   }
   empty.hidden = true; content.hidden = false;
   const { config } = result;
+  const practiceSections = { CS2: 'cs2', 'Dota 2': 'dota-2', Valorant: 'valorant' };
+  document.getElementById('practice-game-link').href = `training.html#${practiceSections[config.game]}`;
+  if (!result.matches) {
+    document.getElementById('practice-during').textContent = 'Повтори вправу в тих самих умовах і порівняй дві спроби.';
+  }
   const put = (id, text) => { document.getElementById(id).textContent = text; };
   const fmt = model.format;
   put("results-badge", example ? "Приклад розрахунку" : "Твій розрахунок");
