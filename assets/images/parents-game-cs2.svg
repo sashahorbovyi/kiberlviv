@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 215">
+ <defs>
+  <linearGradient id="base" x2="1" y2="1"><stop stop-color="#091426"/><stop offset="1" stop-color="#3b5e86"/></linearGradient>
+  <linearGradient id="panel" x2="1" y2="1"><stop stop-color="#253e60"/><stop offset="1" stop-color="#13253f"/></linearGradient>
+  <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0v32" fill="none" stroke="#b7d0f4" stroke-opacity=".12"/></pattern>
+ </defs>
+ <rect width="640" height="215" fill="url(#base)"/><rect width="640" height="215" fill="url(#grid)"/>
+ <g fill="none" stroke="#b7d0f4" opacity=".18"><circle cx="538" cy="72" r="126"/><circle cx="538" cy="72" r="91"/><circle cx="538" cy="72" r="56"/><path d="M0 171h640M48 0v215"/></g>
+ <path d="M32 33h26m-26 0v23M608 182h-26m26 0v-23" fill="none" stroke="#efc94c" stroke-width="2"/>
+ <g transform="translate(112 -17) scale(1.35)"><path d="M28 84h80V33h84v76h96M49 148v-28h112v35h96v-34" fill="none" stroke="#91aed5" stroke-width="5"/><circle cx="108" cy="84" r="10" fill="#efc94c"/><circle cx="192" cy="109" r="10" fill="#efc94c"/><path d="M69 57h15m-7-7v14m145 82h15m-7-7v14" stroke="#efc94c" stroke-width="3"/></g>
+ </svg>

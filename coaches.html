@@ -10,20 +10,20 @@
   <meta property="og:locale" content="uk_UA">
   <meta property="og:site_name" content="КіберЛьвів">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Каталог тренерів | КіберЛьвів">
-  <meta property="og:description" content="Демонстраційні профілі каталогу КіберЛьвів із фільтром за грою та посиланнями на ігрові канали. Запису на заняття немає.">
+  <meta property="og:title" content="Вправи й ігрові канали | КіберЛьвів">
+  <meta property="og:description" content="Приклади вправ для CS2, Dota 2 і Valorant із фільтрами за грою й навичкою та добірка незалежних ігрових каналів.">
   <meta property="og:url" content="https://gilded-rabanadas-6b2d18.netlify.app/coaches.html">
   <meta property="og:image" content="https://gilded-rabanadas-6b2d18.netlify.app/assets/images/hero-optimized.webp">
   <meta property="og:image:alt" content="Промоілюстрація КіберЛьвів: команда піднімає кубок">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Каталог тренерів | КіберЛьвів">
-  <meta name="twitter:description" content="Демонстраційні профілі каталогу КіберЛьвів із фільтром за грою та посиланнями на ігрові канали. Запису на заняття немає.">
+  <meta name="twitter:title" content="Вправи й ігрові канали | КіберЛьвів">
+  <meta name="twitter:description" content="Приклади вправ для CS2, Dota 2 і Valorant із фільтрами за грою й навичкою та добірка незалежних ігрових каналів.">
   <meta name="twitter:image" content="https://gilded-rabanadas-6b2d18.netlify.app/assets/images/hero-optimized.webp">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Демонстраційні профілі каталогу КіберЛьвів із фільтром за грою та посиланнями на ігрові канали. Запису на заняття немає.">
+<meta name="description" content="Приклади вправ для CS2, Dota 2 і Valorant із фільтрами за грою й навичкою та добірка незалежних ігрових каналів.">
 
-  <title>Каталог тренерів | КіберЛьвів</title>
+  <title>Вправи й ігрові канали | КіберЛьвів</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -76,7 +76,7 @@
       >
         <a class="nav-motion-link" href="about.html">Про проєкт</a>
         <a class="nav-motion-link" href="parents.html">Для батьків</a>
-        <a class="nav-motion-link" href="coaches.html" aria-current="page">Каталог тренерів</a>
+        <a class="nav-motion-link" href="training.html">Тренування</a>
         <a class="nav-motion-link" href="tips.html">Поради</a>
         <a class="nav-motion-link nav-calculator-cta arrow-link" href="calculator.html">Калькулятор <span aria-hidden="true">→</span></a>
       </nav>
@@ -99,7 +99,7 @@
         >
           <a class="nav-motion-link" href="about.html">Про проєкт</a>
           <a class="nav-motion-link" href="parents.html">Для батьків</a>
-          <a class="nav-motion-link" href="coaches.html" aria-current="page">Каталог тренерів</a>
+          <a class="nav-motion-link" href="training.html">Тренування</a>
           <a class="nav-motion-link" href="tips.html">Поради</a>
           <a class="nav-motion-link nav-calculator-cta arrow-link" href="calculator.html">Калькулятор <span aria-hidden="true">→</span></a>
         </nav>
@@ -109,187 +109,100 @@
 <main id="main-content" tabindex="-1"><span id="top" class="page-top-anchor" aria-hidden="true"></span>
 
 <section class="page-section section-dark" aria-labelledby="catalog-title"><div class="site-container">
- <h1 class="page-title page-title-rule" id="catalog-title">Каталог тренерів</h1>
- <p class="page-intro">Демонстраційні профілі майбутнього каталогу. Тренерські послуги та співпрацю з проєктом не підтверджено. Посилання ведуть на ігрові канали; запису на заняття немає.</p>
+ <h1 class="page-title page-title-rule" id="catalog-title">Вправи й ігрові канали</h1>
+ <p class="page-intro">Підбери вправу для самостійної практики за грою й навичкою або знайди ігровий канал у добірці незалежних авторів.</p>
  <form id="catalog-form" action="coaches.html" method="get">
- <fieldset class="catalog-filters catalog-live-filters" id="catalog-controls" disabled aria-describedby="catalog-availability"><legend class="visually-hidden">Фільтр демонстраційних профілів</legend>
-  <label for="filter-game">Гра<select id="filter-game" class="page-input" name="game"><option value="all">Усі ігри</option><option value="CS2">CS2</option><option value="Dota 2">Dota 2</option><option value="Valorant">Valorant</option></select></label>
-  <button class="page-button page-button-secondary" type="reset">Скинути фільтр</button>
- </fieldset></form><noscript><p>Для фільтрації потрібен JavaScript. Нижче доступні всі профілі.</p></noscript>
- <p class="page-field-help" id="catalog-availability" role="status" aria-live="polite">Показано 4 демонстраційні профілі. Оберіть гру, щоб звузити список.</p>
+ <fieldset class="catalog-filters catalog-live-filters" id="catalog-controls" disabled><legend class="visually-hidden">Фільтри прикладів тренувань</legend>
+  <fieldset class="catalog-games"><legend>Гра</legend><div class="catalog-game-options">
+   <label><input type="radio" name="game" value="all" checked><span>Усі ігри</span></label>
+   <label><input type="radio" name="game" value="CS2"><span>CS2</span></label>
+   <label><input type="radio" name="game" value="Dota 2"><span>Dota 2</span></label>
+   <label><input type="radio" name="game" value="Valorant"><span>Valorant</span></label>
+  </div></fieldset>
+  <label for="filter-focus">Що хочеш покращити?<select id="filter-focus" class="page-input" name="focus"><option value="all">Усі навички</option><option value="team">Командна взаємодія</option><option value="review">Розбір раундів</option><option value="map">Гра на лінії й рішення на карті</option><option value="abilities">Здібності агента</option><option value="position">Позиціювання</option></select></label>
+  <button class="page-button page-button-secondary" type="reset">Скинути фільтри</button>
+ </fieldset></form><noscript><p>Для фільтрації потрібен JavaScript. Нижче доступні всі приклади тренувань.</p></noscript>
+ <p class="page-field-help" id="catalog-availability" role="status" aria-live="polite">Показано прикладів: 4 із 4.</p>
 </div></section>
 <section id="coaches" class="coaches-section section-light" aria-labelledby="catalog-grid-title"><div class="site-container">
- <h2 id="catalog-grid-title" class="visually-hidden">Усі тренери</h2><p id="catalog-empty" class="training-notice" hidden>Профілів для цієї гри поки немає. Оберіть іншу гру або скиньте фільтр.</p>
- <div class="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4"><article
-        class="flex min-w-0 flex-col overflow-hidden
-               rounded-ui-md border border-white/20
-               bg-navy-soft shadow-card transition-colors duration-180 hover:border-accent focus-within:border-accent"
-        aria-labelledby="arthas-name" data-game="Dota 2"
-      >
-        <div class="coach-photo-frame">
-        <img
-          src="assets/images/arthas.jpg"
-          alt="Arthas — Віталій Цаль"
-          width="664"
-          height="503"
-          loading="lazy"
-          class="coach-photo w-full shrink-0 object-cover object-top"
-        >
-        </div>
-
-        <div class="flex flex-1 flex-col p-4">
-          <div class="mb-4">
-            <span
-              class="inline-flex rounded-full bg-accent
-                     px-3 py-1 text-small font-semibold text-on-accent"
-            >
-              Dota 2
-            </span>
-          </div>
-
-          <h3
-            id="arthas-name"
-            class="mb-2 text-lg font-bold text-on-navy"
-          >
-            Arthas
-          </h3>
-
-          <p class="mb-3 text-sm text-white/70">
-            Віталій Цаль · Папич
-          </p>
-
-          <p class="mb-4 text-sm leading-relaxed text-white/80">Стример і автор ігрового контенту, відомий під ніком Папич. Став популярним завдяки трансляціям Dota 2.</p>
-
-          <div class="mt-auto flex flex-col gap-2">
-
-            <a
-              href="https://www.youtube.com/@SpitefulDick"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Переглянути канал: Arthas на YouTube, відкриється в новій вкладці"
-              class="arrow-link inline-flex min-h-[44px] items-center justify-center gap-2 self-center whitespace-nowrap text-center text-small font-semibold text-white no-underline transition-colors duration-180 hover:text-accent focus-visible:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-            >
-              Переглянути канал
-              <span aria-hidden="true">↗</span>
-            </a>
-          </div>
-        </div>
-      </article><article
-        class="flex min-w-0 flex-col overflow-hidden
-               rounded-ui-md border border-white/20
-               bg-navy-soft shadow-card transition-colors duration-180 hover:border-accent focus-within:border-accent"
-        aria-labelledby="inkmate-name" data-game="CS2"
-      >
-        <div class="coach-photo-frame">
-        <img
-          src="assets/images/inkmate0.jpg"
-          alt="Стример inkmate0"
-          width="650"
-          height="589"
-          loading="lazy"
-          class="coach-photo w-full shrink-0 object-cover object-top"
-        >
-        </div>
-
-        <div class="flex flex-1 flex-col p-4">
-          <div class="mb-4">
-            <span
-              class="inline-flex rounded-full bg-accent
-                     px-3 py-1 text-small font-semibold text-on-accent"
-            >
-              Counter-Strike 2
-            </span>
-          </div>
-
-          <h3
-            id="inkmate-name"
-            class="mb-2 text-lg font-bold text-on-navy"
-          >
-            inkmate0
-          </h3>
-
-          <p class="mb-3 text-sm text-white/70">
-            Ink Mate
-          </p>
-
-          <p class="mb-4 text-sm leading-relaxed text-white/80">Стример Counter-Strike. На каналі — матчі, спілкування з глядачами та контент навколо змагальної гри.</p>
-
-          <div class="mt-auto flex flex-col gap-2">
-
-            <a
-              href="https://www.twitch.tv/inkmate0"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Переглянути канал: inkmate0 на Twitch, відкриється в новій вкладці"
-              class="arrow-link inline-flex min-h-[44px] items-center justify-center gap-2 self-center whitespace-nowrap text-center text-small font-semibold text-white no-underline transition-colors duration-180 hover:text-accent focus-visible:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-            >
-              Переглянути канал
-              <span aria-hidden="true">↗</span>
-            </a>
-          </div>
-        </div>
-      </article><article
-        class="flex min-w-0 flex-col overflow-hidden rounded-ui-md
-               border border-white/20 bg-navy-soft shadow-card transition-colors duration-180 hover:border-accent focus-within:border-accent"
-        aria-labelledby="staryi-boh-name" data-game="Dota 2"
-      >
-        <div class="coach-photo-frame">
-        <img src="assets/images/staryi-bog.jpg" alt="Стример Старий Бог" width="736" height="758" loading="lazy" class="coach-photo w-full shrink-0 object-cover object-top">
-        </div>
-        <div class="flex flex-1 flex-col p-4">
-          <div class="mb-4">
-            <span class="inline-flex rounded-full bg-accent px-3 py-1 text-small font-semibold text-on-accent">Dota 2</span>
-          </div>
-          <h3 id="staryi-boh-name" class="mb-2 text-lg font-bold text-on-navy">Старий Бог</h3>
-          <p class="mb-3 text-sm text-white/70">stariy_bog</p>
-          <p class="mb-4 text-sm leading-relaxed text-white/80">Стример Dota 2. Транслює власні матчі та коментує події на кіберспортивній сцені.</p>
-          <div class="mt-auto flex flex-col gap-2">
-
-            <a
-              href="https://www.twitch.tv/stariy_bog"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Переглянути канал: Старий Бог на Twitch, відкриється в новій вкладці"
-              class="arrow-link inline-flex min-h-[44px] items-center justify-center gap-2 self-center whitespace-nowrap text-center text-small font-semibold text-white no-underline transition-colors duration-180 hover:text-accent focus-visible:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-            >
-              Переглянути канал
-              <span aria-hidden="true">↗</span>
-            </a>
-          </div>
-        </div>
-      </article><article
-        class="flex min-w-0 flex-col overflow-hidden rounded-ui-md
-               border border-white/20 bg-navy-soft shadow-card transition-colors duration-180 hover:border-accent focus-within:border-accent"
-        aria-labelledby="lebiga-name" data-game="CS2"
-      >
-        <div class="coach-photo-frame">
-        <img src="assets/images/lebiga.jpg" alt="Стример Лебіга" width="760" height="485" loading="lazy" class="coach-photo w-full shrink-0 object-cover object-top">
-        </div>
-        <div class="flex flex-1 flex-col p-4">
-          <div class="mb-4">
-            <span class="inline-flex rounded-full bg-accent px-3 py-1 text-small font-semibold text-on-accent">Counter-Strike 2</span>
-          </div>
-          <h3 id="lebiga-name" class="mb-2 text-lg font-bold text-on-navy">Лебіга</h3>
-          <p class="mb-3 text-sm text-white/70">Михайло Лебіга · leb1ga</p>
-          <p class="mb-4 text-sm leading-relaxed text-white/80">Український стример Михайло Лебіга. Створює розмовний контент і проводить спільні з глядачами перегляди матчів Counter-Strike 2.</p>
-          <div class="mt-auto flex flex-col gap-2">
-
-            <a
-              href="https://www.twitch.tv/leb1ga"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Переглянути канал: Лебіга на Twitch, відкриється в новій вкладці"
-              class="arrow-link inline-flex min-h-[44px] items-center justify-center gap-2 self-center whitespace-nowrap text-center text-small font-semibold text-white no-underline transition-colors duration-180 hover:text-accent focus-visible:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-            >
-              Переглянути канал
-              <span aria-hidden="true">↗</span>
-            </a>
-          </div>
-        </div>
-      </article></div>
+ <div class="about-heading"><h2 id="catalog-grid-title">Приклади тренувань</h2></div>
+ <div class="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4">
+<article class="coach-demo-card" aria-labelledby="cs2-team-title" data-game="CS2" data-focus="team review">
+ <div class="coach-demo-cover"><img src="assets/images/coach-demo-cs2-team.svg" alt="" width="640" height="220" loading="lazy"></div>
+ <div class="coach-demo-copy"><div class="coach-demo-labels"><span class="badge">CS2</span><span class="page-muted">Демонстраційний профіль</span></div>
+ <h3 id="cs2-team-title">Командна гра й розбір раундів</h3><p>Підготовка виходів, короткі підказки для команди та розбір взаємодії з напарником.</p>
+ <a class="text-link practice-link" href="training.html#cs2-positioning">Переглянути приклад вправи →</a></div>
+ </article>
+<article class="coach-demo-card" aria-labelledby="dota-lane-title" data-game="Dota 2" data-focus="map">
+ <div class="coach-demo-cover"><img src="assets/images/coach-demo-dota-lane.svg" alt="" width="640" height="220" loading="lazy"></div>
+ <div class="coach-demo-copy"><div class="coach-demo-labels"><span class="badge">Dota 2</span><span class="page-muted">Демонстраційний профіль</span></div>
+ <h3 id="dota-lane-title">Гра на лінії та рішення на карті</h3><p>Розбір добивань і позиції на лінії. Практика переходів між ділянками карти за доступною інформацією.</p>
+ <a class="text-link practice-link" href="training.html#dota-2-lane">Переглянути приклад вправи →</a></div>
+ </article>
+<article class="coach-demo-card" aria-labelledby="val-agent-title" data-game="Valorant" data-focus="abilities">
+ <div class="coach-demo-cover"><img src="assets/images/coach-demo-val-agent.svg" alt="" width="640" height="220" loading="lazy"></div>
+ <div class="coach-demo-copy"><div class="coach-demo-labels"><span class="badge">Valorant</span><span class="page-muted">Демонстраційний профіль</span></div>
+ <h3 id="val-agent-title">Здібності агента</h3><p>Повторення застосування здібностей у приватній грі та розбір їхнього таймінгу в командних діях.</p>
+ <a class="text-link practice-link" href="training.html#valorant-utility">Переглянути приклад вправи →</a></div>
+ </article>
+<article class="coach-demo-card" aria-labelledby="val-team-title" data-game="Valorant" data-focus="team position">
+ <div class="coach-demo-cover"><img src="assets/images/coach-demo-val-team.svg" alt="" width="640" height="220" loading="lazy"></div>
+ <div class="coach-demo-copy"><div class="coach-demo-labels"><span class="badge">Valorant</span><span class="page-muted">Демонстраційний профіль</span></div>
+ <h3 id="val-team-title">Позиціювання й комунікація</h3><p>Вибір позицій для підтримки напарника, короткі повідомлення в раунді та розбір командного виходу.</p>
+ <a class="text-link practice-link" href="training.html#valorant-positioning">Переглянути приклад вправи →</a></div>
+ </article></div>
 </div></section>
-<section class="page-section section-dark page-centered page-accent-top" aria-labelledby="catalog-cta-title"><div class="site-container"><h2 id="catalog-cta-title">Заплануй час тренувань</h2><p>Обери гру та кількість матчів або доступний час одного заняття.</p><div class="page-actions"><a class="motion-button page-button" href="calculator.html">Перейти до калькулятора</a></div></div></section>
-<section class="page-section page-surface" id="coach-guide" aria-labelledby="coach-guide-title"><div class="site-container">
+<section id="gaming-channels" class="page-section section-dark creator-showcase" aria-labelledby="gaming-channels-title">
+ <div class="site-container">
+  <div class="creator-heading">
+   <span class="creator-eyebrow">Ігрові канали</span>
+   <h2 id="gaming-channels-title">Знайомся з контентмейкерами</h2>
+   <p>Добірка незалежних авторів про CS2 і Dota 2: від трансляцій матчів до спільних переглядів. Вони не є тренерами чи учасниками команди КіберЛьвова.</p>
+  </div>
+  <div class="creator-grid"><article class="creator-card" aria-labelledby="creator-arthas-name" id="creator-arthas">
+  <div class="creator-portrait">
+    <img src="assets/images/arthas.jpg" width="664" height="503" alt="" loading="lazy" decoding="async">
+    <span class="creator-game">Dota 2</span>
+    <div class="creator-identity"><h3 id="creator-arthas-name">Arthas</h3><p>Трансляції матчів</p></div>
+  </div>
+  <div class="creator-info"><p>Стример і автор ігрового контенту, відомий під ніком Папич. Став популярним завдяки трансляціям Dota 2.</p>
+    <a class="creator-link" href="https://www.youtube.com/@SpitefulDick" target="_blank" rel="noopener noreferrer" aria-label="Відкрити канал на YouTube: Arthas">Канал на YouTube <span aria-hidden="true">↗</span></a>
+  </div>
+</article>
+<article class="creator-card" aria-labelledby="creator-inkmate0-name" id="creator-inkmate0">
+  <div class="creator-portrait">
+    <img src="assets/images/inkmate0.jpg" width="650" height="589" alt="" loading="lazy" decoding="async">
+    <span class="creator-game">CS2</span>
+    <div class="creator-identity"><h3 id="creator-inkmate0-name">inkmate0</h3><p>Змагальні матчі</p></div>
+  </div>
+  <div class="creator-info"><p>Стример Counter-Strike. На каналі — матчі, спілкування з глядачами та контент навколо змагальної гри.</p>
+    <a class="creator-link" href="https://www.twitch.tv/inkmate0" target="_blank" rel="noopener noreferrer" aria-label="Відкрити канал на Twitch: inkmate0">Канал на Twitch <span aria-hidden="true">↗</span></a>
+  </div>
+</article>
+<article class="creator-card" aria-labelledby="creator-staryi-boh-name" id="creator-staryi-boh">
+  <div class="creator-portrait">
+    <img src="assets/images/staryi-bog.jpg" width="736" height="758" alt="" loading="lazy" decoding="async">
+    <span class="creator-game">Dota 2</span>
+    <div class="creator-identity"><h3 id="creator-staryi-boh-name">Старий Бог</h3><p>Матчі й коментарі</p></div>
+  </div>
+  <div class="creator-info"><p>Стример Dota 2. Транслює власні матчі та коментує події на кіберспортивній сцені.</p>
+    <a class="creator-link" href="https://www.twitch.tv/stariy_bog" target="_blank" rel="noopener noreferrer" aria-label="Відкрити канал на Twitch: Старий Бог">Канал на Twitch <span aria-hidden="true">↗</span></a>
+  </div>
+</article>
+<article class="creator-card" aria-labelledby="creator-lebiga-name" id="creator-lebiga">
+  <div class="creator-portrait">
+    <img src="assets/images/lebiga.jpg" width="760" height="485" alt="" loading="lazy" decoding="async">
+    <span class="creator-game">CS2</span>
+    <div class="creator-identity"><h3 id="creator-lebiga-name">Лебіга</h3><p>Спільні перегляди матчів</p></div>
+  </div>
+  <div class="creator-info"><p>Український стример Михайло Лебіга. Створює розмовний контент і проводить спільні з глядачами перегляди матчів Counter-Strike 2.</p>
+    <a class="creator-link" href="https://www.twitch.tv/leb1ga" target="_blank" rel="noopener noreferrer" aria-label="Відкрити канал на Twitch: Лебіга">Канал на Twitch <span aria-hidden="true">↗</span></a>
+  </div>
+</article></div>
+ </div>
+</section>
+<section class="page-section section-light page-centered page-accent-top" aria-labelledby="catalog-cta-title"><div class="site-container"><h2 id="catalog-cta-title">Заплануй час тренувань</h2><p>Обери гру та кількість матчів або доступний час одного заняття.</p><div class="page-actions"><a class="motion-button page-button" href="calculator.html">Перейти до калькулятора</a></div></div></section>
+<section class="page-section section-dark" id="coach-guide" aria-labelledby="coach-guide-title"><div class="site-container">
  <div class="about-heading"><span class="page-eyebrow">Перед першим заняттям</span><h2 id="coach-guide-title">Що запитати у наставника</h2><p>Якщо знайдеш тренера, почни з розмови про конкретну навичку та формат роботи. Навіть коротке пояснення покаже, чи підходить тобі його підхід.</p></div>
  <div class="about-three-grid">
   <article class="about-card"><h3>«З чим ви можете мені допомогти?»</h3><p>Назви гру, роль та ситуацію, яка регулярно повторюється. Наприклад: «Під час командного виходу я часто залишаюся надто далеко від напарника».</p></article>
@@ -333,8 +246,8 @@
           <a href="contact.html">Контакти</a>
           <a href="index.html#process">Як це працює</a>
           <a href="parents.html">Для батьків</a>
-          <a href="coaches.html" aria-current="page">Каталог тренерів</a>
-          <a href="training.html">Тренування</a>
+          <a href="coaches.html#gaming-channels">Ігрові канали</a>
+          <a href="training.html">Програми тренувань</a>
           <a href="tips.html">Поради</a>
           <a href="calculator.html">Калькулятор</a>
           <a href="results.html?example=1">Приклад результатів</a>

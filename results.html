@@ -76,7 +76,7 @@
       >
         <a class="nav-motion-link" href="about.html">Про проєкт</a>
         <a class="nav-motion-link" href="parents.html">Для батьків</a>
-        <a class="nav-motion-link" href="coaches.html">Каталог тренерів</a>
+        <a class="nav-motion-link" href="training.html">Тренування</a>
         <a class="nav-motion-link" href="tips.html">Поради</a>
         <a class="nav-motion-link nav-calculator-cta arrow-link" href="calculator.html" aria-current="true">Калькулятор <span aria-hidden="true">→</span></a>
       </nav>
@@ -99,7 +99,7 @@
         >
           <a class="nav-motion-link" href="about.html">Про проєкт</a>
           <a class="nav-motion-link" href="parents.html">Для батьків</a>
-          <a class="nav-motion-link" href="coaches.html">Каталог тренерів</a>
+          <a class="nav-motion-link" href="training.html">Тренування</a>
           <a class="nav-motion-link" href="tips.html">Поради</a>
           <a class="nav-motion-link nav-calculator-cta arrow-link" href="calculator.html" aria-current="true">Калькулятор <span aria-hidden="true">→</span></a>
         </nav>
@@ -114,8 +114,13 @@
  <section class="page-section section-dark page-centered" aria-labelledby="results-title"><div class="site-container">
   <span class="badge" id="results-badge">Результати</span><h1 class="page-title" id="results-title">Твій тренувальний план</h1>
   <p class="page-intro" id="results-intro"></p><p class="training-example-note" id="example-note" hidden>Це приклад із початковими налаштуваннями. Відкрий форму, щоб скласти власний план.</p>
-  <div class="page-actions"><a class="motion-button page-button" href="#personal-plan">Переглянути заняття</a><a class="motion-button page-button page-button-secondary" data-edit-plan href="calculator.html">Змінити параметри</a><button type="button" class="motion-button page-button page-button-secondary" id="download-plan">Завантажити план</button></div>
+  <div class="page-actions"><a class="motion-button page-button" href="#personal-plan">Переглянути заняття</a><a class="motion-button page-button page-button-secondary" data-edit-plan href="calculator.html">Змінити параметри</a><button type="button" class="motion-button page-button page-button-secondary" id="download-plan">Завантажити план</button><button type="button" class="motion-button page-button page-button-secondary" id="copy-plan">Скопіювати план</button></div>
   <p class="page-field-help" role="status" id="download-status"></p>
+  <div class="plan-copy-fallback" id="plan-copy-fallback" hidden>
+   <label for="plan-copy-text">Текст плану</label>
+   <textarea class="page-input" id="plan-copy-text" rows="8" readonly></textarea>
+   <p>Виділи текст і вибери «Копіювати». Щоб завантажити файл, відкрий сторінку в окремому браузері.</p>
+  </div>
  </div></section>
  <section class="page-section section-light" aria-labelledby="metrics-title"><div class="site-container page-two-columns">
   <div><span class="page-eyebrow">Підсумок</span><h2 id="metrics-title">Твій обсяг тренувань</h2><p class="page-muted">Тренувальний час — розминка, вправи, матчі й аналіз. Повний час також включає очікування та перерви між матчами.</p></div>
@@ -126,20 +131,20 @@
    <div><dt>Матчів на тиждень</dt><dd id="metric-matches"></dd></div>
   </dl>
  </div></section>
- <section id="personal-plan" class="page-section page-surface" aria-labelledby="personal-plan-title"><div class="site-container page-two-columns training-plan-columns">
+ <section id="personal-plan" class="page-section section-dark" aria-labelledby="personal-plan-title"><div class="site-container page-two-columns training-plan-columns">
   <div><span class="page-eyebrow">Одне заняття</span><h2 id="personal-plan-title">Структура твого тренування</h2><p class="page-muted" id="plan-summary"></p><p class="training-notice" id="budget-note"></p><p class="page-field-help" id="shortened-note"></p></div>
   <div class="training-breakdown"><dl id="session-blocks"></dl><p class="page-field-help">Час очікування припадає на кожен матч. Перерви — лише між матчами; додаткові паузи у вправах можна врахувати вручну в їх тривалості.</p></div>
  </div></section>
- <section class="page-section section-dark" aria-labelledby="focus-title"><div class="site-container page-two-columns">
-  <div><span class="page-eyebrow">Фокус заняття</span><h2 id="focus-title"></h2><p id="focus-advice"></p><div class="page-info-card"><h3>Один висновок після практики</h3><p>Збережи кілька показових моментів. Запиши, що хотів зробити, що відбулося й яку одну дію перевіриш наступного разу. Результат матчу сам по собі не вимірює виконання вправи.</p></div></div>
+ <section class="page-section section-light" aria-labelledby="focus-title"><div class="site-container page-two-columns">
+  <div><span class="page-eyebrow">Фокус заняття</span><h2 id="focus-title"></h2><p id="focus-advice"></p><div class="page-info-card" id="practice-review-card"><h3>Один висновок після практики</h3><p>Збережи кілька показових моментів. Запиши, що хотів зробити, що відбулося й яку одну дію перевіриш наступного разу. Результат матчу сам по собі не вимірює виконання вправи.</p></div></div>
   <figure class="page-media"><img src="assets/images/parents-esports.jpg" width="900" height="506" alt="Двоє гравців разом аналізують ситуацію на моніторі" loading="lazy"></figure>
  </div></section>
- <section class="page-section section-light" aria-labelledby="practice-checklist-title"><div class="site-container">
+ <section class="page-section section-dark" aria-labelledby="practice-checklist-title"><div class="site-container">
   <span class="page-eyebrow">Від плану до практики</span><h2 id="practice-checklist-title">Чекліст заняття</h2>
   <ul class="practice-checklist">
-   <li><label><input type="checkbox"><span><strong>До заняття</strong>Обери одну навичку та визнач, коли завершиш.</span></label></li>
+   <li><label><input type="checkbox"><span><strong>До заняття</strong><span id="practice-before">Обери одну навичку та визнач, коли завершиш.</span></span></label></li>
    <li><label><input type="checkbox"><span><strong>Під час</strong><span id="practice-during">Стеж за обраною дією, а не лише за рахунком.</span></span></label></li>
-   <li><label><input type="checkbox"><span><strong>Після</strong>Запиши один показовий епізод і одну зміну на наступне заняття.</span></label></li>
+   <li><label><input type="checkbox"><span><strong>Після</strong><span id="practice-after">Запиши один показовий епізод і одну зміну на наступне заняття.</span></span></label></li>
   </ul>
   <div class="page-actions"><a class="text-link practice-link" id="practice-game-link" href="training.html">Переглянути приклад заняття →</a></div>
  </div></section>
@@ -147,16 +152,16 @@
   <div><span class="page-eyebrow">На тиждень</span><h2 id="weekly-plan-title">Повторюй структуру, уточнюй завдання</h2><p class="page-muted" id="weekly-summary"></p><p class="page-muted">Це повторюваний шаблон, а не розклад за днями. Після кожного заняття скоригуй конкретну вправу за своїми спостереженнями.</p></div>
   <ol class="training-week-list" id="weekly-sessions"></ol>
  </div></section>
- <section class="page-section page-surface" aria-labelledby="analysis-title"><div class="site-container training-methodology">
+ <section class="page-section section-dark" aria-labelledby="analysis-title"><div class="site-container training-methodology">
   <span class="page-eyebrow">Методика</span><h2 id="analysis-title">Що означає цей розрахунок</h2><p>Калькулятор підсумовує задані блоки. Для обмеженого часу він підбирає найбільшу кількість цілих матчів, зберігаючи підготовку й аналіз та враховуючи перерви між матчами. Якщо підготовка сама перевищує бюджет, час заповнюється послідовно: спочатку розминка, потім вправи, потім аналіз. Останні блоки можуть бути скорочені або пропущені.</p>
   <p>Тривалості є твоїми налаштуваннями, а не науково встановленою нормою. Модель не прогнозує ранг, не діагностує навички й не оцінює безпечність навантаження. Зміст вправ — загальна відправна точка для самостійної практики.</p>
-  <details class="training-settings"><summary>На які джерела спирається підхід</summary><ul class="page-list">
+  <details class="training-settings"><summary>На які джерела спирається підхід</summary><ul class="editorial-list page-list">
    <li><a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0237584" target="_blank" rel="noopener noreferrer">Nagorsky та Wiemeyer, 2020</a> — відмінності між загальним ігровим часом і тренуванням та між дисциплінами.</li>
    <li><a href="https://jses.net/wp-content/uploads/2021/02/Pluss-et-al.-2021.pdf" target="_blank" rel="noopener noreferrer">Pluss та співавтори, 2021</a> — обмежений зв’язок кількості практики з турнірним результатом у дослідженій професійній вибірці.</li>
    <li><a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2023.1191801/full" target="_blank" rel="noopener noreferrer">Coaching and talent development in esports, 2023</a> — ціль заняття, повторення та зворотний зв’язок.</li>
   </ul><p class="page-field-help">Джерела обґрунтовують принципи побудови занять. Числові початкові налаштування та формула планування — наша пробна модель.</p></details>
   <p><a class="arrow-link text-link" href="about.html#methodology">Докладна методологія та приклад <span aria-hidden="true">→</span></a></p>
-  <div class="page-actions"><a class="motion-button page-button" data-edit-plan href="calculator.html">Скоригувати план</a><a class="arrow-link text-link" href="coaches.html">Переглянути каталог тренерів <span aria-hidden="true">→</span></a></div>
+  <div class="page-actions"><a class="motion-button page-button" data-edit-plan href="calculator.html">Скоригувати план</a><a class="arrow-link text-link" href="coaches.html">Підібрати вправу <span aria-hidden="true">→</span></a></div>
  </div></section>
 </div>
 </main>
@@ -194,8 +199,8 @@
           <a href="contact.html">Контакти</a>
           <a href="index.html#process">Як це працює</a>
           <a href="parents.html">Для батьків</a>
-          <a href="coaches.html">Каталог тренерів</a>
-          <a href="training.html">Тренування</a>
+          <a href="coaches.html#gaming-channels">Ігрові канали</a>
+          <a href="training.html">Програми тренувань</a>
           <a href="tips.html">Поради</a>
           <a href="calculator.html">Калькулятор</a>
           <a href="results.html?example=1" aria-current="page">Приклад результатів</a>

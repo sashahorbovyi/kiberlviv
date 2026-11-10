@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300">
+ <defs>
+  <linearGradient id="base" x2="1" y2="1"><stop stop-color="#091426"/><stop offset="1" stop-color="#315b82"/></linearGradient>
+  <linearGradient id="panel" x2="1" y2="1"><stop stop-color="#253e60"/><stop offset="1" stop-color="#13253f"/></linearGradient>
+  <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0v32" fill="none" stroke="#b7d0f4" stroke-opacity=".12"/></pattern>
+ </defs>
+ <rect width="640" height="300" fill="url(#base)"/><rect width="640" height="300" fill="url(#grid)"/>
+ <g fill="none" stroke="#b7d0f4" opacity=".18"><circle cx="538" cy="72" r="126"/><circle cx="538" cy="72" r="91"/><circle cx="538" cy="72" r="56"/><path d="M0 256h640M48 0v300"/></g>
+ <path d="M32 33h26m-26 0v23M608 267h-26m26 0v-23" fill="none" stroke="#efc94c" stroke-width="2"/>
+ <g transform="translate(112 19) scale(1.36)"><circle cx="155" cy="96" r="74" fill="none" stroke="#8fb3df" stroke-width="4"/><circle cx="155" cy="96" r="46" fill="none" stroke="#8fb3df" stroke-width="4"/><circle cx="155" cy="96" r="17" fill="#efc94c"/><path d="M155 11v31m0 108v31M69 96h31m110 0h31" stroke="#efc94c" stroke-width="4"/></g>
+ </svg>

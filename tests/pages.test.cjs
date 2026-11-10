@@ -43,23 +43,72 @@ function setup(page, search = '', overrides = {}) {
     run(file) { vm.runInNewContext(fs.readFileSync(path.join(root, 'js', file), 'utf8'), context); } };
 }
 
-test('catalog supports game filtering, empty state, reset and URL restoration', () => {
-  const env = setup('coaches.html', '?game=CS2'); env.run('catalog.js');
-  const cards = [...env.document.querySelectorAll('article[data-game]')];
-  const visible = () => cards.filter(card => !card.hidden);
-  assert.equal(visible().length, 2);
-  assert(visible().every(card => card.dataset.game === 'CS2'));
-  const select = env.document.getElementById('filter-game');
-  select.value = 'Valorant'; select.dispatchEvent(new env.Event('change'));
-  assert.equal(visible().length, 0); assert.equal(env.document.getElementById('catalog-empty').hidden, false);
+test('catalog restores game and skill, then refreshes the skills when the game changes', () => {
+  const env = setup('coaches.html', '?game=Valorant&focus=team');
+  env.run('catalog.js');
+  const visible = () => [...env.document.querySelectorAll('#coaches article:not([hidden])')]
+    .map(card => card.getAttribute('aria-labelledby'));
+  const focus = env.document.getElementById('filter-focus');
+  const skills = () => [...focus.options].map(option => option.value);
+  assert.deepEqual(visible(), ['val-team-title']);
+  assert.deepEqual(skills(), ['all', 'team', 'abilities', 'position']);
+
+  const dota = env.document.querySelector('input[value="Dota 2"]');
+  dota.dispatchEvent(new env.Event('change'));
+  assert.deepEqual(visible(), ['dota-lane-title']);
+  assert.deepEqual(skills(), ['all', 'map']);
+  assert.equal(focus.value, 'all');
+  assert.equal(new URL(env.location.href).searchParams.get('focus'), null);
+
+  focus.value = 'map';
+  focus.dispatchEvent(new env.Event('change'));
+  assert.equal(new URL(env.location.href).searchParams.get('focus'), 'map');
+
   env.document.getElementById('catalog-form').dispatchEvent(new env.Event('reset', { cancelable: true }));
-  assert.equal(visible().length, 4); assert.equal(env.document.getElementById('catalog-empty').hidden, true);
-  assert(!env.location.href.includes('game='));
+  assert.equal(visible().length, 4);
+  assert.equal(new URL(env.location.href).search, '');
 });
 
-test('unknown catalog filter leaves all profiles visible', () => {
-  const env = setup('coaches.html', '?game=unknown'); env.run('catalog.js');
-  assert.equal(env.document.querySelectorAll('article[data-game]:not([hidden])').length, 4);
+test('catalog ignores legacy channel filters and leaves the separate channels visible', () => {
+  const env = setup('coaches.html', '?game=CS2&focus=abilities&kind=channel&platform=twitch&q=leb1ga');
+  env.run('catalog.js');
+  assert.equal(env.document.querySelectorAll('#coaches article:not([hidden])').length, 1);
+  assert.equal(env.document.querySelectorAll('#gaming-channels article:not([hidden])').length, 4);
+  assert.equal(env.document.getElementById('catalog-availability').textContent, 'Показано прикладів: 1 із 4.');
+  assert.equal(new URL(env.location.href).search, '?game=CS2');
+});
+
+test('each training module opens its own calculator preset and receives a link back from results', () => {
+  const { document } = setup('training.html');
+  const modules = [...document.querySelectorAll('.program-module')];
+  assert.equal(modules.length, 9);
+  for (const module of modules) {
+    const href = module.querySelector('a[href^="calculator.html?"]').getAttribute('href');
+    const search = new URL(href, 'https://example.test').search;
+    const config = model.normalize(model.parse(search));
+    assert.equal(config.matchLength, model.games[config.game].matchLength);
+    assert.equal(config.matches, 1);
+    const results = setup('results.html', search);
+    results.run('results.js');
+    assert.equal(results.document.getElementById('practice-game-link').getAttribute('href'), 'training.html#' + module.id);
+  }
+});
+
+test('a direct link expands only the requested module on arrival', () => {
+  const env = setup('training.html');
+  env.location.hash = '#dota-2-farm';
+  env.run('programs.js');
+  assert.equal(env.document.querySelector('#dota-2-farm details').open, true);
+  assert.equal(env.document.querySelector('#dota-2-lane details').hasAttribute('open'), false);
+});
+
+test('a one-minute warmup does not recommend an exercise or replay review', () => {
+  const env = setup('results.html', '?' + model.serialize({ ...model.defaults, mode: 'budget', budget: 1 }));
+  env.run('results.js');
+  assert.equal(env.document.getElementById('results-title').textContent, 'План розминки');
+  assert.match(env.document.getElementById('focus-advice').textContent, /лише розминка/);
+  assert.match(env.document.getElementById('practice-during').textContent, /Виконай розминку/);
+  assert.equal(env.document.getElementById('practice-review-card').hidden, true);
 });
 
 test('result states handle no parameters, bad parameters and a real plan', () => {
@@ -97,6 +146,38 @@ test('downloaded plan contains the current calculation and a valid edit link', a
   const text = await env.state.blobs[0].text();
   assert(text.includes('Разом за заняття: 2 год 25 хв'));
   assert(text.includes('Редагування: ' + origin + '/calculator.html?mode=matches'));
+});
+
+test('Instagram without file sharing keeps the result page and offers selectable plan text', () => {
+  const env = setup('results.html', '?example=1');
+  env.context.window.navigator = { userAgent: 'iPhone Instagram' };
+  env.run('results.js');
+  env.document.getElementById('download-plan').click();
+  assert.equal(env.state.blobs.length, 0);
+  assert.equal(env.document.getElementById('plan-copy-fallback').hidden, false);
+  assert(env.document.getElementById('plan-copy-text').value.includes('2 год 25 хв'));
+});
+
+test('native file sharing receives the text plan, without opening a Blob page', async () => {
+  const env = setup('results.html', '?example=1', { File });
+  let shared;
+  env.context.window.navigator = { canShare: ({ files }) => files.length === 1, share: async ({ files }) => { shared = files[0]; } };
+  env.run('results.js');
+  env.document.getElementById('download-plan').click();
+  await flush();
+  assert.equal(env.state.blobs.length, 0);
+  assert.equal(shared.name, 'kiberlviv-training-plan.txt');
+  assert((await shared.text()).includes('2 год 25 хв'));
+});
+
+test('clipboard denial leaves the full plan available for manual copying', async () => {
+  const env = setup('results.html', '?example=1');
+  env.context.window.navigator = { clipboard: { writeText: async () => { throw new Error('denied'); } } };
+  env.run('results.js');
+  env.document.getElementById('copy-plan').click();
+  await flush();
+  assert.equal(env.document.getElementById('plan-copy-fallback').hidden, false);
+  assert(env.document.getElementById('plan-copy-text').value.includes('2 год 25 хв'));
 });
 
 test('contact submission sends encoded data once and waits for acceptance', async () => {

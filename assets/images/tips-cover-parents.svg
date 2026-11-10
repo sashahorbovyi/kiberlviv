@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300">
+ <defs>
+  <linearGradient id="base" x2="1" y2="1"><stop stop-color="#091426"/><stop offset="1" stop-color="#594b76"/></linearGradient>
+  <linearGradient id="panel" x2="1" y2="1"><stop stop-color="#253e60"/><stop offset="1" stop-color="#13253f"/></linearGradient>
+  <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0v32" fill="none" stroke="#b7d0f4" stroke-opacity=".12"/></pattern>
+ </defs>
+ <rect width="640" height="300" fill="url(#base)"/><rect width="640" height="300" fill="url(#grid)"/>
+ <g fill="none" stroke="#b7d0f4" opacity=".18"><circle cx="538" cy="72" r="126"/><circle cx="538" cy="72" r="91"/><circle cx="538" cy="72" r="56"/><path d="M0 256h640M48 0v300"/></g>
+ <path d="M32 33h26m-26 0v23M608 267h-26m26 0v-23" fill="none" stroke="#efc94c" stroke-width="2"/>
+ <g transform="translate(112 19) scale(1.36)"><path d="M25 49a14 14 0 0 1 14-14h142a14 14 0 0 1 14 14v62a14 14 0 0 1-14 14H87l-37 30v-30H39a14 14 0 0 1-14-14Z" fill="#1c2e4b" stroke="#bba5d6" stroke-width="4"/><path d="M126 91h134a14 14 0 0 1 14 14v39a14 14 0 0 1-14 14h-16v25l-29-25h-89a14 14 0 0 1-14-14v-39a14 14 0 0 1 14-14Z" fill="#efc94c"/><path d="M52 68h106M52 93h47" stroke="#bba5d6" stroke-width="6" stroke-linecap="round"/><path d="M143 124h96" stroke="#253751" stroke-width="6" stroke-linecap="round"/></g>
+ </svg>

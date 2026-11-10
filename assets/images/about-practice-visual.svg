@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+ <defs>
+  <linearGradient id="base" x2="1" y2="1"><stop stop-color="#091426"/><stop offset="1" stop-color="#315a86"/></linearGradient>
+  <linearGradient id="panel" x2="1" y2="1"><stop stop-color="#253e60"/><stop offset="1" stop-color="#13253f"/></linearGradient>
+  <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0v32" fill="none" stroke="#b7d0f4" stroke-opacity=".12"/></pattern>
+ </defs>
+ <rect width="640" height="360" fill="url(#base)"/><rect width="640" height="360" fill="url(#grid)"/>
+ <g fill="none" stroke="#b7d0f4" opacity=".18"><circle cx="538" cy="72" r="126"/><circle cx="538" cy="72" r="91"/><circle cx="538" cy="72" r="56"/><path d="M0 316h640M48 0v360"/></g>
+ <path d="M32 33h26m-26 0v23M608 327h-26m26 0v-23" fill="none" stroke="#efc94c" stroke-width="2"/>
+
+<g transform="translate(102 76)">
+ <rect x="0" y="0" width="417" height="195" rx="16" fill="url(#panel)" stroke="#7092bc" stroke-width="2"/>
+ <rect x="17" y="17" width="383" height="152" rx="8" fill="#0b192d"/>
+ <path d="M165 196h87l17 32H148z" fill="#233d61"/><path d="M122 229h169" stroke="#83a2cc" stroke-width="5" stroke-linecap="round"/>
+ <circle cx="36" cy="36" r="4" fill="#efc94c"/><circle cx="50" cy="36" r="4" fill="#526d94"/><circle cx="64" cy="36" r="4" fill="#526d94"/>
+ <path d="M31 64h70m-70 19h43m-43 19h58" stroke="#85a6d1" stroke-width="5" stroke-linecap="round"/>
+ <g transform="translate(123 59)"><rect width="255" height="85" rx="8" fill="#1b304e"/><path d="M16 60h221M16 40h221M16 20h221" stroke="#496589" stroke-opacity=".5"/>
+ <path d="m16 63 36-13 35 5 37-25 32 10 35-23 45-3" fill="none" stroke="#efc94c" stroke-width="3" stroke-linejoin="round"/><circle cx="236" cy="14" r="5" fill="#efc94c"/></g>
+ <path d="M32 138h69" stroke="#efc94c" stroke-width="7" stroke-linecap="round"/>
+</g>
+<g transform="translate(489 206)"><rect width="96" height="94" rx="16" fill="#efc94c"/><circle cx="48" cy="48" r="23" fill="none" stroke="#182941" stroke-width="4"/><path d="M48 34v15l11 7" fill="none" stroke="#182941" stroke-width="4" stroke-linecap="round"/></g>
+
+ </svg>

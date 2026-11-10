@@ -1,33 +1,48 @@
 (() => {
   const form = document.getElementById('catalog-form');
   if (!form) return;
-  const select = document.getElementById('filter-game');
-  const cards = [...document.querySelectorAll('#coaches article[data-game]')];
+  const games = [...form.querySelectorAll('input[name="game"]')];
+  const focus = document.getElementById('filter-focus');
+  const options = [...focus.options];
+  const cards = [...document.querySelectorAll('#coaches article[data-game][data-focus]')];
   const status = document.getElementById('catalog-availability');
-  const empty = document.getElementById('catalog-empty');
-  const allowed = new Set([...select.options].map(option => option.value));
-  const requested = new URLSearchParams(location.search).get('game');
-  if (allowed.has(requested)) select.value = requested;
-  function filter() {
+  const params = new URLSearchParams(location.search);
+
+  function filter(game, requestedFocus) {
+    for (const radio of games) radio.checked = radio.value === game;
+    const available = cards.filter(card => game === 'all' || card.dataset.game === game);
+    const skills = new Set(available.flatMap(card => card.dataset.focus.split(' ')));
+    const choices = options.filter(option => option.value === 'all' || skills.has(option.value));
+    focus.replaceChildren(...choices);
+    focus.value = choices.some(option => option.value === requestedFocus) ? requestedFocus : 'all';
+
     let count = 0;
     for (const card of cards) {
-      card.hidden = select.value !== 'all' && card.dataset.game !== select.value;
+      card.hidden = !available.includes(card) ||
+        (focus.value !== 'all' && !card.dataset.focus.split(' ').includes(focus.value));
       if (!card.hidden) count++;
     }
-    empty.hidden = count !== 0;
-    status.textContent = `Показано профілів: ${count} із ${cards.length}. ${select.value === 'all' ? 'Усі ігри.' : `Гра: ${select.value}.`}`;
+    const message = `Показано прикладів: ${count} із ${cards.length}.`;
+    if (status.textContent !== message) status.textContent = message;
+
     const url = new URL(location.href);
-    if (select.value === 'all') url.searchParams.delete('game');
-    else url.searchParams.set('game', select.value);
-    history.replaceState(null, '', url);
+    for (const [key, value] of [['game', game], ['focus', focus.value]]) {
+      if (value === 'all') url.searchParams.delete(key);
+      else url.searchParams.set(key, value);
+    }
+    for (const key of ['kind', 'platform', 'q']) url.searchParams.delete(key);
+    if (url.href !== location.href) history.replaceState(null, '', url);
   }
-  select.addEventListener('change', filter);
-  form.addEventListener('submit', event => { event.preventDefault(); filter(); });
+
+  const selectedGame = () => games.find(radio => radio.checked)?.value || 'all';
+  for (const radio of games) radio.addEventListener('change', () => filter(radio.value, focus.value));
+  focus.addEventListener('change', () => filter(selectedGame(), focus.value));
   form.addEventListener('reset', event => {
     event.preventDefault();
-    select.value = 'all';
-    filter();
+    filter('all', 'all');
   });
+
+  const game = games.find(radio => radio.value === params.get('game'))?.value || 'all';
+  filter(game, params.get('focus'));
   document.getElementById('catalog-controls').disabled = false;
-  filter();
 })();
