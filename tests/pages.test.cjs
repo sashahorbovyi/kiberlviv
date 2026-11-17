@@ -180,41 +180,83 @@ test('clipboard denial leaves the full plan available for manual copying', async
   assert(env.document.getElementById('plan-copy-text').value.includes('2 год 25 хв'));
 });
 
-test('contact submission sends encoded data once and waits for acceptance', async () => {
-  let complete, calls = 0, body;
-  const env = setup('contact.html', '', { fetch: (_, options) => { calls++; body = options.body; return new Promise(resolve => { complete = resolve; }); } });
-  const form = env.document.getElementById('contact-form'); form.reportValidity = () => true;
-  env.document.getElementById('contact-email').value = 'test@example.invalid';
-  env.document.getElementById('contact-message').value = 'Перевірка калькулятора: & + ?';
+function contact(values = {}, overrides = {}, demo = false) {
+  const env = setup('contact.html', '', overrides);
+  if (demo) env.location.origin = 'http://localhost';
+  const get = id => env.document.getElementById('contact-' + id);
+  const form = get('form'), dialog = get('dialog');
+  let focused = '';
+  const valid = {name: 'Ан', email: 'test@example.invalid', phone: '+380000000000',
+    subject: 'calculator', message: '1234567890', privacy: true, ...values};
+  for (const [id,value] of Object.entries(valid)) {
+    get(id)[id === 'privacy' ? 'checked' : 'value'] = value;
+    get(id).focus = () => { focused = id; };
+  }
+  form.reset = () => {
+    for (const id of Object.keys(valid)) get(id)[id === 'privacy' ? 'checked' : 'value'] = id === 'privacy' ? false : '';
+  };
+  dialog.showModal = () => { dialog.open = true; };
+  dialog.close = () => { dialog.open = false; dialog.dispatchEvent(new env.Event('close')); };
+  const submit = () => form.dispatchEvent(new env.Event('submit', { cancelable: true }));
   env.run('contact.js');
-  form.dispatchEvent(new env.Event('submit', { cancelable: true }));
-  form.dispatchEvent(new env.Event('submit', { cancelable: true }));
-  assert.equal(calls, 1); assert.equal(env.state.navigations.length, 0);
-  assert.equal(new URLSearchParams(body).get('message'), 'Перевірка калькулятора: & + ?');
-  assert.equal(new URLSearchParams(body).get('form-name'), 'contact');
-  complete({ ok: true }); await flush();
-  assert.deepEqual(env.state.navigations, [origin + '/contact-success.html']);
+  return { ...env, get, form, dialog, submit, focus: () => focused };
+}
+
+test('contact validates boundaries, full phone format, email, topic and agreement', () => {
+  for (const [id, value] of [['name','А'], ['name','   '], ['email','name@local'], ['email','name@@example.org'],
+    ['phone','+38000000000'], ['phone','+3800000000000'], ['phone','380000000000'],
+    ['phone','+380 000000000'], ['phone','+38000000000A'], ['phone','+380000000000\n'], ['message','123456789'],
+    ['message',' '.repeat(15)], ['message','x'.repeat(3001)], ['subject','unknown'], ['privacy',false]]) {
+    const env = contact({[id]: value}, {}, true);
+    env.submit();
+    assert.equal(env.get(id).getAttribute('aria-invalid'), 'true', id + ': ' + value.slice?.(0,30));
+    assert.equal(env.focus(), id);
+    assert.equal(env.get(id + '-error').hidden, false);
+    assert(!env.dialog.open);
+  }
+  const env = contact({ name:'А' }, {}, true);
+  env.submit();
+  env.get('name').value = 'Іван-Петро';
+  env.get('name').dispatchEvent(new env.Event('input'));
+  assert.equal(env.get('name').getAttribute('aria-invalid'), 'false');
+  assert.equal(env.get('name-error').hidden, true);
+});
+
+test('contact demo confirms minimum valid input without POST and resets form', () => {
+  const env = contact({}, {}, true);
+  env.submit();
+  assert.equal(env.state.bodies.length, 0);
+  assert.equal(env.dialog.open, true);
+  assert.match(env.get('dialog-message').textContent, /не надіслано/);
+  assert.equal(env.get('phone').value, '');
+  assert.equal(env.get('privacy').checked, false);
+  assert.equal(env.get('phone').hasAttribute('aria-invalid'), false);
+});
+
+test('contact sends encoded data only once and resets after acceptance', async () => {
+  let complete, calls = 0, body;
+  const env = contact({ message: 'Перевірка калькулятора: & + ?' },
+    { fetch: (_,options) => { calls++; body = options.body; return new Promise(resolve => { complete = resolve; }); } });
+  env.submit(); env.submit();
+  assert.equal(calls, 1);
+  assert(!env.dialog.open);
+  const params = new URLSearchParams(body);
+  assert.equal(params.get('message'), 'Перевірка калькулятора: & + ?');
+  assert.equal(params.get('phone'), '+380000000000');
+  assert.equal(params.get('privacy'), 'accepted');
+  assert.equal(params.get('form-name'), 'contact');
+  complete({ok:true}); await flush();
+  assert.equal(env.dialog.open, true);
+  assert.equal(env.get('message').value, '');
 });
 
 test('contact rejection keeps input, restores submit and does not show success', async () => {
-  const env = setup('contact.html', '', { fetch: async () => ({ ok: false }) });
-  const form = env.document.getElementById('contact-form'); form.reportValidity = () => true;
-  const input = env.document.getElementById('contact-message'); input.value = 'Збережіть моє повідомлення';
-  env.run('contact.js'); form.dispatchEvent(new env.Event('submit', { cancelable: true })); await flush();
-  assert.equal(input.value, 'Збережіть моє повідомлення');
-  assert.equal(env.state.navigations.length, 0);
-  assert.equal(form.querySelector('button').disabled, false);
-  assert(env.document.getElementById('contact-status').textContent.includes('Не вдалося'));
-});
-
-test('contact mirror retains native cross-origin POST and invalid form does not send', () => {
-  const env = setup('contact.html'); env.location.origin = 'https://sashahorbovyi.github.io'; env.run('contact.js');
-  const event = new env.Event('submit', { cancelable: true });
-  env.document.getElementById('contact-form').dispatchEvent(event);
-  assert.equal(event.defaultPrevented, false);
-  const invalid = setup('contact.html'); invalid.document.getElementById('contact-form').reportValidity = () => false;
-  invalid.run('contact.js'); invalid.document.getElementById('contact-form').dispatchEvent(new invalid.Event('submit', { cancelable: true }));
-  assert.equal(invalid.state.bodies.length, 0);
+  const env = contact({ message: 'Збережіть моє повідомлення' }, { fetch: async () => ({ok:false}) });
+  env.submit(); await flush();
+  assert.equal(env.get('message').value, 'Збережіть моє повідомлення');
+  assert(!env.dialog.open);
+  assert.equal(env.form.querySelector('button').disabled, false);
+  assert.match(env.get('status').textContent, /Не вдалося/);
 });
 
 test('application status exposes a script failure and clears after initialization', () => {

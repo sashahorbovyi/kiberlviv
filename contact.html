@@ -42,6 +42,7 @@
   <link rel="stylesheet" href="css/motion.css">
 
   <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/contact.css">
 </head>
 <body class="font-inter support-page">
 <a class="skip-link" href="#main-content">Перейти до вмісту</a>
@@ -111,19 +112,32 @@
  <nav class="tips-breadcrumbs" aria-label="Навігаційний шлях"><a href="index.html">Головна</a><span aria-hidden="true">/</span><span aria-current="page">Контакти</span></nav>
  <span class="page-eyebrow">Зворотний зв’язок</span><h1 class="page-title">Контакти та звернення</h1><p class="page-intro page-muted">Є запитання про калькулятор, помилка на сторінці або ідея для розвитку? Напишіть автору навчального проєкту.</p>
  <div class="support-layout">
-  <section class="support-copy" aria-labelledby="contact-info-title"><h2 id="contact-info-title">Обговорімо ваш відгук</h2><p>«КіберЛьвів» розвивається як навчальний вебпроєкт. Форма призначена для запитань про сайт і пропозицій щодо його роботи.</p><p>Бронювання тренувань та оплата через сайт не здійснюються. Офлайн-адреси для відвідування проєкт не публікує.</p><a class="arrow-link text-link" href="https://github.com/sashahorbovyi/kiberlviv" target="_blank" rel="noopener noreferrer">Репозиторій проєкту <span aria-hidden="true">↗</span></a><div class="support-note"><h3>Лише потрібні дані</h3><p>Достатньо адреси для відповіді та суті звернення. Не вказуйте паролі, платіжні дані або особисті відомості про дитину.</p></div><p class="page-muted">Звернення надходять автору через Netlify Forms. Відповідь можна отримати на вказану електронну адресу; конкретний строк відповіді не встановлено.</p></section>
+  <section class="support-copy" aria-labelledby="contact-info-title"><h2 id="contact-info-title">Обговорімо ваш відгук</h2><p>«КіберЛьвів» розвивається як навчальний вебпроєкт. Форма призначена для запитань про сайт і пропозицій щодо його роботи.</p><p>Бронювання тренувань та оплата через сайт не здійснюються. Офлайн-адреси для відвідування проєкт не публікує.</p><a class="arrow-link text-link" href="https://github.com/sashahorbovyi/kiberlviv" target="_blank" rel="noopener noreferrer">Репозиторій проєкту <span aria-hidden="true">↗</span></a><div class="support-note"><h3>Лише потрібні дані</h3><p>Для перевірки форми використовуйте тестові дані, якщо відкрили демонстраційну версію. Не вказуйте паролі, платіжні дані або особисті відомості про дитину.</p></div><p class="page-muted">На основній версії Netlify звернення надходять автору через Netlify Forms. Відповідь можна отримати на вказану електронну адресу; конкретний строк відповіді не встановлено.</p></section>
   <form id="contact-form" class="support-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="https://gilded-rabanadas-6b2d18.netlify.app/contact-success.html" aria-labelledby="contact-form-title" aria-describedby="contact-data-note">
    <h2 id="contact-form-title">Напишіть автору проєкту</h2><input type="hidden" name="form-name" value="contact">
    <p class="visually-hidden" aria-hidden="true"><label>Залиште це поле порожнім<input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
-   <div class="page-field"><label for="contact-name">Ім’я <span class="page-muted">(необов’язково)</span></label><input class="page-input" id="contact-name" name="name" maxlength="80" autocomplete="given-name"></div>
-   <div class="page-field"><label for="contact-email">Електронна адреса для відповіді <span aria-hidden="true">*</span></label><input class="page-input" id="contact-email" name="email" type="email" maxlength="254" autocomplete="email" required></div>
-   <div class="page-field"><label for="contact-subject">Тема <span aria-hidden="true">*</span></label><select class="page-input" id="contact-subject" name="subject" required><option value="">Оберіть тему</option><option value="calculator">Запитання про калькулятор</option><option value="error">Помилка на сайті</option><option value="suggestion">Пропозиція чи відгук</option></select></div>
-   <div class="page-field"><label for="contact-message">Повідомлення <span aria-hidden="true">*</span></label><textarea class="page-input" id="contact-message" name="message" rows="6" minlength="10" maxlength="3000" required aria-describedby="contact-message-help"></textarea><p class="page-field-help" id="contact-message-help">Від 10 до 3000 символів. Поля зі зірочкою обов’язкові.</p></div>
-   <p id="contact-data-note" class="page-field-help">Дані звернення передаються через Netlify Forms для його розгляду. <a href="privacy.html">Як обробляються дані</a>.</p>
-   <label class="support-consent"><input type="checkbox" name="privacy" value="accepted" required><span>Я ознайомився / ознайомилася з описом обробки даних і погоджуюся передати дані для розгляду звернення.</span></label>
+   <p id="contact-mode" class="page-field-help">Поля із зірочкою обов’язкові.</p>
+   <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+   <div class="page-field"><label for="contact-name">Ім’я <span aria-hidden="true">*</span></label><input class="page-input" id="contact-name" name="name" required aria-describedby="contact-name-help contact-name-error" minlength="2" maxlength="80" autocomplete="given-name"><p class="page-field-help" id="contact-name-help">Від 2 до 80 символів.</p><p class="contact-error" id="contact-name-error" aria-live="polite" hidden></p></div>
+   <div class="page-field"><label for="contact-email">Електронна адреса <span aria-hidden="true">*</span></label><input class="page-input" id="contact-email" name="email" required aria-describedby="contact-email-help contact-email-error" type="email" maxlength="254" autocomplete="email"><p class="page-field-help" id="contact-email-help">Наприклад, name@example.com.</p><p class="contact-error" id="contact-email-error" aria-live="polite" hidden></p></div>
+   <div class="page-field"><label for="contact-phone">Номер телефону <span aria-hidden="true">*</span></label><input class="page-input" id="contact-phone" name="phone" required aria-describedby="contact-phone-help contact-phone-error" type="tel" autocomplete="tel" inputmode="tel" placeholder="+380XXXXXXXXX" pattern="\+380[0-9]{9}"><p class="page-field-help" id="contact-phone-help">+380 і 9 цифр без пробілів чи дефісів.</p><p class="contact-error" id="contact-phone-error" aria-live="polite" hidden></p></div>
+   <div class="page-field"><label for="contact-subject">Тема <span aria-hidden="true">*</span></label><select class="page-input" id="contact-subject" name="subject" required aria-describedby="contact-subject-help contact-subject-error"><option value="">Оберіть тему</option><option value="calculator">Запитання про калькулятор</option><option value="error">Помилка на сайті</option><option value="suggestion">Пропозиція чи відгук</option></select><p class="page-field-help" id="contact-subject-help">Оберіть найближчу до звернення тему.</p><p class="contact-error" id="contact-subject-error" aria-live="polite" hidden></p></div>
+   <div class="page-field sm:col-span-2"><label for="contact-message">Повідомлення <span aria-hidden="true">*</span></label><textarea class="page-input" id="contact-message" name="message" required aria-describedby="contact-message-help contact-message-error" rows="5" minlength="10" maxlength="3000"></textarea><p class="page-field-help" id="contact-message-help">Від 10 до 3000 символів.</p><p class="contact-error" id="contact-message-error" aria-live="polite" hidden></p></div>
+   </div>
+   <p id="contact-data-note" class="page-field-help">На Netlify дані передаються для розгляду звернення. <a href="privacy.html">Як обробляються дані</a>.</p>
+   <div><label class="support-consent" for="contact-privacy"><input type="checkbox" id="contact-privacy" name="privacy" value="accepted" required aria-describedby="contact-data-note contact-privacy-error"><span>Я погоджуюся на обробку даних для розгляду звернення. <span aria-hidden="true">*</span></span></label>
+   <p class="contact-error" id="contact-privacy-error" aria-live="polite" hidden></p></div>
    <p id="contact-status" class="training-notice" role="status" aria-live="polite" hidden></p>
-   <button class="motion-button page-button" type="submit">Надіслати звернення</button>
+   <noscript><p class="training-notice">Увімкніть JavaScript, щоб перевірити та надіслати форму.</p></noscript>
+   <button class="motion-button page-button w-full sm:w-auto" type="submit" disabled>Надіслати звернення</button>
   </form>
+  <dialog id="contact-dialog" class="contact-dialog" aria-labelledby="contact-dialog-title" aria-describedby="contact-dialog-message">
+   <div class="contact-dialog-panel">
+    <h2 id="contact-dialog-title">Форму перевірено</h2>
+    <p id="contact-dialog-message"></p>
+    <form method="dialog"><button class="page-button" autofocus>Закрити</button></form>
+   </div>
+  </dialog>
  </div>
 </div></section>
 <section class="page-section section-dark" id="contact-guide" aria-labelledby="contact-guide-title"><div class="site-container training-methodology">

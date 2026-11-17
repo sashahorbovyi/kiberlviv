@@ -1,0 +1,20 @@
+.contact-error { color: #a51d32; font-size: .875rem; margin: .35rem 0 0; }
+.contact-error[hidden] { display: none; }
+.support-form [data-state="error"] { border-color: #a51d32; }
+.support-form [data-state="valid"] { border-color: #137247; }
+.support-form input[type="checkbox"][data-state="error"] { outline: 2px solid #a51d32; outline-offset: 2px; }
+.support-form .page-input:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 2px; }
+.contact-dialog {
+  position: fixed; inset: 0; margin: auto; padding: 0; border-radius: .75rem; max-width: min(28rem, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem); overflow: auto;
+  background: var(--color-surface); color: var(--color-ink); border: 1px solid var(--color-line);
+  box-shadow: var(--shadow-card);
+}
+.contact-dialog-panel { padding: clamp(1.25rem, 4vw, 2rem); }
+.contact-dialog::backdrop { background: rgb(7 16 33 / .7); }
+.contact-dialog h2 { font-weight: 700; font-size: 1.5rem; }
+.contact-dialog p { margin: .75rem 0 1.25rem; }
+[data-theme="dark"] .contact-error { color: #ffadb5; }
+[data-theme="dark"] .support-form [data-state="error"] { border-color: #ffadb5; }
+[data-theme="dark"] .support-form input[type="checkbox"][data-state="error"] { outline-color: #ffadb5; }
+[data-theme="dark"] .support-form [data-state="valid"] { border-color: #78dfa8; }
