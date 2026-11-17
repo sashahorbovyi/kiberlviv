@@ -4,7 +4,7 @@
   <link rel="icon" type="image/svg+xml" sizes="any" href="assets/icons/favicon.svg">
   <meta charset="UTF-8">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta http-equiv="Content-Security-Policy" content="default-src &#x27;self&#x27;; script-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app https://widget.time.is; style-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app &#x27;unsafe-inline&#x27; https://fonts.googleapis.com; font-src &#x27;self&#x27; https://fonts.gstatic.com; img-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app data: https://widget.time.is https://time.is; media-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://www.google.com https://maps.google.com; connect-src &#x27;self&#x27; https://widget.time.is https://time.is https://gilded-rabanadas-6b2d18.netlify.app; object-src &#x27;none&#x27;; base-uri &#x27;self&#x27;; form-action &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app">
+  <meta http-equiv="Content-Security-Policy" content="default-src &#x27;self&#x27;; script-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app https://widget.time.is https://cdn.jsdelivr.net; style-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app &#x27;unsafe-inline&#x27; https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src &#x27;self&#x27; https://fonts.gstatic.com data:; img-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app data: https://widget.time.is https://time.is; media-src &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://www.google.com https://maps.google.com; connect-src &#x27;self&#x27; https://widget.time.is https://time.is https://gilded-rabanadas-6b2d18.netlify.app; object-src &#x27;none&#x27;; base-uri &#x27;self&#x27;; form-action &#x27;self&#x27; https://gilded-rabanadas-6b2d18.netlify.app">
   <link rel="canonical" href="https://gilded-rabanadas-6b2d18.netlify.app/">
   <meta name="robots" content="index, follow">
   <meta property="og:locale" content="uk_UA">
@@ -47,6 +47,12 @@
   <script src="js/time-widget.js" defer></script>
   <!-- Кінець підключення Time.is -->
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "КіберЛьвів", "url": "https://gilded-rabanadas-6b2d18.netlify.app/", "inLanguage": "uk", "description": "Навчальний проєкт КіберЛьвів: калькулятор тренувань у CS2, Dota 2 та Valorant, практичні статті й гід для батьків."}</script>
+  <link id="swiper-css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.2.10/swiper-bundle.min.css" integrity="sha384-gAPqlBuTCdtVcYt9ocMOYWrnBZ4XSL6q+4eXqwNycOr4iFczhNKtnYhF3NEXJM51" crossorigin="anonymous">
+  <link id="glightbox-css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/css/glightbox.min.css" integrity="sha384-GPAzSuZc0kFvdIev6wm9zg8gnafE8tLso7rsAYQfc9hAdWCpOcpcNI5W9lWkYcsd" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/media-gallery.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/swiper@11.2.10/swiper-bundle.min.js" integrity="sha384-2UI1PfnXFjVMQ7/ZDEF70CR943oH3v6uZrFQGGqJYlvhh4g6z6uVktxYbOlAczav" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/js/glightbox.min.js" integrity="sha384-MZZbZ6RXJudK43v1qY1zOWKOU2yfeBPatuFoKyHAaAgHTUZhwblRTc9CphTt4IGQ" crossorigin="anonymous"></script>
+  <script defer src="js/media-gallery.js"></script>
 </head>
 
 <body class="font-inter">
@@ -840,6 +846,70 @@
               </a>
             </div>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="training-gallery" class="media-gallery section-dark" aria-labelledby="training-gallery-title">
+      <div class="site-container">
+        <div class="section-heading">
+          <h2 id="training-gallery-title">Від розминки до аналізу</h2>
+          <p>П’ять етапів, з яких можна скласти тренувальне заняття. Натисни на ілюстрацію, щоб відкрити її у повному розмірі.</p>
+        </div>
+        <div class="swiper media-swiper">
+          <div class="swiper-wrapper" id="training-gallery-slides">
+            <article class="swiper-slide">
+              <a class="media-card-visual media-icon" href="assets/icons/Мінімалістична іконка геймера з гарнітурою 1 (Traced) (1).svg" data-gallery="training-steps" data-type="image" data-title="Розминка" data-alt="Розминка" aria-label="Відкрити ілюстрацію: Розминка">
+                <img src="assets/icons/Мінімалістична іконка геймера з гарнітурою 1 (Traced) (1).svg" alt="" width="1254" height="1254" loading="lazy" decoding="async">
+              </a>
+              <div class="media-card-copy">
+                <h3><span class="sr-only">Етап 01: </span>Розминка</h3>
+                <p>Кілька хвилин простих повторів перед основним навантаженням.</p>
+              </div>
+            </article>
+            <article class="swiper-slide">
+              <a class="media-card-visual" href="assets/images/about-practice-visual.svg" data-gallery="training-steps" data-type="image" data-title="Мета заняття" data-alt="Мета заняття" aria-label="Відкрити ілюстрацію: Мета заняття">
+                <img src="assets/images/about-practice-visual.svg" alt="" width="640" height="360" loading="lazy" decoding="async">
+              </a>
+              <div class="media-card-copy">
+                <h3><span class="sr-only">Етап 02: </span>Мета заняття</h3>
+                <p>Обери одну навичку й заздалегідь визнач, як виміряєш прогрес.</p>
+              </div>
+            </article>
+            <article class="swiper-slide">
+              <a class="media-card-visual media-icon" href="assets/icons/Ігровий таймер із контролером 1 (Traced) (1).svg" data-gallery="training-steps" data-type="image" data-title="Цільові повтори" data-alt="Цільові повтори" aria-label="Відкрити ілюстрацію: Цільові повтори">
+                <img src="assets/icons/Ігровий таймер із контролером 1 (Traced) (1).svg" alt="" width="1254" height="1254" loading="lazy" decoding="async">
+              </a>
+              <div class="media-card-copy">
+                <h3><span class="sr-only">Етап 03: </span>Цільові повтори</h3>
+                <p>Працюй короткими серіями з паузою, щоб оцінити якість виконання.</p>
+              </div>
+            </article>
+            <article class="swiper-slide">
+              <a class="media-card-visual" href="assets/images/blog-training.svg" data-gallery="training-steps" data-type="image" data-title="Практика в грі" data-alt="Практика в грі" aria-label="Відкрити ілюстрацію: Практика в грі">
+                <img src="assets/images/blog-training.svg" alt="" width="640" height="360" loading="lazy" decoding="async">
+              </a>
+              <div class="media-card-copy">
+                <h3><span class="sr-only">Етап 04: </span>Практика в грі</h3>
+                <p>Перевір обрану навичку в матчі або в контрольованому сценарії.</p>
+              </div>
+            </article>
+            <article class="swiper-slide">
+              <a class="media-card-visual media-icon" href="assets/icons/Зростання до золотої нагороди 1 (Traced) (1).svg" data-gallery="training-steps" data-type="image" data-title="Підсумок" data-alt="Підсумок" aria-label="Відкрити ілюстрацію: Підсумок">
+                <img src="assets/icons/Зростання до золотої нагороди 1 (Traced) (1).svg" alt="" width="1254" height="1254" loading="lazy" decoding="async">
+              </a>
+              <div class="media-card-copy">
+                <h3><span class="sr-only">Етап 05: </span>Підсумок</h3>
+                <p>Запиши один висновок і виріши, що повторити наступного разу.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div class="media-controls" role="group" aria-label="Керування галереєю" hidden>
+          <button type="button" data-media-prev aria-label="Попередній слайд" aria-controls="training-gallery-slides">←</button>
+          <button type="button" data-media-next aria-label="Наступний слайд" aria-controls="training-gallery-slides">→</button>
+          <div class="swiper-pagination media-dots"></div>
+          <button type="button" data-media-autoplay>Призупинити</button>
         </div>
       </div>
     </section>
