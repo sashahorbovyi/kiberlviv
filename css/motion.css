@@ -1,4 +1,31 @@
-/* CSS-only motion. Static layout and Hero are unchanged. */
+/* Interaction effects and entrances; content is visible without scripts. */
+.parents-typing {
+    margin-block: 16px 8px;
+    padding-inline-start: 12px;
+    border-inline-start: 2px solid var(--color-accent);
+}
+.parents-typing > p {
+    margin: 0;
+    color: var(--color-on-navy);
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    font-weight: 700;
+    line-height: 1.35;
+}
+.cta-typing { display: grid; padding-inline-end: .25em; }
+.cta-typing > span { grid-area: 1 / 1; }
+.cta-typing-measure { visibility: hidden; }
+.cta-typing[data-running] .cta-typing-text::after {
+    content: "";
+    position: absolute;
+    display: inline-block;
+    height: .88em;
+    margin: .16em 0 0 .09em;
+    border-inline-start: .065em solid var(--color-accent);
+}
+@media (prefers-reduced-motion: reduce) {
+    .cta-typing[data-running] .cta-typing-text::after { content: none; }
+}
+
 .coach-photo-frame {
     flex-shrink: 0;
     min-width: 0;
@@ -180,41 +207,6 @@ header details[open] .menu-toggle-icon > span {
         }
     }
 
-    /* Progressive enhancement: no hidden content in unsupported browsers.
-       Translate is separate from hover transform, so both effects compose. */
-    @supports (animation-timeline: view()) and (translate: 0 12px) {
-        :is(#process, #weekly, #location) .section-heading,
-        #coaches .coaches-heading,
-        #blog .blog-heading,
-        :is(#process, #coaches, #blog) article,
-        #calculator .section-copy,
-        #calculator .calculator-preview,
-        #weekly .time-balance,
-        :is(#planning, #parents) .feature-item,
-        #weekly .weekly-detail,
-        #location aside {
-            animation: section-enter 1ms linear both;
-            animation-timeline: view();
-            animation-range: entry 0% entry 70%;
-        }
-
-        /* Keyboard and anchor navigation must never wait for a scroll reveal. */
-        :is(#process, #coaches, #blog) article:focus-within,
-        #blog .blog-heading:focus-within,
-        #calculator .section-copy:focus-within,
-        #calculator .calculator-preview:focus-within,
-        :is(#planning, #parents) .feature-item:focus-within,
-        #location aside:focus-within {
-            animation: none;
-            opacity: 1;
-            translate: none;
-        }
-        main > section:target .section-heading {
-            animation: none;
-            opacity: 1;
-            translate: none;
-        }
-    }
 }
 
 @keyframes feature-icon-nudge {
@@ -230,11 +222,6 @@ header details[open] .menu-toggle-icon > span {
 @keyframes mobile-menu-item-enter {
     from { opacity: 0; transform: translateX(6px); }
     to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes section-enter {
-    from { opacity: 0.25; translate: 0 12px; }
-    to { opacity: 1; translate: 0 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -259,21 +246,122 @@ header details[open] .menu-toggle-icon > span {
   .parents-game-card:hover .parents-game-mark { transform: translateY(-2px); }
   .parents-page :is(.parents-game-card,.parents-video-card):hover { border-color: var(--color-accent); box-shadow: var(--shadow-card); }
  }
- @supports (animation-timeline: view()) and (translate: 0 12px) {
-  .parents-page :is(.parents-section-heading,.parents-info-card,.parents-game-card,.parents-myth-card,.parents-video-card,.parents-steps li,.parents-agreement-example,.parents-attention-card) {
-   animation: section-enter 1ms linear both; animation-timeline: view(); animation-range: entry 0% entry 65%;
-  }
-  .parents-page :is(.parents-game-card,.parents-video-card,.parents-myth-card,.parents-agreement-example):focus-within,
-  .parents-page section:target :is(.parents-section-heading,.parents-info-card,.parents-game-card,.parents-myth-card,.parents-video-card,.parents-steps li,.parents-agreement-example,.parents-attention-card) { animation: none; opacity: 1; translate: none; }
- }
 }
 @keyframes parents-detail-enter { from { opacity: .5; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
 @media (prefers-reduced-motion: no-preference) {
  .about-page .about-details[open] > div { animation: parents-detail-enter 200ms ease-out; }
- @supports (animation-timeline: view()) and (translate: 0 12px) {
-  .about-page :is(.about-heading,.about-card,.about-workflow li,.about-research-card,.about-status-card) { animation: section-enter 1ms linear both; animation-timeline: view(); animation-range: entry 0% entry 65%; }
-  .about-page :is(.about-card,.about-research-card):focus-within { animation: none; opacity: 1; translate: none; }
-  .about-page section:target :is(.about-heading,.about-card,.about-workflow li,.about-research-card,.about-status-card) { animation: none; opacity: 1; translate: none; }
- }
+}
+
+@keyframes motion-viewport-enter {
+    from { opacity: var(--enter-opacity, .8); translate: 0 var(--enter-distance, 16px); scale: var(--enter-scale, 1); }
+    to { opacity: 1; translate: 0 0; scale: 1; }
+}
+
+@keyframes motion-graphic-in {
+    from { opacity: .45; scale: .95; }
+    to { opacity: 1; scale: 1; }
+}
+@keyframes motion-chart-segment {
+    from { opacity: .35; stroke-width: 18px; }
+}
+@keyframes motion-feedback-in {
+    from { opacity: .7; translate: 0 5px; }
+}
+@keyframes motion-dialog-in {
+    from { opacity: .75; translate: 0 8px; scale: .98; }
+}
+@keyframes motion-choice-confirm {
+    from { scale: .96; }
+    to { scale: 1; }
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+    .motion-enter { animation: motion-viewport-enter 510ms cubic-bezier(.2,.7,.25,1) var(--enter-delay, 0ms) both; }
+    .motion-enter[data-motion-kind="text"] { --enter-distance: 13px; --enter-opacity: .76; }
+    .motion-enter[data-motion-kind="visual"] { --enter-distance: 14px; --enter-scale: .98; }
+    .motion-enter[data-motion-step="1"] { --enter-delay: 45ms; }
+    .motion-enter[data-motion-step="2"] { --enter-delay: 90ms; }
+    .motion-enter[data-motion-step="3"] { --enter-delay: 135ms; }
+    .motion-enter :is(.program-diagram svg,.feature-icon img,.review-rating [aria-hidden]) {
+        animation: motion-graphic-in 460ms ease-out var(--enter-delay, 0ms) both;
+        transform-origin: center;
+    }
+    .motion-enter .time-balance-chart circle[stroke-dasharray] {
+        animation: motion-chart-segment 420ms ease-out calc(var(--enter-delay, 0ms) + var(--segment-delay, 0ms)) both;
+    }
+    .time-balance-chart circle[stroke-dasharray]:nth-of-type(2n) { --segment-delay: 45ms; }
+    .time-balance-chart circle[stroke-dasharray]:nth-of-type(3n) { --segment-delay: 85ms; }
+
+    main :is(.contact-error,#contact-status):not([hidden]),
+    main #download-status:not(:empty) { animation: motion-feedback-in 240ms ease-out; }
+    main .contact-dialog[open] { animation: motion-dialog-in 280ms cubic-bezier(.2,.7,.25,1); }
+    main :is(.review-card,.media-swiper .swiper-slide,.calculator-preview,.parents-video-card) {
+        transition: border-color 200ms ease, box-shadow 220ms ease, background-color 200ms ease;
+    }
+    main :is(.review-card,.media-swiper .swiper-slide,.calculator-preview,.parents-video-card):focus-within {
+        border-color: var(--color-accent);
+        box-shadow: var(--shadow-card);
+    }
+    main .media-card-visual img { transition: transform 240ms ease; }
+    main .media-card-visual:focus-visible img { transform: scale(1.04); }
+    @media (hover: hover) and (pointer: fine) {
+        main :is(.review-card,.media-swiper .swiper-slide,.calculator-preview,.parents-video-card):hover {
+            border-color: var(--color-accent);
+            box-shadow: var(--shadow-card);
+        }
+        main .media-card-visual:hover img { transform: scale(1.045); }
+    }
+
+    body, body > header, body > footer {
+        transition: background-color 220ms ease, color 180ms ease;
+    }
+    header .header-layout > a img,
+    header .header-theme-toggle svg,
+    main :is(.program-game img, .creator-portrait img, .tips-card-cover img, .coach-demo-cover img, .program-diagram svg) {
+        transition: transform 260ms cubic-bezier(.2,.7,.25,1);
+    }
+    header .header-theme-toggle[aria-pressed="true"] svg { transform: rotate(18deg); }
+    main :is(.program-module,.creator-card,.coach-demo-card,.tips-card,.about-card,.about-research-card,
+             .about-status-card,.parents-info-card,.parents-myth-card,.parents-attention-card,
+             .metric-grid > div,.training-week-list > li,.home-programs > a) {
+        transition: transform 210ms ease, border-color 180ms ease,
+                    background-color 180ms ease, box-shadow 210ms ease;
+    }
+    main :is(.program-module,.creator-card,.coach-demo-card,.tips-card,.about-card):focus-within {
+        border-color: var(--color-accent);
+        box-shadow: var(--shadow-card);
+    }
+    main :is(.program-module,.program-game):focus-within :is(svg,img) { transform: scale(1.035); }
+    main details > summary {
+        transition: color 180ms ease, text-decoration-color 180ms ease;
+        text-underline-offset: .28em;
+    }
+    main details[open] > :not(summary) { animation: parents-detail-enter 230ms ease-out; }
+    main :is(input:not([type="hidden"]),select,textarea,.page-choice > span,.catalog-game-options span) {
+        transition: border-color 170ms ease, background-color 170ms ease, color 170ms ease, box-shadow 170ms ease;
+    }
+    main :is(.page-choice-input,.catalog-game-options input):checked + span {
+        animation: motion-choice-confirm 180ms ease-out;
+    }
+    main .practice-checklist label { transition: background-color 170ms ease, border-color 170ms ease; }
+    main .practice-checklist label:has(input:checked) { border-color: var(--color-accent); }
+    footer a { transition: color 180ms ease, text-decoration-color 180ms ease; text-underline-offset: .28em; }
+
+    @media (hover: hover) and (pointer: fine) {
+        header .header-layout > a:hover img { transform: rotate(-5deg) scale(1.06); }
+        main :is(.creator-card,.coach-demo-card,.tips-card,.about-card,.about-research-card,
+                 .parents-info-card,.parents-myth-card,.parents-attention-card,.home-programs > a):hover {
+            transform: translateY(-3px);
+            border-color: var(--color-accent);
+            box-shadow: var(--shadow-card);
+        }
+        main .program-module:hover {
+            border-color: var(--color-accent);
+            box-shadow: var(--shadow-card);
+        }
+        main :is(.program-game:hover img,.creator-card:hover .creator-portrait img,.tips-card:hover .tips-card-cover img,
+                 .coach-demo-card:hover .coach-demo-cover img,.program-module:hover .program-diagram svg) { transform: scale(1.05); }
+        main details > summary:hover, footer a:hover { text-decoration: underline; text-decoration-color: var(--color-accent); }
+    }
 }

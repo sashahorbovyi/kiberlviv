@@ -21,6 +21,23 @@
     clock.textContent = "Час тимчасово недоступний";
   };
 
+  function load() {
+    const script = document.createElement("script");
+    script.src = "https://widget.time.is/t.js";
+    script.addEventListener("load", init, { once: true });
+    script.addEventListener("error", unavailable, { once: true });
+    document.head.append(script);
+  }
+  if ("IntersectionObserver" in window) {
+    const near = new IntersectionObserver(entries => {
+      if (!entries.some(item => item.isIntersecting)) return;
+      near.disconnect();
+      load();
+    }, { rootMargin: "250px" });
+    near.observe(container ?? clock);
+  } else load();
+
+  function init() {
   if (
     !window.time_is_widget ||
     typeof window.time_is_widget.init !== "function"
@@ -54,5 +71,6 @@
     window.clearTimeout(timeout);
     observer.disconnect();
     unavailable();
+  }
   }
 })();

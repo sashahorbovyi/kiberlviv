@@ -5,3 +5,21 @@
 [build.environment]
   NODE_VERSION = "24"
   NPM_FLAGS = "--ignore-scripts"
+
+[build.processing.html]
+  pretty_urls = false
+
+[[redirects]]
+  from = "/calculator"
+  to = "/calculator.html"
+  status = 301
+
+[[redirects]]
+  from = "/results"
+  to = "/results.html"
+  status = 301
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact.html"
+  status = 301

@@ -1,0 +1,52 @@
+name: CI/CD Production Deploy
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run build:site
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kiberlviv-site
+          path: dist/
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.VERCEL_DEPLOY_ENABLED == 'true'
+    needs: validate
+    runs-on: ubuntu-latest
+    concurrency:
+      group: vercel-production
+      cancel-in-progress: false
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Deploy prebuilt Vercel project
+        run: |
+          : "${VERCEL_TOKEN:?Set VERCEL_TOKEN in GitHub Actions secrets}"
+          : "${VERCEL_ORG_ID:?Set VERCEL_ORG_ID in GitHub Actions secrets}"
+          : "${VERCEL_PROJECT_ID:?Set VERCEL_PROJECT_ID in GitHub Actions secrets}"
+          npx --yes vercel@48.0.0 pull --yes --environment=production --token="$VERCEL_TOKEN"
+          npx --yes vercel@48.0.0 build --prod --token="$VERCEL_TOKEN"
+          npx --yes vercel@48.0.0 deploy --prebuilt --prod --token="$VERCEL_TOKEN"

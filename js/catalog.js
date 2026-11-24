@@ -24,6 +24,11 @@
     }
     const message = `Показано прикладів: ${count} із ${cards.length}.`;
     if (status.textContent !== message) status.textContent = message;
+    const model = window.TrainingModel;
+    if (model) {
+      document.getElementById('catalog-program-link').href = model.programLink(game);
+      document.getElementById('catalog-booking-link').href = model.bookingLink(game);
+    }
 
     const url = new URL(location.href);
     for (const [key, value] of [['game', game], ['focus', focus.value]]) {

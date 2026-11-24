@@ -11,12 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
   let autoEnabled = !reducedMotion.matches;
   let hovered = false;
   let opener;
-  let albumOpen = false;
+  let previewOpen = false;
 
   function updateAutoplay() {
     if (!swiper) return;
-    toggle.textContent = autoEnabled ? 'Призупинити' : 'Автогортання';
-    if (autoEnabled && visible && !hovered && !document.hidden && !albumOpen && !reducedMotion.matches) {
+    toggle.setAttribute('aria-pressed', String(autoEnabled));
+    toggle.title = autoEnabled ? 'Зупинити автопрокручування' : 'Увімкнути автопрокручування';
+    if (autoEnabled && visible && !hovered && !document.hidden && !previewOpen && !reducedMotion.matches) {
       if (!swiper.autoplay.running) swiper.autoplay.start();
     } else if (swiper.autoplay.running) {
       swiper.autoplay.stop();
@@ -38,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
       pagination: {
         el: controls.querySelector('.media-dots'),
         clickable: true,
-        renderBullet: (_, className) => `<button type="button" class="${className}"></button>`
+        renderBullet: (index, className) => `<button type="button" class="${className}" aria-label="Перейти до слайда ${index + 1}"></button>`
       },
       a11y: {
         prevSlideMessage: 'Попередній слайд',
@@ -47,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lastSlideMessage: 'Останній слайд',
         paginationBulletMessage: 'Перейти до слайда {{index}}',
         slideLabelMessage: '{{index}} з {{slidesLength}}',
+        slideRole: 'article',
         wrapperLiveRegion: false
       }
     });
@@ -87,33 +89,108 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (typeof window.GLightbox === 'function' && document.getElementById('glightbox-css')?.sheet) {
-    section.addEventListener('click', event => {
-      const link = event.target.closest('.media-card-visual');
-      if (link) opener = link;
-    }, { capture: true });
+    const template = document.getElementById('media-preview-template');
+    const sections = {
+      calculator: ['Приклад заняття у CS2', [
+        ['Розминка й вправи', '30 хв'], ['Один матч', '35 хв'], ['Розбір після гри', '10 хв'], ['Усього', '75 хв']
+      ], 'Приклад розподілу часу. Тривалість можна змінити в калькуляторі.'],
+      training: ['Що можна потренувати', [
+        ['CS2', 'Прицілювання та рух'], ['Dota 2', 'Добивання кріпів'], ['Valorant', 'Робота з кутами']
+      ]],
+      parents: ['Теми гіда', [
+        ['Знайомство', 'Що таке кіберспорт'], ['Баланс', 'Як домовитися про час гри'], ['Розмова', 'Що обговорити після матчу']
+      ]],
+      tips: ['Про що почитати', [
+        ['Баланс', 'Тренування й відпочинок'], ['Практика', 'Як розбити вправу на кроки'], ['Розбір', 'Що записати після гри']
+      ]],
+      reviews: ['Як залишити відгук', [
+        ['Оціни сайт', 'Від 1 до 5'], ['Опиши досвід', 'Що зручно і чого бракує'], ['Переглянь приклади', 'Три демонстраційні відгуки']
+      ]]
+    };
+    let pendingAnchor = '';
     const album = window.GLightbox({
-      selector: '#training-gallery .media-card-visual',
-      openEffect: reducedMotion.matches ? 'none' : 'fade',
-      closeEffect: reducedMotion.matches ? 'none' : 'fade',
-      slideEffect: reducedMotion.matches ? 'none' : 'slide',
-      touchNavigation: true,
-      keyboardNavigation: true,
-      zoomable: true,
-      loop: true
+      elements: [],
+      width: '760px',
+      height: 'auto',
+      closeButton: false,
+      draggable: false,
+      touchNavigation: false,
+      keyboardNavigation: false,
+      openEffect: 'none',
+      closeEffect: 'none'
+    });
+    section.addEventListener('click', event => {
+      const link = event.target.closest('[data-media-preview]');
+      if (!link || !template || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const card = link.closest('.swiper-slide');
+      const [heading, rows, note] = sections[link.dataset.mediaPreview] || [];
+      if (!card || !heading) return;
+
+      const panel = template.content.firstElementChild.cloneNode(true);
+      panel.querySelector('h2').textContent = card.querySelector('h3').textContent;
+      panel.querySelector('.site-preview-description').textContent = card.querySelector('p').textContent;
+      panel.querySelector('.site-preview-sample-title').textContent = heading;
+      const list = panel.querySelector('.site-preview-rows');
+      for (const [label, value] of rows) {
+        const row = document.createElement('div');
+        const dt = document.createElement('dt');
+        const dd = document.createElement('dd');
+        dt.textContent = label;
+        dd.textContent = value;
+        row.append(dt, dd);
+        list.append(row);
+      }
+      if (note) {
+        const caption = panel.querySelector('.site-preview-note');
+        caption.textContent = note;
+        caption.hidden = false;
+      }
+      const cta = panel.querySelector('.site-preview-cta');
+      const cardLink = card.querySelector('.media-card-link');
+      const href = cardLink.getAttribute('href');
+      cta.setAttribute('href', href);
+      cta.textContent = cardLink.textContent.trim();
+      cta.addEventListener('click', e => {
+        if (!href.startsWith('#') || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        e.preventDefault();
+        pendingAnchor = href;
+        album.close();
+      });
+
+      event.preventDefault();
+      opener = link;
+      album.setElements([{ content: panel, type: 'inline' }]);
+      album.openAt(0);
     });
     album.on('open', () => {
-      albumOpen = true;
+      previewOpen = true;
       updateAutoplay();
       const modal = document.getElementById('glightbox-body');
       if (!modal) return;
-      modal.setAttribute('aria-label', 'Ілюстрації до тренування');
-      for (const [selector, name] of [['.gclose', 'Закрити альбом'], ['.gprev', 'Попереднє зображення'], ['.gnext', 'Наступне зображення']]) {
-        modal.querySelector(selector)?.setAttribute('aria-label', name);
-      }
+      modal.classList.add('site-preview-modal');
+      modal.setAttribute('aria-modal', 'true');
+      modal.setAttribute('aria-labelledby', 'site-preview-title');
+      const close = modal.querySelector('.site-preview-close');
+      const cta = modal.querySelector('.site-preview-cta');
+      close?.focus({ preventScroll: true });
+      modal.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          album.close();
+        } else if (event.key === 'Tab' && close && cta) {
+          event.preventDefault();
+          (document.activeElement === close ? cta : close).focus();
+        }
+      });
     });
     album.on('close', () => {
-      albumOpen = false;
-      opener?.focus({ preventScroll: true });
+      previewOpen = false;
+      if (pendingAnchor) {
+        const anchor = pendingAnchor;
+        pendingAnchor = '';
+        window.location.hash = anchor;
+        document.getElementById(anchor.slice(1))?.scrollIntoView();
+      } else opener?.focus({ preventScroll: true });
       opener = null;
       updateAutoplay();
     });

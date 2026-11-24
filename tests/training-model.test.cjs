@@ -54,6 +54,12 @@ test("inactive fields cannot change or invalidate a plan", () => {
   assert.equal(plan({ budget: "" }).total, 145);
   assert.equal(plan({ mode: "budget", budget: 145, matches: "bad" }).total, 145);
 });
+test("time values in restored links reject whitespace, booleans and non-decimal notation", () => {
+  for (const queue of [" ", false, [], "0x10", "1e1", "1.0"]) {
+    assert.throws(() => plan({ queue }));
+  }
+  assert.equal(plan({ queue: "0" }).queueTime, 0);
+});
 test("game and focus survive the result/edit URL round trip", () => {
   const expected = plan({ game: "Dota 2", focus: "lane", matchLength: 45 });
   const restored = model.calculate(model.parse(model.serialize(expected.config)));
@@ -81,4 +87,20 @@ test("duration formatting keeps the remaining minutes", () => {
   assert.equal(model.format(0), "0 хв");
   assert.equal(model.format(60), "1 год");
   assert.equal(model.format(145), "2 год 25 хв");
+});
+
+test("exercise-only plan never inserts a match and reports shortened blocks", () => {
+  const r = plan({ mode: "drills", budget: 30 });
+  assert.equal(r.matches, 0);
+  assert.deepEqual(model.steps(r), [["Розминка", 10], ["Вправи", 20]]);
+  assert.deepEqual(model.reductions(r), ["Розбір: 15 хв → 0 хв"]);
+  assert.equal(plan({ mode: "drills", budget: 120 }).matches, 0);
+});
+
+test("budget uses the same match cap as manual mode and flags unusually long plans", () => {
+  const r = plan({ mode: "budget", budget: 1440, matchLength: 5, queue: 0, breakMinutes: 0, days: 7 });
+  assert.equal(r.matches, model.ranges.matches[1]);
+  assert.equal(r.total + r.remaining, 1440);
+  assert.match(model.volumeWarning(r), /за тиждень/);
+  assert.equal(model.volumeWarning(plan({})), "");
 });

@@ -1,3 +1,4 @@
+#contact-form { scroll-margin-top: 96px; }
 .contact-error { color: #a51d32; font-size: .875rem; margin: .35rem 0 0; }
 .contact-error[hidden] { display: none; }
 .support-form [data-state="error"] { border-color: #a51d32; }

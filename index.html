@@ -26,14 +26,10 @@
   <meta name="description" content="Навчальний проєкт КіберЛьвів: калькулятор тренувань у CS2, Dota 2 та Valorant, практичні статті й гід для батьків.">
 
   <title>КіберЛьвів — калькулятор тренувань і практичні поради</title>
+  <link rel="preload" as="image" href="assets/images/hero-optimized.webp" fetchpriority="high">
+  <link rel="preload" as="font" href="assets/fonts/inter-cyrillic-wght-normal.woff2" type="font/woff2" crossorigin>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
-    rel="stylesheet"
-  >
 
   <!-- Локально зібрані утиліти Tailwind CSS -->
   <script src="js/theme.js"></script>
@@ -42,17 +38,22 @@
   <!-- CSS-змінні, типографіка та специфічні стилі проєкту -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/motion.css">
+  <script defer src="js/motion.js"></script>
+  <script defer src="js/training-model.js"></script>
+  <script defer src="js/training-preview.js"></script>
   <!-- Початок підключення Time.is: сервіс та локальна ініціалізація -->
-  <script src="https://widget.time.is/t.js" defer></script>
   <script src="js/time-widget.js" defer></script>
   <!-- Кінець підключення Time.is -->
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "КіберЛьвів", "url": "https://gilded-rabanadas-6b2d18.netlify.app/", "inLanguage": "uk", "description": "Навчальний проєкт КіберЛьвів: калькулятор тренувань у CS2, Dota 2 та Valorant, практичні статті й гід для батьків."}</script>
-  <link id="swiper-css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.2.10/swiper-bundle.min.css" integrity="sha384-gAPqlBuTCdtVcYt9ocMOYWrnBZ4XSL6q+4eXqwNycOr4iFczhNKtnYhF3NEXJM51" crossorigin="anonymous">
-  <link id="glightbox-css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/css/glightbox.min.css" integrity="sha384-GPAzSuZc0kFvdIev6wm9zg8gnafE8tLso7rsAYQfc9hAdWCpOcpcNI5W9lWkYcsd" crossorigin="anonymous">
+  <link id="swiper-css" rel="stylesheet" href="assets/vendor/swiper-bundle.min.css">
+  <link id="glightbox-css" rel="stylesheet" href="assets/vendor/glightbox.min.css">
   <link rel="stylesheet" href="css/media-gallery.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/swiper@11.2.10/swiper-bundle.min.js" integrity="sha384-2UI1PfnXFjVMQ7/ZDEF70CR943oH3v6uZrFQGGqJYlvhh4g6z6uVktxYbOlAczav" crossorigin="anonymous"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/js/glightbox.min.js" integrity="sha384-MZZbZ6RXJudK43v1qY1zOWKOU2yfeBPatuFoKyHAaAgHTUZhwblRTc9CphTt4IGQ" crossorigin="anonymous"></script>
+  <script defer src="assets/vendor/swiper-bundle.min.js"></script>
+  <script defer src="assets/vendor/glightbox.min.js"></script>
   <script defer src="js/media-gallery.js"></script>
+  <link rel="stylesheet" href="css/reviews.css">
+  <script defer src="js/reviews.js"></script>
+  <script defer src="js/external-embeds.js"></script>
 </head>
 
 <body class="font-inter">
@@ -92,6 +93,8 @@
         <a class="nav-motion-link" href="parents.html">Для батьків</a>
         <a class="nav-motion-link" href="training.html">Тренування</a>
         <a class="nav-motion-link" href="tips.html">Поради</a>
+        <a class="nav-motion-link" href="contact.html">Контакти</a>
+        <a class="nav-motion-link" href="register.html">Запис</a>
         <a class="nav-motion-link nav-calculator-cta arrow-link" href="calculator.html">Калькулятор <span aria-hidden="true">→</span></a>
       </nav>
 
@@ -115,6 +118,8 @@
           <a class="nav-motion-link" href="parents.html">Для батьків</a>
           <a class="nav-motion-link" href="training.html">Тренування</a>
           <a class="nav-motion-link" href="tips.html">Поради</a>
+          <a class="nav-motion-link" href="contact.html">Контакти</a>
+          <a class="nav-motion-link" href="register.html">Запис</a>
           <a class="nav-motion-link nav-calculator-cta arrow-link" href="calculator.html">Калькулятор <span aria-hidden="true">→</span></a>
         </nav>
       </details>
@@ -138,13 +143,13 @@
             без шкоди здоров'ю
           </h1>
 
-          <p class="hero-description min-w-0 [overflow-wrap:anywhere]">
+          <h2 class="hero-description min-w-0 [overflow-wrap:anywhere]">
             Перший кіберспортивний хаб Західної України.
             Персональні AI-плани тренувань, заняття з професійними
             наставниками та прозорі звіти прогресу для батьків
             у єдиній екосистемі.
-          </p>
-          <p class="hero-project-note">Навчальна концепція. Зараз доступні калькулятор часу й практичні матеріали; AI-плани, звіти прогресу та заняття з наставниками — напрями подальшого розвитку.</p>
+          </h2>
+          <p class="hero-project-note">«КіберЛьвів» — навчальний проєкт. AI-плани, заняття з наставниками й звіти прогресу — частина концепції. <a href="about.html" class="text-link">Про можливості сайту й плани розвитку</a>.</p>
 
           <div class="flex flex-wrap items-center gap-ui-3">
             <a
@@ -169,6 +174,108 @@
         </div>
       </div>
     </section>
+
+    <section id="training-gallery" class="media-gallery section-dark" aria-labelledby="training-gallery-title">
+      <div class="site-container">
+        <div class="section-heading">
+          <h2 id="training-gallery-title">Знайди потрібне в КіберЛьвові</h2>
+          <p>Склади план, оберіть вправу або знайдіть поради. Натисни на ілюстрацію, щоб переглянути розділ перед переходом.</p>
+        </div>
+        <div class="media-stage">
+        <div class="swiper media-swiper">
+          <div class="swiper-wrapper" id="training-gallery-slides">
+            <article class="swiper-slide">
+              <a class="media-card-visual" href="calculator.html" data-media-preview="calculator" aria-label="Переглянути: Калькулятор тренувань">
+                <img src="assets/images/about-practice-visual.svg" alt="" width="640" height="360" loading="lazy" decoding="async">
+              </a>
+              <div class="media-card-copy">
+                <h3>Калькулятор тренувань</h3>
+                <p>Склади заняття з розминки, вправ і матчів під час, який маєте.</p>
+                <a class="media-card-link arrow-link text-link" href="calculator.html">Розрахувати план <span aria-hidden="true">→</span></a>
+              </div>
+            </article>
+            <article class="swiper-slide">
+              <a class="media-card-visual" href="training.html" data-media-preview="training" aria-label="Переглянути: Тренувальні програми">
+                <img src="assets/images/blog-training.svg" alt="" width="640" height="360" loading="lazy" decoding="async">
+              </a>
+              <div class="media-card-copy">
+                <h3>Тренувальні програми</h3>
+                <p>Оберіть CS2, Dota 2 або Valorant і знайдіть вправи для своєї навички.</p>
+                <a class="media-card-link arrow-link text-link" href="training.html">Обрати програму <span aria-hidden="true">→</span></a>
+              </div>
+            </article>
+            <article class="swiper-slide">
+              <a class="media-card-visual" href="parents.html" data-media-preview="parents" aria-label="Переглянути: Гід для батьків">
+                <img src="assets/images/blog-parents.svg" alt="" width="640" height="360" loading="lazy" decoding="async">
+              </a>
+              <div class="media-card-copy">
+                <h3>Гід для батьків</h3>
+                <p>Розберися, що таке кіберспорт і як домовитися про час за грою.</p>
+                <a class="media-card-link arrow-link text-link" href="parents.html">Відкрити гід <span aria-hidden="true">→</span></a>
+              </div>
+            </article>
+            <article class="swiper-slide">
+              <a class="media-card-visual" href="tips.html" data-media-preview="tips" aria-label="Переглянути: Поради для гравців">
+                <img src="assets/images/blog-balance.svg" alt="" width="640" height="360" loading="lazy" decoding="async">
+              </a>
+              <div class="media-card-copy">
+                <h3>Поради для гравців</h3>
+                <p>Дізнайся, як планувати практику, робити перерви та розбирати матчі.</p>
+                <a class="media-card-link arrow-link text-link" href="tips.html">Почитати поради <span aria-hidden="true">→</span></a>
+              </div>
+            </article>
+            <article class="swiper-slide">
+              <a class="media-card-visual" href="#reviews" data-media-preview="reviews" aria-label="Переглянути: Відгуки про сайт">
+                <img src="assets/images/tips-guide-visual.svg" alt="" width="640" height="360" loading="lazy" decoding="async">
+              </a>
+              <div class="media-card-copy">
+                <h3>Відгуки про сайт</h3>
+                <p>Поділись, що вже допомогло та яких матеріалів тобі бракує.</p>
+                <a class="media-card-link arrow-link text-link" href="#reviews">Перейти до відгуків <span aria-hidden="true">→</span></a>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div class="media-controls" role="group" aria-label="Керування галереєю" hidden>
+          <button class="media-arrow media-arrow-prev" type="button" data-media-prev aria-label="Попередній слайд" aria-controls="training-gallery-slides">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg>
+          </button>
+          <div class="swiper-pagination media-dots"></div>
+          <button class="media-arrow media-arrow-next" type="button" data-media-next aria-label="Наступний слайд" aria-controls="training-gallery-slides">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg>
+          </button>
+            <button class="media-autoplay" type="button" data-media-autoplay aria-label="Авто: прокручування слайдів" aria-pressed="true" aria-controls="training-gallery-slides">
+            <svg class="media-icon-pause" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M4 3h2.5v10H4zm5.5 0H12v10H9.5z"/></svg>
+            <svg class="media-icon-play" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M5 3v10l8-5z"/></svg>
+            <span aria-hidden="true">Авто</span>
+          </button>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <template id="media-preview-template">
+      <div class="site-preview">
+        <div class="site-preview-top">
+          <span>КіберЛьвів <span aria-hidden="true">/</span> Огляд розділу</span>
+          <button type="button" class="site-preview-close gtrigger-close" aria-label="Закрити прев’ю">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+          </button>
+        </div>
+        <div class="site-preview-body">
+          <div class="site-preview-intro">
+            <h2 id="site-preview-title"></h2>
+            <p class="site-preview-description"></p>
+            <a class="site-preview-cta motion-button" href="index.html"></a>
+          </div>
+          <div class="site-preview-sample">
+            <h3 class="site-preview-sample-title"></h3>
+            <dl class="site-preview-rows"></dl>
+            <p class="site-preview-note" hidden></p>
+          </div>
+        </div>
+      </div>
+    </template>
 
     <!-- ПРОЦЕС: КАРТКИ ТА АДАПТИВНА СІТКА -->
     <section
@@ -202,7 +309,7 @@
                      bg-navy min-[701px]:min-h-[118px]"
             >
               <img loading="lazy"
-                src="assets/icons/Ігровий%20таймер%20із%20контролером%201%20(Traced)%20(1).svg"
+                src="assets\icons\feature-icon-1.png"
                 alt=""
                 aria-hidden="true"
                 width="38"
@@ -213,11 +320,11 @@
 
             <div class="p-ui-4">
               <h3 class="mb-ui-2 text-copy font-bold">
-                Обери гру та вкажи час
+                Оберіть гру та вкажіть час
               </h3>
 
               <p class="mb-0 text-sm text-muted">
-                Обери гру, фокус практики та кількість матчів або доступний час.
+                Оберіть гру, фокус практики та кількість матчів або доступний час.
               </p>
             </div>
           </article>
@@ -232,7 +339,7 @@
                      bg-navy-soft min-[701px]:min-h-[118px]"
             >
               <img
-                src="assets/icons/Мінімалістична%20іконка%20геймера%20з%20гарнітурою%201%20(Traced)%20(1).svg"
+                src="assets\icons\feature-icon-3.png"
                 alt=""
                 aria-hidden="true"
                 width="38"
@@ -244,7 +351,7 @@
 
             <div class="p-ui-4">
               <h3 class="mb-ui-2 text-copy font-bold">
-                Переглянь розрахунок часу
+                Перегляньте розрахунок часу
               </h3>
 
               <p class="mb-0 text-sm text-muted">
@@ -263,7 +370,7 @@
                      bg-navy min-[701px]:min-h-[118px]"
             >
               <img loading="lazy"
-                src="assets/icons/Зростання%20до%20золотої%20нагороди%201%20(Traced)%20(1).svg"
+                src="assets\icons\feature-icon-2.png"
                 alt=""
                 aria-hidden="true"
                 width="38"
@@ -274,29 +381,18 @@
 
             <div class="p-ui-4">
               <h3 class="mb-ui-2 text-copy font-bold">
-                Виконуй план тренувань
+                Виконуйте план тренувань
               </h3>
 
               <p class="mb-0 text-sm text-muted">
-                Скоригуй параметри або завантаж план. Висновки після заняття записуй самостійно.
+                Скоригуйте параметри або завантажте план. Висновки після заняття записуйте самостійно.
               </p>
             </div>
           </article>
         </div>
 
         <div class="section-actions">
-          <a
-            href="calculator.html"
-            class="motion-button inline-flex min-h-[44px] items-center justify-center
-                   rounded-ui-sm border border-transparent
-                   bg-accent px-ui-5 py-ui-2
-                   text-center text-small font-semibold
-                   text-on-accent no-underline
-                   transition-colors duration-180
-                   hover:bg-accent-dark active:bg-accent-dark"
-          >
-            Перейти до калькулятора
-          </a>
+
 
           <a class="arrow-link text-link transition-shadow duration-180" href="#planning">
             Переваги планування
@@ -304,11 +400,12 @@
           </a>
         </div>
       </div>
-    <nav class="site-container home-programs" aria-label="Програми тренувань за грою">
+    <nav id="home-programs" class="site-container home-programs" aria-label="Програми тренувань за грою">
  <a href="training.html#cs2"><strong>CS2</strong><span>Стрільба, гранати й командні виходи →</span></a>
  <a href="training.html#dota-2"><strong>Dota 2</strong><span>Лінія, фарм і рішення за мінікартою →</span></a>
  <a href="training.html#valorant"><strong>Valorant</strong><span>Позиції, здібності й розбір раунду →</span></a>
 </nav>
+      <div class="site-container"><p class="page-field-help">Програми вище підходять для самостійної практики. Якщо хочете обговорити заняття з наставником, <a class="text-link" href="register.html#booking-options">порівняйте пакети та ціни</a>.</p></div>
     </section>
 
     <!-- КАЛЬКУЛЯТОР -->
@@ -324,7 +421,7 @@
           <h2 id="calculator-title">Знайди баланс між грою та життям</h2>
 
           <p>
-            Порахуй час одного заняття та тижня: вправи, повні матчі, аналіз, очікування й перерви.
+            Порахуйте час одного заняття та тижня: вправи, повні матчі, аналіз, очікування й перерви.
           </p>
 
           <div class="inline-actions">
@@ -337,16 +434,15 @@
           </div>
         </div>
 
-        <!-- Статичне прев’ю: власні значення вводяться на calculator.html. -->
         <article class="calculator-preview" aria-labelledby="calculator-preview-title">
- <div class="preview-heading"><span class="preview-eyebrow">Приклад за початковими параметрами</span><h3 id="calculator-preview-title">Одне заняття у CS2</h3><p>За кількістю матчів або за доступним часом — обери свій режим у калькуляторі.</p></div>
- <dl class="preview-fields preview-current-fields">
-  <div><dt>Матчів за заняття</dt><dd><strong>2</strong><span>по 40 хвилин</span></dd></div>
-  <div><dt>Розминка, вправи й аналіз</dt><dd><strong>45 хв</strong></dd></div>
-  <div><dt>Очікування й перерва</dt><dd><strong>20 хв</strong></dd></div>
- </dl>
- <p class="preview-total"><strong>2 год 25 хв</strong><span>повна тривалість одного заняття</span></p>
- <div class="preview-footer"><p>Редагований приклад. Власні значення задаються у формі.</p><a href="calculator.html" class="motion-button page-button">Відкрити калькулятор</a> <a class="text-link practice-link" href="training.html">Програми тренувань →</a></div>
+ <div class="preview-heading"><span class="preview-eyebrow">Швидкий розрахунок</span><h3 id="calculator-preview-title">Що вміститься в одне заняття?</h3><p>Спробуйте на прикладі CS2. Гру й навичку можна змінити у повному калькуляторі.</p></div>
+ <form id="training-quick" class="training-quick" action="calculator.html" hidden>
+  <label for="training-quick-budget">Скільки часу маєте на заняття?</label>
+  <div><input class="page-input" id="training-quick-budget" name="budget" type="number" min="1" max="1440" step="1" inputmode="numeric" value="90" required aria-describedby="training-quick-result"><span>хв</span></div>
+  <p id="training-quick-result" role="status"></p>
+  <button class="motion-button page-button" type="submit">Налаштувати цей план</button>
+ </form>
+ <div class="preview-footer"><a href="calculator.html" class="motion-button page-button">Відкрити калькулятор</a> <a class="text-link practice-link" href="training.html">Програми тренувань →</a></div>
 </article>
       </div>
     </section>
@@ -367,7 +463,7 @@
           <article class="feature-item">
             <span class="feature-icon shrink-0">
               <img width="32" height="32"
-                src="assets/icons/Мінімалістична%20іконка%20геймера%20з%20гарнітурою%201%20(Traced)%20(1).svg"
+                src="assets\icons\feature-icon-3.png"
                 alt=""
                 aria-hidden="true"
                 loading="lazy"
@@ -375,9 +471,9 @@
             </span>
 
             <div>
-              <h3>Структура під твій час</h3>
+              <h3>Структура під ваш час</h3>
               <p class="text-sm">
-                Обери фокус практики та задай тривалість блоків. Структуру можна змінити перед наступним заняттям.
+                Оберіть фокус практики та задай тривалість блоків. Структуру можна змінити перед наступним заняттям.
               </p>
             </div>
           </article>
@@ -385,7 +481,7 @@
           <article class="feature-item">
             <span class="feature-icon shrink-0">
               <img width="32" height="32"
-                src="assets/icons/Ігровий%20таймер%20із%20контролером%201%20(Traced)%20(1).svg"
+                src="assets\icons\feature-icon-1.png"
                 alt=""
                 aria-hidden="true"
                 loading="lazy"
@@ -403,7 +499,7 @@
           <article class="feature-item">
             <span class="feature-icon shrink-0">
               <img width="32" height="32"
-                src="assets/icons/Зростання%20до%20золотої%20нагороди%201%20(Traced)%20(1).svg"
+                src="assets\icons\feature-icon-2.png"
                 alt=""
                 aria-hidden="true"
                 loading="lazy"
@@ -413,24 +509,13 @@
             <div>
               <h3>Перегляд і коригування</h3>
               <p class="text-sm">
-                Повернися до параметрів після практики й уточни свій план. Історія виконання на сайті не зберігається.
+                Поверніться до параметрів після практики й уточніть свій план. Історія виконання на сайті не зберігається.
               </p>
             </div>
           </article>
 
           <div class="inline-actions">
-            <a
-              href="calculator.html"
-              class="motion-button inline-flex min-h-[44px] items-center justify-center
-                     rounded-ui-sm border border-transparent
-                     bg-accent px-ui-5 py-ui-2
-                     text-center text-small font-semibold
-                     text-on-accent no-underline
-                     transition-colors duration-180
-                     hover:bg-accent-dark active:bg-accent-dark"
-            >
-              Перейти до калькулятора
-            </a>
+
 
             <a class="arrow-link text-link transition-shadow duration-180" href="#weekly">
               Приклад розподілу часу
@@ -439,24 +524,24 @@
           </div>
         </div>
 
-        <!-- Початок медіавставки: проморолик концепції КіберЛьвів із YouTube -->
+        <!-- Відео про кіберспорт українською -->
         <figure class="m-0 min-w-0 w-full lg:w-1/2">
           <div class="relative aspect-video w-full min-w-0 overflow-hidden rounded-ui-md shadow-card bg-navy">
-            <iframe
+            <button class="external-embed-button page-button" type="button" hidden aria-controls="external-embed-1" data-embed-load>Завантажити відео</button><iframe id="external-embed-1" hidden
               class="absolute inset-0 h-full w-full border-0"
-              src="https://www.youtube-nocookie.com/embed/ORu-XSS-mxU"
-              title="КіберЛьвів — проморолик концепції кіберспортивної академії"
+              data-embed-src="https://www.youtube-nocookie.com/embed/mlPefAjdj7Q"
+              title="Що таке кіберспорт? Інтерв’ю Lviv.Media з Андрієм Грищенком"
               loading="lazy"
               referrerpolicy="strict-origin-when-cross-origin"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowfullscreen
-            ></iframe>
+            </iframe>
           </div>
           <figcaption class="mt-3 text-sm text-muted">
-            Проморолик навчального проєкту. Створено за допомогою ШІ
+            Що таке кіберспорт і як влаштовані команди й турніри? Українською, від Lviv.Media.
             <span class="block">
               <a
-            href="https://youtu.be/ORu-XSS-mxU"
+            href="https://www.youtube.com/watch?v=mlPefAjdj7Q"
             target="_blank"
             rel="noopener noreferrer"
             class="arrow-link mt-2 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-ink-soft no-underline transition-colors duration-180 hover:text-ink"
@@ -467,7 +552,6 @@
             </span>
           </figcaption>
         </figure>
-        <!-- Кінець медіавставки: проморолик концепції КіберЛьвів -->
       </div>
     </section>
 
@@ -485,10 +569,24 @@
         <div class="parent-features min-w-0 w-full lg:w-1/2">
           <p class="text-small text-white/70">Планування допомагає обговорювати навантаження, відпочинок і навчання разом із дитиною</p>
 
+          <div class="parents-typing">
+            <p data-typing>
+              <span class="sr-only">Запитайте дитину, у що вона грає</span>
+              <span class="cta-typing" aria-hidden="true">
+                <span class="cta-typing-measure">Запитайте дитину, у що вона грає</span>
+                <span class="cta-typing-measure">Домовтеся, коли завершувати гру</span>
+                <span class="cta-typing-measure">Обговоріть мету тренування</span>
+                <span class="cta-typing-measure">Заплануйте перерви й відпочинок</span>
+                <span class="cta-typing-measure">Разом підсумуйте, що вдалося</span>
+                <span class="cta-typing-line"><span class="cta-typing-text">Запитайте дитину, у що вона грає</span></span>
+              </span>
+            </p>
+          </div>
+
           <article class="feature-item">
             <span class="feature-icon shrink-0">
               <img width="32" height="32"
-                src="assets/icons/Щит%20конфіденційності%20з%20оком%20сканування%201%20(Traced).svg"
+                src="assets\icons\feature-icon-4.png"
                 alt=""
                 aria-hidden="true"
                 loading="lazy"
@@ -507,7 +605,7 @@
           <article class="feature-item">
             <span class="feature-icon shrink-0">
               <img width="32" height="32"
-                src="assets/icons/Ігровий%20таймер%20із%20контролером%201%20(Traced)%20(1).svg"
+                src="assets\icons\feature-icon-1.png"
                 alt=""
                 aria-hidden="true"
                 loading="lazy"
@@ -526,7 +624,7 @@
           <article class="feature-item">
             <span class="feature-icon shrink-0">
               <img width="32" height="32"
-                src="assets/icons/Зростання%20до%20золотої%20нагороди%201%20(Traced)%20(1).svg"
+                src="assets\icons\feature-icon-2.png"
                 alt=""
                 aria-hidden="true"
                 loading="lazy"
@@ -547,12 +645,16 @@
               Відкрити гід для батьків
               <span aria-hidden="true">→</span>
             </a>
+            <a class="arrow-link text-link transition-shadow duration-180" href="register.html?applicant=parent#booking-options">
+              Переглянути формати для дитини
+              <span aria-hidden="true">→</span>
+            </a>
           </div>
         </div>
 
         <div class="visual-panel parents-photo min-w-0 w-full lg:w-1/2">
           <img
-            src="assets/images/parents-esports.jpg"
+            src="assets/images/parents-esports.webp"
             alt="Двоє гравців у навушниках разом дивляться на ігровий монітор"
             width="900"
             height="506"
@@ -577,7 +679,7 @@
           </h2>
 
           <p>
-            Тренування, навчання й відпочинок — в одному тижні. Переглянь приклад розподілу часу між щоденними справами.
+            Тренування, навчання й відпочинок — в одному тижні. Перегляньте приклад розподілу часу між щоденними справами.
           </p>
         </div>
 
@@ -598,7 +700,7 @@
           </div>
 
           <figure class="time-balance" aria-labelledby="time-balance-title" aria-describedby="time-balance-caption">
-            <h3 id="time-balance-title">Твій тиждень у годинах</h3>
+            <h3 id="time-balance-title">Ваш тиждень у годинах</h3>
             <div class="time-balance-layout grid min-w-0 grid-cols-1 sm:grid-cols-[minmax(0,0.9fr)_minmax(0,1.2fr)]">
               <svg class="time-balance-chart" viewBox="0 0 220 220" role="img" aria-labelledby="time-balance-svg-title time-balance-svg-desc">
                 <title id="time-balance-svg-title">Тиждень: 168 годин</title>
@@ -626,20 +728,7 @@
             <figcaption id="time-balance-caption">Приклад розподілу 168 годин</figcaption>
           </figure>
         </div>
-        <div class="section-actions">
-            <a
-              href="calculator.html"
-              class="motion-button inline-flex min-h-[44px] items-center justify-center
-                     rounded-ui-sm border border-transparent
-                     bg-accent px-ui-5 py-ui-2
-                     text-center text-small font-semibold
-                     text-on-accent no-underline
-                     transition-colors duration-180
-                     hover:bg-accent-dark active:bg-accent-dark"
-            >
-              Перейти до калькулятора
-            </a>
-          </div>
+
       </div>
     </section>
 
@@ -850,70 +939,6 @@
       </div>
     </section>
 
-    <section id="training-gallery" class="media-gallery section-dark" aria-labelledby="training-gallery-title">
-      <div class="site-container">
-        <div class="section-heading">
-          <h2 id="training-gallery-title">Від розминки до аналізу</h2>
-          <p>П’ять етапів, з яких можна скласти тренувальне заняття. Натисни на ілюстрацію, щоб відкрити її у повному розмірі.</p>
-        </div>
-        <div class="swiper media-swiper">
-          <div class="swiper-wrapper" id="training-gallery-slides">
-            <article class="swiper-slide">
-              <a class="media-card-visual media-icon" href="assets/icons/Мінімалістична іконка геймера з гарнітурою 1 (Traced) (1).svg" data-gallery="training-steps" data-type="image" data-title="Розминка" data-alt="Розминка" aria-label="Відкрити ілюстрацію: Розминка">
-                <img src="assets/icons/Мінімалістична іконка геймера з гарнітурою 1 (Traced) (1).svg" alt="" width="1254" height="1254" loading="lazy" decoding="async">
-              </a>
-              <div class="media-card-copy">
-                <h3><span class="sr-only">Етап 01: </span>Розминка</h3>
-                <p>Кілька хвилин простих повторів перед основним навантаженням.</p>
-              </div>
-            </article>
-            <article class="swiper-slide">
-              <a class="media-card-visual" href="assets/images/about-practice-visual.svg" data-gallery="training-steps" data-type="image" data-title="Мета заняття" data-alt="Мета заняття" aria-label="Відкрити ілюстрацію: Мета заняття">
-                <img src="assets/images/about-practice-visual.svg" alt="" width="640" height="360" loading="lazy" decoding="async">
-              </a>
-              <div class="media-card-copy">
-                <h3><span class="sr-only">Етап 02: </span>Мета заняття</h3>
-                <p>Обери одну навичку й заздалегідь визнач, як виміряєш прогрес.</p>
-              </div>
-            </article>
-            <article class="swiper-slide">
-              <a class="media-card-visual media-icon" href="assets/icons/Ігровий таймер із контролером 1 (Traced) (1).svg" data-gallery="training-steps" data-type="image" data-title="Цільові повтори" data-alt="Цільові повтори" aria-label="Відкрити ілюстрацію: Цільові повтори">
-                <img src="assets/icons/Ігровий таймер із контролером 1 (Traced) (1).svg" alt="" width="1254" height="1254" loading="lazy" decoding="async">
-              </a>
-              <div class="media-card-copy">
-                <h3><span class="sr-only">Етап 03: </span>Цільові повтори</h3>
-                <p>Працюй короткими серіями з паузою, щоб оцінити якість виконання.</p>
-              </div>
-            </article>
-            <article class="swiper-slide">
-              <a class="media-card-visual" href="assets/images/blog-training.svg" data-gallery="training-steps" data-type="image" data-title="Практика в грі" data-alt="Практика в грі" aria-label="Відкрити ілюстрацію: Практика в грі">
-                <img src="assets/images/blog-training.svg" alt="" width="640" height="360" loading="lazy" decoding="async">
-              </a>
-              <div class="media-card-copy">
-                <h3><span class="sr-only">Етап 04: </span>Практика в грі</h3>
-                <p>Перевір обрану навичку в матчі або в контрольованому сценарії.</p>
-              </div>
-            </article>
-            <article class="swiper-slide">
-              <a class="media-card-visual media-icon" href="assets/icons/Зростання до золотої нагороди 1 (Traced) (1).svg" data-gallery="training-steps" data-type="image" data-title="Підсумок" data-alt="Підсумок" aria-label="Відкрити ілюстрацію: Підсумок">
-                <img src="assets/icons/Зростання до золотої нагороди 1 (Traced) (1).svg" alt="" width="1254" height="1254" loading="lazy" decoding="async">
-              </a>
-              <div class="media-card-copy">
-                <h3><span class="sr-only">Етап 05: </span>Підсумок</h3>
-                <p>Запиши один висновок і виріши, що повторити наступного разу.</p>
-              </div>
-            </article>
-          </div>
-        </div>
-        <div class="media-controls" role="group" aria-label="Керування галереєю" hidden>
-          <button type="button" data-media-prev aria-label="Попередній слайд" aria-controls="training-gallery-slides">←</button>
-          <button type="button" data-media-next aria-label="Наступний слайд" aria-controls="training-gallery-slides">→</button>
-          <div class="swiper-pagination media-dots"></div>
-          <button type="button" data-media-autoplay>Призупинити</button>
-        </div>
-      </div>
-    </section>
-
     <!-- ФІНАЛЬНИЙ ЗАКЛИК ДО ДІЇ -->
     <section
       class="final-cta section-dark"
@@ -923,13 +948,12 @@
         <h2 id="cta-title">Плануй час, грай краще</h2>
 
         <p>
-          Розрахунок ігрового часу допомагає тренуватися
-          розумно й відпочивати вчасно.
+          Виберіть вправу для наступного заняття або перегляньте поради для батьків.
         </p>
 
         <div class="section-actions">
           <a
-            href="calculator.html"
+            href="training.html"
             class="motion-button inline-flex min-h-[44px] items-center justify-center
                    rounded-ui-sm border border-transparent
                    bg-accent px-ui-5 py-ui-2
@@ -938,11 +962,11 @@
                    transition-colors duration-180
                    hover:bg-accent-dark active:bg-accent-dark"
           >
-            Перейти до калькулятора
+            Обрати вправу
           </a>
 
           <a
-            href="#process"
+            href="parents.html"
             class="motion-button inline-flex min-h-[44px] items-center justify-center
                    rounded-ui-sm border border-white/70
                    bg-transparent px-ui-5 py-ui-2
@@ -952,7 +976,7 @@
                    hover:bg-surface hover:text-ink
                    active:bg-surface active:text-ink"
           >
-            Як це працює
+            Матеріали для батьків
           </a>
         </div>
       </div>
@@ -964,6 +988,7 @@
           <h2 id="location-title">КіберЛьвів у Львові</h2>
           <p>Львів — місто навчального проєкту. На карті показано загальний огляд міста, а не адресу академії</p>
         </div>
+        <details class="location-resources"><summary>Карта і поточний час у Львові</summary>
         <!-- Початок віджета Time.is: поточний час у Львові -->
         <aside aria-label="Поточний час у Львові"
                class="mx-auto mb-6 w-full min-w-0 max-w-sm rounded-ui-md border border-line bg-surface p-4 text-center text-ink shadow-card">
@@ -981,7 +1006,7 @@
             id="time-widget-toggle"
             aria-expanded="true"
             aria-controls="time-widget-content"
-            class="motion-button mt-3 inline-flex min-h-[44px] items-center justify-center rounded-ui-sm
+            class="motion-button mt-3 inline-flex min-h-[48px] items-center justify-center rounded-ui-sm
                    border border-ink-soft bg-transparent px-4 py-2 text-center text-small
                    font-semibold text-ink-soft transition-colors duration-180
                    hover:bg-navy-soft hover:text-on-navy"
@@ -990,19 +1015,57 @@
           </button>
         </aside>
         <!-- Кінець віджета Time.is: поточний час у Львові -->
-        <div class="h-72 w-full overflow-hidden rounded-ui-md shadow-card md:h-96">
-          <iframe
-            class="block h-full w-full border-0"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d83424.98294889944!2d23.929835256241514!3d49.83265984439919!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473add7c09109a57%3A0x4223c517012378e2!2z0JvRjNCy0ZbQsiwg0JvRjNCy0ZbQstGB0YzQutCwINC-0LHQu9Cw0YHRgtGMLCA3OTAwMA!5e1!3m2!1suk!2sua!4v1793045124248!5m2!1suk!2sua"
+        <div class="location-map w-full overflow-hidden rounded-ui-md">
+          <button class="external-embed-button page-button" type="button" hidden aria-controls="external-embed-2" data-embed-load>Завантажити карту</button><iframe id="external-embed-2" hidden
+            class="block w-full border-0 location-map-frame"
+            data-embed-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d83424.98294889944!2d23.929835256241514!3d49.83265984439919!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473add7c09109a57%3A0x4223c517012378e2!2z0JvRjNCy0ZbQsiwg0JvRjNCy0ZbQstGB0YzQutCwINC-0LHQu9Cw0YHRgtGMLCA3OTAwMA!5e1!3m2!1suk!2sua!4v1793045124248!5m2!1suk!2sua"
             title="Карта Львова — міста навчального проєкту КіберЛьвів"
             allowfullscreen
             loading="lazy"
             referrerpolicy="strict-origin-when-cross-origin"
-          ></iframe>
+          </iframe>
         </div>
+        </details>
       </div>
     </section>
     <!-- Кінець вставки Google Maps: загальний огляд Львова для навчального проєкту -->
+
+    <section id="reviews" class="reviews section-light" aria-labelledby="reviews-title">
+      <div class="site-container">
+        <div class="reviews-heading">
+          <div><h2 id="reviews-title">Відгуки про КіберЛьвів</h2>
+          <p>Поділись, що допомогло у тренуванні та чого бракує на сайті.</p></div>
+          <a class="motion-button reviews-cta" href="contact.html?topic=review#contact-form">Залишити відгук <span aria-hidden="true">→</span></a>
+        </div>
+        <p class="reviews-note">Нижче — демонстраційні приклади, а не відгуки реальних користувачів.</p>
+        <div class="reviews-grid">
+          <article class="review-card"><h3>Планування заняття</h3><p class="review-rating"><span aria-hidden="true">★★★★★</span> <span>5 із 5</span></p><blockquote>Зручніше бачити окремо час на розминку, вправи та розбір матчу.</blockquote></article>
+          <article class="review-card"><h3>Програми тренувань</h3><p class="review-rating"><span aria-hidden="true">★★★★☆</span> <span>4 із 5</span></p><blockquote>Приклади дають конкретну вправу для старту. Хотілося б більше варіантів для новачків.</blockquote></article>
+          <article class="review-card"><h3>Матеріали для батьків</h3><p class="review-rating"><span aria-hidden="true">★★★★★</span> <span>5 із 5</span></p><blockquote>Гід допомагає обговорити ігровий час та домовитися, коли завершувати заняття.</blockquote></article>
+        </div>
+        <article class="review-card review-local" id="review-local" aria-labelledby="review-local-title" hidden>
+          <h3 id="review-local-title">Мій відгук</h3>
+          <p class="reviews-note">Чернетка, видима лише в цьому браузері.</p>
+          <p class="review-rating" id="review-local-rating"></p>
+          <blockquote id="review-local-message"></blockquote>
+          <button type="button" class="reviews-remove" id="review-local-remove">Прибрати чернетку</button>
+        </article>
+        <p class="sr-only" id="review-local-status" role="status"></p>
+      </div>
+    </section>
+
+    <section id="feedback" class="final-cta section-dark" aria-labelledby="feedback-title">
+      <div class="site-container">
+        <h2 id="feedback-title">Маєш запитання чи пропозицію?</h2>
+        <p>Напишіть, якщо результат калькулятора незрозумілий, помітив помилку на сайті або хочете запропонувати нову вправу.</p>
+        <div class="section-actions">
+          <a href="contact.html#contact-form"
+             class="motion-button inline-flex min-h-[44px] items-center justify-center rounded-ui-sm border border-transparent bg-accent px-ui-5 py-ui-2 text-center text-small font-semibold text-on-accent no-underline transition-colors duration-180 hover:bg-accent-dark active:bg-accent-dark">
+            Написати нам <span class="ml-2" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- ФУТЕР: ЗБЕРЕЖЕНО ДВОЯРУСНУ СТРУКТУРУ САЙТУ -->
@@ -1045,6 +1108,7 @@
           <a href="tips.html">Поради</a>
           <a href="calculator.html">Калькулятор</a>
           <a href="results.html?example=1">Приклад результатів</a>
+                  <a href="register.html">Запис на тренування</a>
         </nav>
       </div>
 

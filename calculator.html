@@ -25,13 +25,7 @@
 
   <title>Калькулятор ігрового часу | КіберЛьвів</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
-    rel="stylesheet"
-  >
 
   <!-- Локально зібрані утиліти Tailwind CSS -->
   <script src="js/theme.js"></script>
@@ -40,6 +34,7 @@
   <!-- CSS-змінні, типографіка та специфічні стилі проєкту -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/motion.css">
+  <script defer src="js/motion.js"></script>
 
   <link rel="stylesheet" href="css/pages.css">
 </head>
@@ -78,6 +73,8 @@
         <a class="nav-motion-link" href="parents.html">Для батьків</a>
         <a class="nav-motion-link" href="training.html">Тренування</a>
         <a class="nav-motion-link" href="tips.html">Поради</a>
+        <a class="nav-motion-link" href="contact.html">Контакти</a>
+        <a class="nav-motion-link" href="register.html">Запис</a>
         <a class="nav-motion-link nav-calculator-cta arrow-link" href="calculator.html" aria-current="page">Калькулятор <span aria-hidden="true">→</span></a>
       </nav>
 
@@ -101,6 +98,8 @@
           <a class="nav-motion-link" href="parents.html">Для батьків</a>
           <a class="nav-motion-link" href="training.html">Тренування</a>
           <a class="nav-motion-link" href="tips.html">Поради</a>
+          <a class="nav-motion-link" href="contact.html">Контакти</a>
+          <a class="nav-motion-link" href="register.html">Запис</a>
           <a class="nav-motion-link nav-calculator-cta arrow-link" href="calculator.html" aria-current="page">Калькулятор <span aria-hidden="true">→</span></a>
         </nav>
       </details>
@@ -109,42 +108,65 @@
 <main id="main-content" tabindex="-1"><div class="site-container"><p id="app-load-status" class="training-notice" role="status">Завантаження інтерактивної частини… Якщо вона не з’явиться, оновіть сторінку. <a href="about.html#methodology">Формула та приклад</a> доступні окремо.</p></div><span id="top" class="page-top-anchor" aria-hidden="true"></span>
 <section class="page-section section-light" aria-labelledby="calculator-page-title">
  <div class="site-container">
+  <nav class="tips-breadcrumbs" aria-label="Шлях сторінкою"><a href="index.html">Головна</a><span aria-hidden="true">/</span><span aria-current="page">Калькулятор</span></nav>
   <div class="calculator-card">
    <span class="page-eyebrow">Тренування з конкретною метою</span>
    <h1 class="page-title page-title-rule" id="calculator-page-title">Сплануй тренування</h1>
-   <p class="page-muted">Визнач час для вправ, повних матчів і розбору. Обери, що вже знаєш: скільки матчів хочеш зіграти чи скільки часу маєш.</p>
-   <noscript><p class="training-notice">Для розрахунку потрібен JavaScript. Увімкни його в браузері та онови сторінку.</p></noscript>
+   <p class="page-muted">Оберіть гру, навичку та час. План оновлюється одразу.</p>
+   <noscript><p class="training-notice">Для розрахунку потрібен JavaScript. Увімкніть його в браузері та оновіть сторінку.</p></noscript>
    <form id="calculator-form" action="results.html" method="get" aria-describedby="calculator-method-note">
-    <fieldset class="page-fieldset"><legend>Режим розрахунку</legend>
-     <div class="training-mode-choices">
-      <label class="page-choice"><input class="page-choice-input" type="radio" name="mode" value="matches" checked><span>Знаю кількість матчів</span></label>
-      <label class="page-choice"><input class="page-choice-input" type="radio" name="mode" value="budget"><span>Маю обмежений час</span></label>
-     </div>
-    </fieldset>
-    <fieldset class="page-fieldset"><legend>Гра</legend>
+    <fieldset class="page-fieldset"><legend>1. У що граєте?</legend>
      <div class="game-choices">
       <label class="page-choice"><input class="page-choice-input" type="radio" name="game" value="CS2" checked required><span>CS2</span></label>
       <label class="page-choice"><input class="page-choice-input" type="radio" name="game" value="Dota 2" required><span>Dota 2</span></label>
       <label class="page-choice"><input class="page-choice-input" type="radio" name="game" value="Valorant" required><span>Valorant</span></label>
      </div>
     </fieldset>
-    <div class="training-form-grid">
-     <div class="page-field"><label for="training-focus">Фокус тренування</label><select class="page-input" id="training-focus" name="focus" required><option value="mechanics">Стрільба та рух</option></select></div>
-     <div class="page-field"><label for="days">Занять на тиждень</label><input class="page-input" id="days" name="days" type="number" min="1" max="7" step="1" inputmode="numeric" value="4" required aria-describedby="days-help"><p class="page-field-help" id="days-help">Від 1 до 7. Конкретні дні обираєш самостійно.</p></div>
-     <div id="matches-field"><div class="page-field"><label for="matches">Матчів за одне заняття</label><input class="page-input" id="matches" name="matches" type="number" min="1" max="50" step="1" inputmode="numeric" value="2" required></div></div>
-     <div id="budget-field" hidden><div class="page-field"><label for="budget">Доступний час на заняття, хв</label><input class="page-input" id="budget" name="budget" type="number" min="1" max="1440" step="1" inputmode="numeric" value="145" required aria-describedby="budget-help"><p class="page-field-help" id="budget-help">Разом із підготовкою, очікуванням та перервами.</p></div></div>
+    <div class="page-field"><label for="training-focus">2. Що хочете потренувати?</label><select class="page-input" id="training-focus" name="focus" required aria-describedby="focus-help"><option value="mechanics">Стрільба та рух</option></select><p class="page-field-help" id="focus-help">Навичка визначає вправу в плані. Час на вправи можна змінити в налаштуваннях.</p></div>
+    <label for="training-mode" class="training-mode-label">Що ви плануєте?</label>
+    <select class="page-input" id="training-mode" name="mode">
+     <option value="budget">Маю певний час</option><option value="matches">Хочу зіграти певну кількість матчів</option><option value="drills">Лише вправи</option>
+    </select>
+    <div id="budget-field" class="training-primary">
+     <div class="page-field"><label for="budget">Скільки часу маєте на одне заняття?</label><input class="page-input" id="budget" name="budget" type="number" min="1" max="1440" step="1" inputmode="numeric" value="90" required aria-describedby="budget-help"><p class="page-field-help" id="budget-help">Введіть хвилини або виберіть готовий варіант.</p></div>
+     <div class="training-presets" role="group" aria-label="Готові варіанти часу">
+      <button type="button" data-budget="30" aria-pressed="false">30 хв</button><button type="button" data-budget="60" aria-pressed="false">60 хв</button><button type="button" data-budget="90" aria-pressed="true">90 хв</button><button type="button" data-budget="120" aria-pressed="false">120 хв</button>
+     </div>
+     <p id="training-quick-summary" class="page-field-help" role="status"></p>
+     <p id="training-match-threshold" class="page-field-help"></p>
+     <button id="training-add-time" class="text-link training-error-action" type="button" hidden></button>
     </div>
-    <details class="training-settings">
-     <summary>Налаштувати тривалість блоків</summary>
-     <p class="page-muted">Початкові значення — редагований приклад. Тривалість матчу залежить від режиму гри; це оцінка для планування, а не обмеження матчу.</p>
+    <div id="matches-field" class="training-primary" hidden><div class="page-field"><label for="matches">Скільки матчів хочете зіграти?</label><input class="page-input" id="matches" name="matches" type="number" min="1" max="50" step="1" inputmode="numeric" value="2" required disabled></div></div>
+    <details class="training-settings" id="training-settings">
+     <summary>Змінити тривалість блоків або додати заняття на тиждень</summary>
+     <p class="page-muted">Тривалість матчу й очікування — приблизні. Змініть їх, якщо у твоєму режимі вони відрізняються.</p>
      <div class="training-form-grid">
-      <div class="page-field"><label for="warmup">Розминка, хв</label><input class="page-input" id="warmup" name="warmup" type="number" min="0" max="180" step="1" inputmode="numeric" value="10" required></div> <div class="page-field"><label for="drills">Цільові вправи, хв</label><input class="page-input" id="drills" name="drills" type="number" min="0" max="360" step="1" inputmode="numeric" value="20" required></div> <div class="page-field"><label for="matchLength">Один матч, хв</label><input class="page-input" id="matchLength" name="matchLength" type="number" min="5" max="180" step="1" inputmode="numeric" value="40" required aria-describedby="matchLength-help"><p class="page-field-help" id="matchLength-help">Початково: CS2 і Valorant — 40 хв, Dota 2 — 45 хв. Заміни власною оцінкою.</p></div> <div class="page-field"><label for="queue">Очікування перед кожним матчем, хв</label><input class="page-input" id="queue" name="queue" type="number" min="0" max="120" step="1" inputmode="numeric" value="5" required></div> <div class="page-field"><label for="review">Аналіз після заняття, хв</label><input class="page-input" id="review" name="review" type="number" min="0" max="180" step="1" inputmode="numeric" value="15" required></div> <div class="page-field"><label for="breakMinutes">Перерва між матчами, хв</label><input class="page-input" id="breakMinutes" name="breakMinutes" type="number" min="0" max="120" step="1" inputmode="numeric" value="10" required aria-describedby="breakMinutes-help"><p class="page-field-help" id="breakMinutes-help">Дві гри — одна перерва. Без матчів цей блок не додається.</p></div>
+      <div class="page-field"><label for="days">Занять на тиждень</label><input class="page-input" id="days" name="days" type="number" min="1" max="7" step="1" inputmode="numeric" value="1" required aria-describedby="days-help"><p class="page-field-help" id="days-help">План заняття повторюється стільки разів.</p></div>
+      <div class="page-field"><label for="warmup">Розминка, хв</label><input class="page-input" id="warmup" name="warmup" type="number" min="0" max="180" step="1" inputmode="numeric" value="10" required></div> <div class="page-field"><label for="drills">Цільові вправи, хв</label><input class="page-input" id="drills" name="drills" type="number" min="0" max="360" step="1" inputmode="numeric" value="20" required></div> <div class="page-field"><label for="matchLength">Один матч, хв</label><input class="page-input" id="matchLength" name="matchLength" type="number" min="5" max="180" step="1" inputmode="numeric" value="40" required aria-describedby="matchLength-help"><p class="page-field-help" id="matchLength-help">Початково: CS2 і Valorant — 40 хв, Dota 2 — 45 хв. Замініть власною оцінкою.</p></div> <div class="page-field"><label for="queue">Очікування перед кожним матчем, хв</label><input class="page-input" id="queue" name="queue" type="number" min="0" max="120" step="1" inputmode="numeric" value="5" required></div> <div class="page-field"><label for="review">Аналіз після заняття, хв</label><input class="page-input" id="review" name="review" type="number" min="0" max="180" step="1" inputmode="numeric" value="15" required></div> <div class="page-field"><label for="breakMinutes">Перерва між матчами, хв</label><input class="page-input" id="breakMinutes" name="breakMinutes" type="number" min="0" max="120" step="1" inputmode="numeric" value="10" required aria-describedby="breakMinutes-help"><p class="page-field-help" id="breakMinutes-help">Дві гри — одна перерва. Без матчів цей блок не додається.</p></div>
      </div>
     </details>
     <p class="training-error" id="calculator-error" role="alert" tabindex="-1" hidden></p>
+    <section class="training-live" id="training-live-heading-focus" aria-labelledby="training-live-title" tabindex="-1">
+     <h2 id="training-live-title">Твій план заняття</h2>
+     <p id="training-live-note" role="status">Підсумок з’явиться після завантаження калькулятора.</p>
+     <button id="training-error-action" class="text-link training-error-action" type="button" hidden>Перейти до поля з помилкою</button>
+     <dl id="training-live-values" hidden>
+      <div><dt>Одне заняття</dt><dd id="training-live-session"></dd></div>
+      <div id="training-live-week-item" hidden><dt>Разом за тиждень</dt><dd id="training-live-week"></dd></div>
+      <div><dt>Матчів за заняття</dt><dd id="training-live-matches"></dd></div>
+     </dl>
+     <ol id="training-live-steps" class="training-live-steps" hidden></ol>
+     <p id="training-live-exercise" hidden></p>
+     <p id="training-live-setup" class="page-field-help"></p>
+     <p id="training-live-changes" class="page-field-help" hidden></p>
+     <p id="training-live-warning" class="training-notice" hidden></p>
+     <button id="training-reserve-review" class="text-link training-error-action" type="button" hidden></button>
+     <a class="text-link training-error-action" id="training-open-exercise" href="training.html" hidden>Відкрити вправу →</a>
+    </section>
     <div class="page-form-actions">
-     <p class="page-field-help" id="calculator-method-note">Повний час включає очікування та перерви. Розрахунок виконується у браузері, без реєстрації.</p>
-     <button class="motion-button page-button" id="calculator-submit" type="submit" disabled>Розрахувати час</button>
+     <p class="page-field-help" id="calculator-method-note">Детальний план можна зберегти або поділитися посиланням.</p>
+     <button class="motion-button page-button" id="calculator-submit" type="submit" disabled>Переглянути деталі плану</button>
+     <a class="text-link" href="https://gilded-rabanadas-6b2d18.netlify.app/contact.html?topic=error#contact-form">Повідомити про проблему</a>
     </div>
    </form>
   </div>
@@ -158,12 +180,12 @@
  </div>
 </section>
 <section class="page-section section-light" id="calculator-examples" aria-labelledby="calculator-examples-title"><div class="site-container">
- <div class="about-heading"><span class="page-eyebrow">Приклади розрахунку</span><h2 id="calculator-examples-title">Що вміститься у твій час?</h2><p>Два варіанти для CS2 з однаковими початковими параметрами. Відкрий приклад і зміни тривалості під себе.</p></div>
+ <div class="about-heading"><span class="page-eyebrow">Приклади розрахунку</span><h2 id="calculator-examples-title">Що вміститься у твій час?</h2><p>Два варіанти для CS2 з однаковими початковими параметрами. Відкрийте приклад і змініть тривалості під себе.</p></div>
  <div class="about-two-grid">
-  <article class="about-card"><span class="badge">30 хв</span><h3>Відпрацювати одну дію</h3><p>10 хв розминки та 20 хв вправ. Повний матч не вміщується, а час на розбір скорочується до нуля. Якщо хочеш залишити 5 хв на висновок, зменш вправи до 15 хв і задай 5 хв розбору.</p><div class="page-actions"><a class="text-link practice-link" href="calculator.html?mode=budget&amp;game=CS2&amp;focus=mechanics&amp;days=1&amp;matches=1&amp;budget=30&amp;warmup=10&amp;drills=20&amp;matchLength=40&amp;queue=5&amp;review=15&amp;breakMinutes=10">Спробувати бюджет 30 хв →</a></div></article>
+  <article class="about-card"><span class="badge">30 хв</span><h3>Відпрацювати одну дію</h3><p>10 хв розминки та 20 хв вправ. Повний матч не вміщується, а час на розбір скорочується до нуля. Якщо хочете залишити 5 хв на висновок, зменшіть вправи до 15 хв і задай 5 хв розбору.</p><div class="page-actions"><a class="text-link practice-link" href="calculator.html?mode=budget&amp;game=CS2&amp;focus=mechanics&amp;days=1&amp;matches=1&amp;budget=30&amp;warmup=10&amp;drills=20&amp;matchLength=40&amp;queue=5&amp;review=15&amp;breakMinutes=10">Спробувати бюджет 30 хв →</a></div></article>
   <article class="about-card"><span class="badge">90 хв</span><h3>Перевірити навичку в матчі</h3><p>10 хв розминки, 20 хв вправ, 40 хв на матч, 5 хв очікування та 15 хв розбору. Це приклад із плановою тривалістю матчу: якщо потрібен запас часу, врахуй його у своїй оцінці.</p><div class="page-actions"><a class="text-link practice-link" href="calculator.html?mode=budget&amp;game=CS2&amp;focus=mechanics&amp;days=1&amp;matches=1&amp;budget=90&amp;warmup=10&amp;drills=20&amp;matchLength=40&amp;queue=5&amp;review=15&amp;breakMinutes=10">Спробувати бюджет 90 хв →</a></div></article>
  </div>
- <div class="page-actions"><a class="text-link practice-link" href="training.html">Обрати вправу для заняття →</a></div>
+ <div class="page-actions"><a class="text-link practice-link" id="calculator-program-link" href="training.html">Переглянути самостійну програму</a><a class="text-link" id="calculator-booking-link" href="register.html#booking-options">Переглянути пакети занять</a><a class="text-link" href="contact.html?topic=calculator#contact-form">Запитати про розрахунок</a></div>
 </div></section>
 </main>
 <footer id="footer" class="bg-navy py-ui-6 text-on-navy">

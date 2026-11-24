@@ -25,13 +25,7 @@
 
   <title>Вправи й ігрові канали | КіберЛьвів</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
-    rel="stylesheet"
-  >
 
   <!-- Локально зібрані утиліти Tailwind CSS -->
   <script src="js/theme.js"></script>
@@ -40,6 +34,7 @@
   <!-- CSS-змінні, типографіка та специфічні стилі проєкту -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/motion.css">
+  <script defer src="js/motion.js"></script>
 
   <link rel="stylesheet" href="css/pages.css">
 </head>
@@ -76,8 +71,10 @@
       >
         <a class="nav-motion-link" href="about.html">Про проєкт</a>
         <a class="nav-motion-link" href="parents.html">Для батьків</a>
-        <a class="nav-motion-link" href="training.html">Тренування</a>
+        <a class="nav-motion-link" href="training.html" aria-current="true">Тренування</a>
         <a class="nav-motion-link" href="tips.html">Поради</a>
+        <a class="nav-motion-link" href="contact.html">Контакти</a>
+        <a class="nav-motion-link" href="register.html">Запис</a>
         <a class="nav-motion-link nav-calculator-cta arrow-link" href="calculator.html">Калькулятор <span aria-hidden="true">→</span></a>
       </nav>
 
@@ -99,8 +96,10 @@
         >
           <a class="nav-motion-link" href="about.html">Про проєкт</a>
           <a class="nav-motion-link" href="parents.html">Для батьків</a>
-          <a class="nav-motion-link" href="training.html">Тренування</a>
+          <a class="nav-motion-link" href="training.html" aria-current="true">Тренування</a>
           <a class="nav-motion-link" href="tips.html">Поради</a>
+          <a class="nav-motion-link" href="contact.html">Контакти</a>
+          <a class="nav-motion-link" href="register.html">Запис</a>
           <a class="nav-motion-link nav-calculator-cta arrow-link" href="calculator.html">Калькулятор <span aria-hidden="true">→</span></a>
         </nav>
       </details>
@@ -109,8 +108,9 @@
 <main id="main-content" tabindex="-1"><span id="top" class="page-top-anchor" aria-hidden="true"></span>
 
 <section class="page-section section-dark" aria-labelledby="catalog-title"><div class="site-container">
+ <nav class="tips-breadcrumbs" aria-label="Шлях сторінкою"><a href="index.html">Головна</a><span aria-hidden="true">/</span><a href="training.html">Тренування</a><span aria-hidden="true">/</span><span aria-current="page">Вправи й ігрові канали</span></nav>
  <h1 class="page-title page-title-rule" id="catalog-title">Вправи й ігрові канали</h1>
- <p class="page-intro">Підбери вправу для самостійної практики за грою й навичкою або знайди ігровий канал у добірці незалежних авторів.</p>
+ <p class="page-intro">Підберіть вправу для самостійної практики за грою й навичкою або знайдіть ігровий канал у добірці незалежних авторів.</p>
  <form id="catalog-form" action="coaches.html" method="get">
  <fieldset class="catalog-filters catalog-live-filters" id="catalog-controls" disabled><legend class="visually-hidden">Фільтри прикладів тренувань</legend>
   <fieldset class="catalog-games"><legend>Гра</legend><div class="catalog-game-options">
@@ -119,7 +119,7 @@
    <label><input type="radio" name="game" value="Dota 2"><span>Dota 2</span></label>
    <label><input type="radio" name="game" value="Valorant"><span>Valorant</span></label>
   </div></fieldset>
-  <label for="filter-focus">Що хочеш покращити?<select id="filter-focus" class="page-input" name="focus"><option value="all">Усі навички</option><option value="team">Командна взаємодія</option><option value="review">Розбір раундів</option><option value="map">Гра на лінії й рішення на карті</option><option value="abilities">Здібності агента</option><option value="position">Позиціювання</option></select></label>
+  <label for="filter-focus">Що хочете покращити?<select id="filter-focus" class="page-input" name="focus"><option value="all">Усі навички</option><option value="team">Командна взаємодія</option><option value="review">Розбір раундів</option><option value="map">Гра на лінії й рішення на карті</option><option value="abilities">Здібності агента</option><option value="position">Позиціювання</option></select></label>
   <button class="page-button page-button-secondary" type="reset">Скинути фільтри</button>
  </fieldset></form><noscript><p>Для фільтрації потрібен JavaScript. Нижче доступні всі приклади тренувань.</p></noscript>
  <p class="page-field-help" id="catalog-availability" role="status" aria-live="polite">Показано прикладів: 4 із 4.</p>
@@ -129,25 +129,25 @@
  <div class="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4">
 <article class="coach-demo-card" aria-labelledby="cs2-team-title" data-game="CS2" data-focus="team review">
  <div class="coach-demo-cover"><img src="assets/images/coach-demo-cs2-team.svg" alt="" width="640" height="220" loading="lazy"></div>
- <div class="coach-demo-copy"><div class="coach-demo-labels"><span class="badge">CS2</span><span class="page-muted">Демонстраційний профіль</span></div>
+ <div class="coach-demo-copy"><div class="coach-demo-labels"><span class="badge">CS2</span></div>
  <h3 id="cs2-team-title">Командна гра й розбір раундів</h3><p>Підготовка виходів, короткі підказки для команди та розбір взаємодії з напарником.</p>
  <a class="text-link practice-link" href="training.html#cs2-positioning">Переглянути приклад вправи →</a></div>
  </article>
 <article class="coach-demo-card" aria-labelledby="dota-lane-title" data-game="Dota 2" data-focus="map">
  <div class="coach-demo-cover"><img src="assets/images/coach-demo-dota-lane.svg" alt="" width="640" height="220" loading="lazy"></div>
- <div class="coach-demo-copy"><div class="coach-demo-labels"><span class="badge">Dota 2</span><span class="page-muted">Демонстраційний профіль</span></div>
+ <div class="coach-demo-copy"><div class="coach-demo-labels"><span class="badge">Dota 2</span></div>
  <h3 id="dota-lane-title">Гра на лінії та рішення на карті</h3><p>Розбір добивань і позиції на лінії. Практика переходів між ділянками карти за доступною інформацією.</p>
  <a class="text-link practice-link" href="training.html#dota-2-lane">Переглянути приклад вправи →</a></div>
  </article>
 <article class="coach-demo-card" aria-labelledby="val-agent-title" data-game="Valorant" data-focus="abilities">
  <div class="coach-demo-cover"><img src="assets/images/coach-demo-val-agent.svg" alt="" width="640" height="220" loading="lazy"></div>
- <div class="coach-demo-copy"><div class="coach-demo-labels"><span class="badge">Valorant</span><span class="page-muted">Демонстраційний профіль</span></div>
+ <div class="coach-demo-copy"><div class="coach-demo-labels"><span class="badge">Valorant</span></div>
  <h3 id="val-agent-title">Здібності агента</h3><p>Повторення застосування здібностей у приватній грі та розбір їхнього таймінгу в командних діях.</p>
  <a class="text-link practice-link" href="training.html#valorant-utility">Переглянути приклад вправи →</a></div>
  </article>
 <article class="coach-demo-card" aria-labelledby="val-team-title" data-game="Valorant" data-focus="team position">
  <div class="coach-demo-cover"><img src="assets/images/coach-demo-val-team.svg" alt="" width="640" height="220" loading="lazy"></div>
- <div class="coach-demo-copy"><div class="coach-demo-labels"><span class="badge">Valorant</span><span class="page-muted">Демонстраційний профіль</span></div>
+ <div class="coach-demo-copy"><div class="coach-demo-labels"><span class="badge">Valorant</span></div>
  <h3 id="val-team-title">Позиціювання й комунікація</h3><p>Вибір позицій для підтримки напарника, короткі повідомлення в раунді та розбір командного виходу.</p>
  <a class="text-link practice-link" href="training.html#valorant-positioning">Переглянути приклад вправи →</a></div>
  </article></div>
@@ -201,15 +201,15 @@
 </article></div>
  </div>
 </section>
-<section class="page-section section-light page-centered page-accent-top" aria-labelledby="catalog-cta-title"><div class="site-container"><h2 id="catalog-cta-title">Заплануй час тренувань</h2><p>Обери гру та кількість матчів або доступний час одного заняття.</p><div class="page-actions"><a class="motion-button page-button" href="calculator.html">Перейти до калькулятора</a></div></div></section>
+<section class="page-section section-light page-centered page-accent-top" aria-labelledby="catalog-cta-title"><div class="site-container"><h2 id="catalog-cta-title">Заплануй час тренувань</h2><p>Оберіть гру та кількість матчів або доступний час одного заняття.</p><div class="page-actions"><a class="motion-button page-button" href="calculator.html">Перейти до калькулятора</a></div></div></section>
 <section class="page-section section-dark" id="coach-guide" aria-labelledby="coach-guide-title"><div class="site-container">
- <div class="about-heading"><span class="page-eyebrow">Перед першим заняттям</span><h2 id="coach-guide-title">Що запитати у наставника</h2><p>Якщо знайдеш тренера, почни з розмови про конкретну навичку та формат роботи. Навіть коротке пояснення покаже, чи підходить тобі його підхід.</p></div>
+ <div class="about-heading"><span class="page-eyebrow">Перед першим заняттям</span><h2 id="coach-guide-title">Що запитати у наставника</h2><p>Якщо знайдеш тренера, почніть з розмови про конкретну навичку та формат роботи. Навіть коротке пояснення покаже, чи підходить тобі його підхід.</p></div>
  <div class="about-three-grid">
   <article class="about-card"><h3>«З чим ви можете мені допомогти?»</h3><p>Назви гру, роль та ситуацію, яка регулярно повторюється. Наприклад: «Під час командного виходу я часто залишаюся надто далеко від напарника».</p></article>
-  <article class="about-card"><h3>«Як пройде заняття?»</h3><p>Уточни, чи буде розбір запису матчу, спільна практика або вправа для самостійного повторення. Запитай, що варто підготувати до зустрічі.</p></article>
-  <article class="about-card"><h3>«Як ми перевіримо результат?»</h3><p>Домовся про одну ознаку, за якою зможеш оцінити зміни. Наприклад, у трьох раундах заздалегідь повідомити напарнику, яку позицію ти контролюєш.</p></article>
+  <article class="about-card"><h3>«Як пройде заняття?»</h3><p>Уточніть, чи буде розбір запису матчу, спільна практика або вправа для самостійного повторення. Запитайте, що варто підготувати до зустрічі.</p></article>
+  <article class="about-card"><h3>«Як ми перевіримо результат?»</h3><p>Домовся про одну ознаку, за якою зможеш оцінити змініть. Наприклад, у трьох раундах заздалегідь повідомити напарнику, яку позицію ти контролюєш.</p></article>
  </div>
- <div class="page-actions"><a class="text-link practice-link" href="training.html">Спробувати заняття самостійно →</a></div>
+ <div class="page-actions"><a id="catalog-program-link" class="text-link practice-link" href="training.html">Спробувати заняття самостійно</a><a id="catalog-booking-link" class="text-link" href="register.html#booking-options">Переглянути пакети занять</a></div>
 </div></section>
 </main>
 <footer id="footer" class="bg-navy py-ui-6 text-on-navy">
@@ -269,6 +269,7 @@
       </div>
     </div>
   </footer>
+<script src="js/training-model.js" defer></script>
 <script src="js/catalog.js" defer></script>
 </body>
 </html>
