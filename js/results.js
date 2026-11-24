@@ -5,12 +5,12 @@
   document.documentElement.dataset.appReady = "true";
   document.getElementById("app-load-status").hidden = true;
   window.dispatchEvent(new Event("kiberlviv:ready"));
-  const params = model.parse(window.location.search);
-  const example = params.example === "1";
   const empty = document.getElementById("results-empty");
   const content = document.getElementById("results-content");
-  let result;
+  let result, example;
   try {
+    const params = model.parse(window.location.search);
+    example = params.example === "1";
     if (!Object.keys(params).length) return;
     result = model.calculate(example ? model.defaults : params);
   } catch (_) {
@@ -31,17 +31,20 @@
   const put = (id, text) => { document.getElementById(id).textContent = text; };
   const fmt = model.format;
   const count = result.matches ? model.count(result.matches, "матч", "матчі", "матчів") : "Без матчу";
-  put("result-at-a-glance", `${count} · ${fmt(result.total)} заняття${config.mode === "matches" ? "" : " · " + fmt(result.remaining) + " запасу"}`);
+  put("result-at-a-glance", `${count} · ${fmt(result.total)} заняття`);
   put("result-volume-warning", model.volumeWarning(result));
   if (window.location.hash === "#result-at-a-glance") document.getElementById("result-at-a-glance").focus();
   const [focusTitle, focusTip] = model.games[config.game].focuses[config.focus];
-  const onlyWarmup = !result.matches && !result.drills && !result.review;
+  const onlyWarmup = !result.matches && !result.drills && !result.review && !result.extraMinutes;
   let advice = focusTip;
   if (onlyWarmup) {
     advice = 'У плані є лише розминка. Змініть тривалість блоків або збільште доступний час, якщо хочете додати вправу.';
     put('practice-before', 'Підготуйте знайому дію для розминки.');
     put('practice-during', 'Виконайте розминку у спокійному темпі.');
     put('practice-after', 'Відмітьте, чи вистачило часу на розминку.');
+  } else if (!result.matches && result.extraMinutes && !result.drills) {
+    advice = 'Використайте додатковий час для повторів обраної навички й коротких нотаток.';
+    put('practice-during', 'Виконайте додаткові повтори за підсумком розрахунку.');
   } else if (!result.matches) {
     advice = result.drills
       ? 'Виконайте цільову вправу без матчу. Порівняйте повтори в однакових умовах.'
@@ -66,7 +69,7 @@
     ? `${model.count(result.matches, "повний матч", "повні матчі", "повних матчів")} за заняття. Тривалість матчу й очікування — ваші планові оцінки; фактичний час може відрізнятися.`
     : `Заняття без матчу. Щоб зіграти повний матч із цими налаштуваннями, потрібно ${fmt(result.firstMatchMinutes)}.`);
   put("budget-note", config.mode !== "matches"
-    ? `Маєте ${fmt(config.budget)}. ${result.remaining ? `Запас часу — ${fmt(result.remaining)}.` : "План займає весь відведений час."}`
+    ? `Маєте ${fmt(config.budget)}. ${result.extraMinutes ? `${fmt(result.extraMinutes)} відведено на додаткові активності.` : "Основні блоки займають весь відведений час."}`
     : "Час перерв між матчами й очікування вже включено в повну тривалість.");
   const timeline = document.getElementById("session-blocks");
   const blocks = model.steps(result);
@@ -93,7 +96,6 @@
     ...blocks.map(([title, time]) => `${title}: ${fmt(time)}`),
     `Разом за заняття: ${fmt(result.total)}`, `Разом за тиждень: ${fmt(result.weeklyTotal)}`,
     `Тренувальний час за тиждень: ${fmt(result.weeklyActive)}`,
-    ...(config.mode !== "matches" ? [`Запас часу: ${fmt(result.remaining)}`] : []),
     "", advice,
     "", "Це планувальна модель, а не прогноз рангу або оцінка безпечності навантаження.",
     `Редагування: ${new URL(`calculator.html?${query}`, window.location.href).href}`].join("\n");

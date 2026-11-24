@@ -11,7 +11,7 @@
     try {
       const plan = model.calculate(model.preset(undefined, undefined, input.value));
       const count = model.count(plan.matches, 'матч', 'матчі', 'матчів');
-      result.textContent = `${model.format(plan.total)} на заняття · ${count} · запас ${model.format(plan.remaining)}.`;
+      result.textContent = `${model.format(plan.total)} на заняття · ${count}${plan.extraMinutes ? " · додаткові активності: " + model.format(plan.extraMinutes) : ""}.`;
       input.removeAttribute('aria-invalid');
       button.disabled = false;
       return plan;

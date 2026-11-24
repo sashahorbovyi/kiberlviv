@@ -3,6 +3,59 @@ const assert = require("node:assert/strict");
 const model = require("../js/training-model.js");
 const plan = changes => model.calculate({ ...model.defaults, ...changes });
 
+test("rank goals change review time only for a valid higher target in the selected game", () => {
+  const current = { game: "Valorant", rank: "gold" };
+  const base = model.trainingProfile(current);
+  const goal = model.trainingProfile({ ...current, targetRank: "diamond" });
+  assert.equal(goal.config.review, base.config.review + 10);
+  assert.equal(goal.suggestedMinutes, base.suggestedMinutes + 10);
+  assert.equal(model.trainingProfile({ ...current, targetRank: "gold" }).config.review, base.config.review);
+  assert.throws(() => model.trainingProfile({ ...current, targetRank: "iron" }), /нижчим/);
+  assert.throws(() => model.trainingProfile({ ...current, targetRank: "herald" }), /ранги/);
+  assert.throws(() => model.trainingProfile({ ...current, ageGroup: "999" }), /вікову/);
+  assert.throws(() => model.trainingProfile({ ...current, routine: "bad" }), /регулярність/);
+  assert.equal(model.maxMatches(goal.config), 2);
+});
+
+test("known duplicate query parameters are rejected even if the values are identical", () => {
+  assert.throws(() => model.parse("?days=2&days=2"), /повторені/);
+  assert.throws(() => model.parse("?game=CS2&%67ame=Valorant"), /повторені/);
+  assert.throws(() => model.parse("?format=group&format=individual"), /повторені/);
+  assert.deepEqual(model.parse("?game=CS2&utm=1&utm=2"), { game: "CS2" });
+});
+
+test("profiles adapt blocks to the game, rank, age group and practice routine without exceeding the budget", () => {
+  const base = model.trainingProfile({ game: "Dota 2", focus: "farm" });
+  const junior = model.trainingProfile({ game: "Dota 2", focus: "farm", ageGroup: "minor", routine: "starting" });
+  const advanced = model.trainingProfile({ game: "Dota 2", focus: "farm", rank: "immortal" });
+  const beginner = model.trainingProfile({ game: "Dota 2", focus: "farm", rank: "herald" });
+  const valorant = model.trainingProfile({ game: "Valorant", focus: "utility" });
+  assert.ok(junior.suggestedMinutes < base.suggestedMinutes);
+  assert.ok(junior.config.drills < base.config.drills);
+  assert.ok(advanced.config.review > beginner.config.review);
+  assert.ok(beginner.config.drills > advanced.config.drills);
+  assert.notEqual(base.config.drills, valorant.config.drills);
+  const r = model.calculate(junior.config);
+  const blocks = model.steps(r);
+  assert.equal(blocks.reduce((sum, [, time]) => sum + time, 0), junior.suggestedMinutes);
+  assert.ok(blocks.some(([label]) => label === "Маршрут фарму та переходи за мінікартою"));
+  assert.ok(blocks.some(([label]) => label === "Пауза без екрана"));
+  assert.deepEqual(model.calculate(model.parse(model.serialize(r.config))), r);
+  const link = new URL(model.bookingFromCalculator(r.config), "https://example.test");
+  assert.ok(["ageGroup", "rank", "routine"].every(key => !link.searchParams.has(key)));
+});
+
+test("lesson extensions add one fifteen-minute fee per session without changing the two-hour base price", () => {
+  assert.equal(model.lessonPrice("individual", "intro", 120), 1380);
+  assert.equal(model.lessonPrice("individual", "intro", 150), 1720);
+  assert.equal(model.lessonPrice("group", "intro", 120), 620);
+  assert.deepEqual(model.lessonQuote("group", "base", 135), {base: 2220, extension: 320, extraMinutes: 15, total: 2540});
+  assert.equal(model.lessonPrice("group", "base", 20), null);
+  assert.equal(model.suggestLessonDuration(20), 120);
+  assert.equal(model.suggestLessonDuration(148), 135);
+  assert.equal(model.suggestLessonDuration(180), 180);
+});
+
 test("two full matches include queues and one inter-match break", () => {
   const r = plan({});
   assert.equal(r.total, 145);
@@ -21,15 +74,17 @@ test("budget fits whole matches at exact boundary", () => {
   assert.equal(plan({ mode: "budget", budget: 145 }).matches, 2);
   const below = plan({ mode: "budget", budget: 144 });
   assert.equal(below.matches, 1);
-  assert.equal(below.remaining, 54);
+  assert.equal(below.extraMinutes, 54);
 });
 test("insufficient match budget creates a skills session, not a partial match", () => {
   const r = plan({ mode: "budget", budget: 89 });
   assert.equal(r.matches, 0);
-  assert.equal(r.total, 45);
+  assert.equal(r.coreTotal, 45);
+  assert.equal(r.total, 89);
   assert.equal(r.queueTime, 0);
   assert.equal(r.breaks, 0);
-  assert.equal(r.remaining, 44);
+  assert.equal(r.extraMinutes, 44);
+  assert.deepEqual(r.extra.map(block => block[1]), [15, 10, 5, 14]);
 });
 test("very short budget trims preparation in the stated order", () => {
   const r = plan({ mode: "budget", budget: 25 });
@@ -44,8 +99,10 @@ test("invalid, fractional, missing, negative and non-finite inputs fail", () => 
     assert.throws(() => plan(changes), JSON.stringify(changes));
   }
 });
-test("a session cannot exceed the minutes in one day", () => {
-  assert.throws(() => plan({ matches: 50, matchLength: 180 }), /24/);
+test("a session is limited to 180 minutes in all modes", () => {
+  for (const mode of ["budget", "drills"]) assert.throws(() => plan({ mode, budget: 181 }), /межах/);
+  assert.throws(() => plan({ matches: 3 }), /180 хв/);
+  assert.equal(plan({ matches: 3, matchLength: 35, queue: 5, breakMinutes: 5, review: 20 }).total, 180);
 });
 test("a budget with no possible training blocks produces a useful error", () => {
   assert.throws(() => plan({ mode: "budget", budget: 1, warmup: 0, drills: 0, review: 0 }), /блок/);
@@ -68,17 +125,18 @@ test("game and focus survive the result/edit URL round trip", () => {
 test("across budgets, allocated time fits and another full match never fits", () => {
   for (const game of Object.keys(model.games)) {
     const focus = Object.keys(model.games[game].focuses)[0];
-    for (let budget = 1; budget <= 1440; budget++) {
+    for (let budget = 1; budget <= model.sessionLimit; budget++) {
       const r = plan({ mode: "budget", game, focus, budget, matchLength: model.games[game].matchLength });
-      assert.ok(r.total <= budget);
-      assert.equal(r.total + r.remaining, budget);
+      assert.equal(r.total, budget);
+      assert.equal(r.coreTotal + r.extraMinutes, budget);
+      assert.equal(model.steps(r).reduce((sum, [, minutes]) => sum + minutes, 0), budget);
       assert.ok(Number.isInteger(r.matches));
-      assert.equal(r.active + r.queueTime + r.breaks, r.total);
+      assert.equal(r.active + r.queueTime + r.breaks + r.extraBreaks, r.total);
       if (r.matches) {
-        const next = r.total + r.config.matchLength + r.config.queue + r.config.breakMinutes;
+        const next = r.coreTotal + r.config.matchLength + r.config.queue + r.config.breakMinutes;
         assert.ok(next > budget);
       } else if (!r.shortened) {
-        assert.ok(r.total + r.config.matchLength + r.config.queue > budget);
+        assert.ok(r.coreTotal + r.config.matchLength + r.config.queue > budget);
       }
     }
   }
@@ -98,9 +156,9 @@ test("exercise-only plan never inserts a match and reports shortened blocks", ()
 });
 
 test("budget uses the same match cap as manual mode and flags unusually long plans", () => {
-  const r = plan({ mode: "budget", budget: 1440, matchLength: 5, queue: 0, breakMinutes: 0, days: 7 });
+  const r = plan({ mode: "budget", budget: 180, warmup: 0, drills: 0, review: 0, matchLength: 5, queue: 0, breakMinutes: 0, days: 7 });
   assert.equal(r.matches, model.ranges.matches[1]);
-  assert.equal(r.total + r.remaining, 1440);
+  assert.equal(r.total, 180);
   assert.match(model.volumeWarning(r), /за тиждень/);
   assert.equal(model.volumeWarning(plan({})), "");
 });

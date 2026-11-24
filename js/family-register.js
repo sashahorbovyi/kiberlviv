@@ -21,45 +21,92 @@
       stretch: 'Перенесіть сценарій на іншу точку карти й перевірте, що варто змінити в комунікації.'
     }
   };
-  const formats = {
-    individual: { title: 'Індивідуально', minutes: 60, note: 'Заняття один на один: розбір ваших рішень, вправи та зворотний зв’язок. 60 хв.', prices: [690, 2390, 4390] },
-    group: { title: 'Мала група', minutes: 75, note: '3–5 учасників: спільні вправи й розбір командних рішень. 75 хв. Ціна за учасника.', prices: [390, 1390, 2590] }
+  const model = window.TrainingModel;
+  if (!model) return;
+  const formats = model.lessonFormats;
+  const formatNotes = {
+    individual: 'Заняття один на один: розбір ваших рішень, вправи та зворотний зв’язок.',
+    group: '3–5 учасників: спільні вправи й розбір командних рішень. Ціна за учасника.'
   };
-  const packages = {
-    intro: { title: 'Пробне', count: 1, index: 0 },
-    base: { title: 'Основа', count: 4, index: 1 },
-    progress: { title: 'Прогрес', count: 8, index: 2 }
-  };
+  const packages = model.lessonPackages;
   const game = booking('game');
   const format = booking('format');
+  const duration = booking('lesson-duration');
   const applicant = booking('applicant');
   const choices = [...form.querySelectorAll('[name="package"]')];
-  const params = new URLSearchParams(location.search);
+  let params = new URLSearchParams();
+  let calculation;
+  try {
+    const incoming = model.parse(location.search);
+    if ((incoming.game !== undefined && !Object.hasOwn(games, incoming.game)) ||
+        (incoming.format !== undefined && !Object.hasOwn(formats, incoming.format)) ||
+        (incoming.package !== undefined && !Object.hasOwn(packages, incoming.package)) ||
+        (incoming.duration !== undefined && !model.lessonDurations.some(minutes => String(minutes) === incoming.duration)) ||
+        (incoming.applicant !== undefined && !['adult', 'parent'].includes(incoming.applicant)) ||
+        (incoming.from !== undefined && incoming.from !== 'calculator')) {
+      throw new Error('Посилання містить недопустимий вибір.');
+    }
+    if (incoming.from === 'calculator') calculation = model.calculate(incoming);
+    params = new URLSearchParams(incoming);
+  } catch {
+    const warning = booking('link-warning');
+    warning.textContent = 'Не вдалося відновити параметри з посилання. Відкрито стандартний варіант; перевірте гру, формат і пакет.';
+    warning.hidden = false;
+  }
   const isLive = location.origin === form.dataset.liveOrigin;
-  const money = new Intl.NumberFormat('uk-UA', { maximumFractionDigits: 2 });
-  const hryvnias = number => money.format(number) + ' грн';
+  const hryvnias = model.formatPrice;
   const countLabel = count => count + (count === 8 ? ' занять' : ' заняття');
   const choice = key => choices.find(input => input.value === key) || choices[0];
   game.value = Object.hasOwn(games, params.get('game')) ? params.get('game') : 'CS2';
   format.value = Object.hasOwn(formats, params.get('format')) ? params.get('format') : 'individual';
+  duration.min = model.standardLessonMinutes;
+  duration.max = model.sessionLimit;
+  duration.step = model.extensionStepMinutes;
+  const chosenDuration = model.lessonDurations.find(minutes => String(minutes) === params.get('duration'));
+  duration.value = String(chosenDuration ?? (calculation ? model.suggestLessonDuration(calculation.total) : model.standardLessonMinutes));
   choice(params.get('package')).checked = true;
   applicant.value = params.get('applicant') === 'parent' ? 'parent' : 'adult';
 
   function selection() {
     const gameName = game.value;
     const mode = formats[format.value];
-    const pack = packages[choices.find(input => input.checked)?.value || 'intro'];
-    return { gameName, mode, pack, total: mode.prices[pack.index] };
+    const selected = choices.filter(input => input.checked);
+    const packId = selected[0]?.value;
+    const pack = packages[packId];
+    const minutes = Number(duration.value);
+    const quote = model.lessonQuote(format.value, packId, minutes);
+    if (!Object.hasOwn(games, gameName) || selected.length !== 1 || !quote || !['adult', 'parent'].includes(applicant.value)) return null;
+    return { gameName, mode, pack, minutes, quote };
   }
 
   function refresh() {
-    const { gameName, mode, pack, total } = selection();
-    const program = games[gameName];
-    booking('format-note').textContent = mode.note;
-    for (const [key, item] of Object.entries(packages)) {
-      form.querySelector('[data-price="' + key + '"]').textContent = hryvnias(mode.prices[item.index]);
+    const selected = selection();
+    const submit = form.querySelector('button[type="submit"]');
+    if (!selected) {
+      submit.disabled = true;
+      booking('inline-total').textContent = 'Перевірте параметри';
+      field('submit-error').textContent = 'Оберіть одну гру, один формат та один пакет із допустимою тривалістю.';
+      field('submit-error').dataset.selectionError = 'true';
+      field('submit-error').hidden = false;
+      return;
     }
-    booking('plan-title').textContent = 'План: ' + gameName + ' · ' + pack.title;
+    submit.disabled = sending || submitted;
+    if (!sending && field('submit-error').dataset.selectionError === 'true') {
+      field('submit-error').hidden = true;
+      delete field('submit-error').dataset.selectionError;
+    }
+    const { gameName, mode, pack, minutes, quote } = selected;
+    const { base, extension, extraMinutes, total } = quote;
+    const durationLabel = model.format(minutes) + (extraMinutes ? ' · +' + extraMinutes + ' хв' : '');
+    booking('lesson-duration-value').textContent = durationLabel;
+    duration.setAttribute('aria-valuetext', model.format(minutes));
+    const program = games[gameName];
+    booking('format-note').textContent = formatNotes[format.value];
+    booking('duration-help').textContent = `+${hryvnias(mode.extensionPrice)} за кожні додаткові ${model.extensionStepMinutes} хв одного заняття${format.value === 'group' ? ' за учасника' : ''}. У пакеті додатковий час застосовується до всіх занять.`;
+    for (const key of Object.keys(packages)) {
+      form.querySelector('[data-price="' + key + '"]').textContent = hryvnias(model.lessonPrice(format.value, key, minutes));
+    }
+    booking('plan-title').textContent = 'Що входить у пакет «' + pack.title + '»';
     const steps = pack.index === 0
       ? ['На занятті: ' + program.steps[0], 'Після заняття: повторіть вправу самостійно й запишіть початковий результат.']
       : pack.index === 1
@@ -72,28 +119,56 @@
       return item;
     }));
     booking('selection').textContent = gameName + ' · ' + mode.title;
-    booking('duration').textContent = countLabel(pack.count) + ' × ' + mode.minutes + ' хв';
+    booking('duration').textContent = countLabel(pack.count) + ' × ' + model.format(minutes);
+    booking('price-breakdown').hidden = !extension;
+    booking('price-breakdown').textContent = extension
+      ? `${hryvnias(base)} за стандартний пакет + ${hryvnias(extension)} за додаткові ${extraMinutes} хв до кожного заняття.`
+      : '';
     booking('unit').textContent = hryvnias(total / pack.count);
     for (const key of ['total', 'inline-total']) booking(key).textContent = hryvnias(total);
-    const calculator = 'calculator.html?' + new URLSearchParams({ game: gameName, focus: program.focus });
+    const currentCalculation = calculation?.config.game === gameName ? calculation : null;
+    const calculator = 'calculator.html?' + (currentCalculation
+      ? model.serialize(currentCalculation.config)
+      : new URLSearchParams({ game: gameName, focus: program.focus }));
     booking('calculator').setAttribute('href', calculator);
     booking('success-calculator').setAttribute('href', calculator);
-    const model = window.TrainingModel;
+    booking('calculation').hidden = !currentCalculation;
+    booking('time-fit').hidden = true;
+    if (currentCalculation) {
+      const { config, total } = currentCalculation;
+      const focus = model.games[gameName].focuses[config.focus][0];
+      booking('calculation-text').textContent = `${gameName} · ${focus} · ${model.format(total)} на самостійну практику`;
+      booking('edit-calculation').setAttribute('href', calculator);
+      if (config.mode !== 'matches') {
+        booking('time-fit').hidden = false;
+        booking('time-fit').textContent = minutes <= config.budget
+          ? `Ця тривалість вміщується у ваш ліміт ${model.format(config.budget)}.`
+          : `Вибрано ${minutes} хв. Ваш ліміт — ${model.format(config.budget)}.`;
+      }
+    }
     if (model) {
       booking('practice-link').setAttribute('href', model.programLink(gameName));
       booking('practice-link').textContent = 'Переглянути самостійну програму ' + gameName;
     }
     const query = new URLSearchParams({
       game: gameName, format: format.value,
+      duration: String(minutes),
       package: choices.find(input => input.checked)?.value || 'intro', applicant: applicant.value
     });
+    if (currentCalculation) {
+      for (const [key, value] of new URLSearchParams(model.serialize(currentCalculation.config))) query.set(key, value);
+      query.set('from', 'calculator');
+    }
     booking('live-link').setAttribute('href', form.dataset.liveOrigin + '/register.html?' + query + '#booking-options');
     booking('applicant-note').textContent = applicant.value === 'parent'
       ? 'Укажіть лише ім’я та пошту дорослого. Дані дитини не потрібні.'
       : 'Залиште свої контактні дані.';
   }
 
-  for (const input of [game, format, applicant, ...choices]) input.addEventListener('change', refresh);
+  let sending = false;
+  let submitted = false;
+  for (const input of [game, format, duration, applicant, ...choices]) input.addEventListener('change', refresh);
+  duration.addEventListener('input', refresh);
   refresh();
 
   const nickname = field('nickname');
@@ -104,7 +179,6 @@
   const consent = field('consent');
   const submit = form.querySelector('button[type="submit"]');
   const submitError = field('submit-error');
-  let sending = false;
   const emailPattern = /^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/u;
   const rules = new Map([
     [nickname, () => {
@@ -143,18 +217,24 @@
 
   form.addEventListener('submit', async event => {
     event.preventDefault();
-    if (!isLive || sending) return;
+    if (!isLive || sending || submitted) return;
     submitError.hidden = true;
     const invalid = [...rules.keys()].filter(input => !validate(input));
     if (invalid.length) return invalid[0].focus();
 
-    const { gameName, mode, pack } = selection();
+    const selected = selection();
+    if (!selected) {
+      refresh();
+      return;
+    }
+    const { gameName, mode, pack, minutes } = selected;
     const body = new URLSearchParams({
       'form-name': 'family-registration',
       'family-name': nickname.value.trim(),
       email: email.value.trim(),
       game: gameName,
       format: mode.title,
+      duration: String(minutes),
       package: pack.title + ' · ' + countLabel(pack.count),
       applicant: applicant.value === 'parent' ? 'Для дитини (від дорослого)' : 'Для себе (18+)',
       'bot-field': field('trap').value
@@ -166,6 +246,7 @@
     try {
       const response = await fetch('/', { method: 'POST', body });
       if (!response.ok) throw new Error('Family application submission failed');
+      submitted = true;
       form.hidden = true;
       form.reset();
       field('success').hidden = false;
@@ -175,7 +256,7 @@
       submitError.hidden = false;
     } finally {
       sending = false;
-      submit.disabled = false;
+      submit.disabled = submitted;
       submit.textContent = 'Надіслати заявку';
       form.removeAttribute('aria-busy');
     }

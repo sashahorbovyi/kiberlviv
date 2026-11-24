@@ -274,12 +274,29 @@
   .calculator-page .page-fieldset { margin-bottom: 16px; }
 }
 .training-primary .page-input { width: min(100%, 12rem); }
-.training-presets { display: flex; flex-wrap: wrap; gap: 8px; }
-.training-presets button { min-height: 44px; padding: 6px 12px; border: 1px solid var(--color-line); border-radius: var(--radius-sm); font-weight: 600; }
-.training-presets button[aria-pressed="true"] { background: var(--color-accent); color: var(--color-on-accent); border-color: var(--color-accent); }
+.training-time-slider { min-width: 0; }
+.training-slider-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .25rem .75rem; }
+.training-slider-heading label { font-weight: 600; }
+.training-slider-heading output { padding: .3rem .65rem; border-radius: var(--radius-sm); background: var(--color-accent); color: var(--color-on-accent); font-weight: 700; }
+.training-time-slider input[type="range"] { display: block; width: 100%; min-height: 44px; margin: 0; accent-color: var(--color-accent); cursor: pointer; }
+.training-time-slider input[type="range"]:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 2px; border-radius: var(--radius-sm); }
+.training-slider-scale { display: flex; justify-content: space-between; gap: .5rem; margin-bottom: .4rem; color: var(--color-muted-text); font-size: .875rem; }
 .training-live-steps { list-style: decimal; margin: 14px 0; padding-inline-start: 1.5rem; }
 .training-live-steps li { margin-block: .25rem; }
-.training-live #training-live-exercise { padding-top: 10px; border-top: 1px solid var(--color-line); }
+#training-extra { margin-top: .75rem; }
+#training-extra summary { cursor: pointer; font-weight: 700; padding-block: .4rem; }
+#training-extra .training-live-steps { margin-block: .25rem .75rem; }
+.training-profile-inputs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap: .75rem; }
+.training-profile-inputs .page-input { width: 100%; min-width: 0; }
+.calculator-prices { margin-block: 1.5rem; }
+.calculator-prices h2 { margin-bottom: .5rem; }
+.calculator-price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 245px), 1fr)); gap: .75rem; }
+.calculator-price-grid article { min-width: 0; padding: 1rem; border: 1px solid var(--color-line); border-radius: var(--radius-sm); background: var(--color-page); }
+.calculator-price-grid h3 { margin-bottom: .25rem; font-weight: 700; }
+.calculator-price-grid dl { display: grid; gap: .4rem; margin-block: .75rem; }
+.calculator-price-grid dl div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem .75rem; }
+.calculator-price-grid dd { margin: 0; font-weight: 700; }
+.calculator-price-grid dd small { display: block; color: var(--color-muted-text); font-weight: 400; }
 .training-settings[open] .page-fieldset { margin-top: 14px; }
 .training-inline-error { color: var(--color-ink); font-size: .875rem; font-weight: 600; }
 .calculator-page .page-input[aria-invalid="true"] { border: 2px solid #b94040; }

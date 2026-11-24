@@ -55,6 +55,37 @@ function familyForm(env) {
   return { form, field, send: () => form.dispatchEvent(new env.Event('submit', { cancelable: true })) };
 }
 
+test('calculator booking prices follow the selected duration while the source calculation stays editable', () => {
+  const config = model.preset('Dota 2', 'farm', 120);
+  const destination = new URL(model.bookingFromCalculator(config), origin);
+  assert.equal(destination.pathname, '/register.html');
+  assert.equal(destination.hash, '#booking-options');
+  const env = setup('register.html', destination.search);
+  env.run('family-register.js');
+  const get = id => env.document.getElementById(id);
+  assert.equal(get('booking-game').value, 'Dota 2');
+  assert.equal(get('booking-calculation').hidden, false);
+  assert.match(get('booking-calculation-text').textContent, /Dota 2/);
+  assert.match(get('booking-time-fit').textContent, /вміщується/);
+  const format = get('booking-format');
+  format.value = 'group';
+  format.dispatchEvent(new env.Event('change'));
+  assert.equal(get('booking-lesson-duration').value, '120');
+  assert.match(get('booking-inline-total').textContent, /620 грн/);
+  const duration = get('booking-lesson-duration');
+  duration.value = '135';
+  duration.dispatchEvent(new env.Event('change'));
+  assert.match(get('booking-time-fit').textContent, /135 хв/);
+  assert.match(get('booking-inline-total').textContent, /700 грн/);
+  assert.match(get('booking-price-breakdown').textContent, /80 грн/);
+  const edit = new URL(get('booking-edit-calculation').getAttribute('href'), origin);
+  assert.deepEqual(model.parse(edit.search), model.parse(model.serialize(config)));
+  const game = get('booking-game');
+  game.value = 'CS2';
+  game.dispatchEvent(new env.Event('change'));
+  assert.equal(get('booking-calculation').hidden, true);
+});
+
 test('training requests include the selected package and adult contact, preserve data on failure and confirm after retry', async () => {
   const calls = [];
   const env = setup('register.html', '?game=Dota+2&format=group&package=progress&applicant=parent', { fetch: async (url, options) => {
@@ -69,7 +100,7 @@ test('training requests include the selected package and adult contact, preserve
   await flush();
   assert.deepEqual(calls, [['/', 'POST', {
     'form-name': 'family-registration', 'family-name': 'Лев & родина', email: 'parent@example.com',
-    game: 'Dota 2', format: 'Мала група', package: 'Прогрес · 8 занять',
+    game: 'Dota 2', format: 'Мала група', duration: '120', package: 'Прогрес · 8 занять',
     applicant: 'Для дитини (від дорослого)', 'bot-field': ''
   }]]);
   assert.equal(field('submit-error').hidden, false);
@@ -81,6 +112,21 @@ test('training requests include the selected package and adult contact, preserve
   assert.equal(calls.length, 2);
   assert.equal(field('success').hidden, false);
   assert.equal(form.hidden, true);
+  send();
+  await flush();
+  assert.equal(calls.length, 2);
+});
+
+test('booking shows an explicit fallback instead of using a conflicting or invalid query choice', () => {
+  for (const search of ['?game=CS2&game=Valorant', '?duration=121', '?format=group&package=unknown']) {
+    const env = setup('register.html', search);
+    env.run('family-register.js');
+    const get = id => env.document.getElementById(id);
+    assert.equal(get('booking-link-warning').hidden, false);
+    assert.equal(get('booking-game').value, 'CS2');
+    assert.equal(get('booking-lesson-duration').value, '120');
+    assert.equal(get('booking-format').value, 'individual');
+  }
 });
 
 test('preview host calculates the package and carries it over without accepting contacts', async () => {
@@ -95,18 +141,20 @@ test('preview host calculates the package and carries it over without accepting 
   assert.equal(field('success').hidden, true);
   booking('game').value = 'Valorant';
   booking('format').value = 'group';
+  booking('lesson-duration').value = '135';
   const trial = form.querySelector('[value="intro"]');
   const base = form.querySelector('[value="base"]');
   trial.checked = false;
   base.checked = true;
   base.dispatchEvent(new env.Event('change'));
-  assert.match(booking('total').textContent, /1\s390 грн/);
-  assert.match(booking('unit').textContent, /347,5 грн/);
-  assert.match(booking('duration').textContent, /4 заняття × 75 хв/);
+  assert.match(booking('total').textContent, /2\s540 грн/);
+  assert.match(booking('unit').textContent, /635 грн/);
+  assert.match(booking('duration').textContent, /4 заняття × 2 год 15 хв/);
   assert.match(booking('plan').textContent, /укриття/);
   const live = new URL(booking('live-link').getAttribute('href'));
   assert.equal(live.origin, origin);
   assert.equal(live.searchParams.get('package'), 'base');
+  assert.equal(live.searchParams.get('duration'), '135');
   assert.equal(live.searchParams.get('game'), 'Valorant');
   send();
   await flush();

@@ -30,6 +30,7 @@
 .booking-builder > legend { font-size: clamp(1.35rem, 3vw, 1.8rem); font-weight: 700; margin-bottom: 1rem; }
 .booking-selects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
 .booking-selects .page-input, .booking-contacts select { width: 100%; }
+.booking-selects > :last-child { grid-column: 1 / -1; }
 .booking-packages {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -53,7 +54,12 @@
 .booking-option span { font-size: .875rem; color: var(--color-ink-soft); }
 .booking-option b { font-size: .95rem; font-variant-numeric: tabular-nums; }
 .booking-program { padding: 1rem; border: 1px solid var(--color-line); border-radius: var(--radius-sm); }
-.booking-program h3, .booking-recap h3 { margin-bottom: .65rem; font-weight: 700; }
+.booking-program { margin-top: .85rem; }
+.booking-program summary { font-weight: 700; cursor: pointer; }
+.booking-program[open] summary, .booking-recap h3 { margin-bottom: .65rem; }
+.booking-recap h3 { font-weight: 700; }
+.booking-calculation { border-inline-start: 3px solid var(--color-accent); border-radius: var(--radius-sm); background: var(--color-page); padding: .75rem 1rem; margin-bottom: 1rem; }
+.booking-calculation p { margin-bottom: .25rem; }
 .booking-program ol { display: grid; gap: .45rem; list-style: decimal; margin: 0; padding-inline-start: 1.4rem; color: var(--color-ink-soft); }
 .booking-inline-total { margin: .85rem 0 0; }
 .booking-contacts:not([hidden]) { display: grid; gap: 1rem; }
