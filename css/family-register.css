@@ -60,6 +60,12 @@
 .booking-recap h3 { font-weight: 700; }
 .booking-calculation { border-inline-start: 3px solid var(--color-accent); border-radius: var(--radius-sm); background: var(--color-page); padding: .75rem 1rem; margin-bottom: 1rem; }
 .booking-calculation p { margin-bottom: .25rem; }
+.booking-handoff { padding: .9rem 1rem; margin-bottom: 1rem; border: 1px solid var(--color-line); border-inline-start: 3px solid var(--color-accent); border-radius: var(--radius-sm); background: var(--color-page); }
+.booking-handoff p { margin: 0 0 .35rem; }
+.booking-handoff-label { font-weight: 700; }
+.booking-handoff dl { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; margin-bottom: 0; }
+.booking-handoff dt { color: var(--color-muted-text); font-size: .875rem; }
+.booking-handoff dd { margin: .15rem 0 0; font-weight: 700; }
 .booking-program ol { display: grid; gap: .45rem; list-style: decimal; margin: 0; padding-inline-start: 1.4rem; color: var(--color-ink-soft); }
 .booking-inline-total { margin: .85rem 0 0; }
 .booking-contacts:not([hidden]) { display: grid; gap: 1rem; }

@@ -5,11 +5,13 @@
   const input = document.getElementById('training-quick-budget');
   const result = document.getElementById('training-quick-result');
   const button = form.querySelector('button');
-  [input.min, input.max] = model.ranges.budget;
-  input.value = model.preset().budget;
+  const profile = model.trainingProfile();
+  input.min = profile.minimumMinutes;
+  input.max = model.sessionLimit;
+  input.value = profile.suggestedMinutes;
   function refresh() {
     try {
-      const plan = model.calculate(model.preset(undefined, undefined, input.value));
+      const plan = model.calculate({ ...profile.config, budget: input.value });
       const count = model.count(plan.matches, 'матч', 'матчі', 'матчів');
       result.textContent = `${model.format(plan.total)} на заняття · ${count}${plan.extraMinutes ? " · додаткові активності: " + model.format(plan.extraMinutes) : ""}.`;
       input.removeAttribute('aria-invalid');

@@ -26,12 +26,18 @@
   const defaults = { mode: "matches", game: "CS2", focus: "mechanics", days: 4,
     matches: 2, budget: 145, warmup: 10, drills: 20, matchLength: 40,
     queue: 5, review: 15, breakMinutes: 10 };
+  const subranks = (rank, level, tiers) => tiers.map((tier, i) =>
+    [rank.toLowerCase() + (i ? "-" + (i + 1) : ""), rank + " " + tier, level]);
   const rankOptions = {
-    CS2: [["low", "CS Rating до 10 000", "foundation"], ["mid", "CS Rating 10 000–19 999", "balanced"], ["high", "CS Rating від 20 000", "analysis"]],
+    CS2: [["entry", "CS Rating до 5 000", "foundation"], ["low", "CS Rating 5 000–9 999", "foundation"],
+      ["mid", "CS Rating 10 000–14 999", "balanced"], ["upper-mid", "CS Rating 15 000–19 999", "balanced"],
+      ["high", "CS Rating 20 000–24 999", "analysis"], ["elite", "CS Rating 25 000–29 999", "analysis"], ["top", "CS Rating від 30 000", "analysis"]],
     "Dota 2": ["Herald", "Guardian", "Crusader", "Archon", "Legend", "Ancient", "Divine", "Immortal"]
-      .map((rank, i) => [rank.toLowerCase(), rank, i < 3 ? "foundation" : i < 6 ? "balanced" : "analysis"]),
+      .flatMap((rank, i) => rank === "Immortal" ? [["immortal", rank, "analysis"]]
+        : subranks(rank, i < 3 ? "foundation" : i < 6 ? "balanced" : "analysis", ["I", "II", "III", "IV", "V"])),
     Valorant: ["Iron", "Bronze", "Silver", "Gold", "Platinum", "Diamond", "Ascendant", "Immortal", "Radiant"]
-      .map((rank, i) => [rank.toLowerCase(), rank, i < 3 ? "foundation" : i < 6 ? "balanced" : "analysis"])
+      .flatMap((rank, i) => rank === "Radiant" ? [["radiant", rank, "analysis"]]
+        : subranks(rank, i < 3 ? "foundation" : i < 6 ? "balanced" : "analysis", ["I", "II", "III"]))
   };
   const gamePractice = {
     CS2: { warmup: 10, drills: 20, review: 15, warmupLabel: "Рух і зупинка перед пострілом", reviewLabel: "Розбір раундів і рішень на карті", drillLabels: {
@@ -50,8 +56,9 @@
     if (!Object.hasOwn(gamePractice, game)) throw new Error("Оберіть гру зі списку.");
     const skill = focus ?? Object.keys(practice.drillLabels)[0];
     if (!Object.hasOwn(practice.drillLabels, skill)) throw new Error("Оберіть навичку для вибраної гри.");
-    if (!["budget", "matches", "drills"].includes(mode)) throw new Error("Оберіть режим розрахунку.");
-    if (!["", "minor", "adult"].includes(ageGroup)) throw new Error("Оберіть вікову групу зі списку.");
+    if (!["budget", "matches"].includes(mode)) throw new Error("Оберіть режим розрахунку.");
+    const ageOptions = ["", "under13", "13to15", "16to17", "18to24", "25to34", "35to44", "45plus", "minor", "adult"];
+    if (!ageOptions.includes(ageGroup)) throw new Error("Оберіть вікову групу зі списку.");
     if (!["", "starting", "occasional", "regular"].includes(routine)) throw new Error("Оберіть регулярність практики зі списку.");
     const ranks = rankOptions[game];
     const current = ranks.findIndex(([id]) => id === rank);
@@ -60,32 +67,32 @@
     if (current >= 0 && target >= 0 && target < current) throw new Error("Бажаний ранг не може бути нижчим за поточний.");
     const rankGap = current >= 0 && target >= 0 ? target - current : 0;
     const level = ranks[current]?.[2] ?? "balanced";
-    const junior = ageGroup === "minor";
+    const junior = ["under13", "13to15", "16to17", "minor"].includes(ageGroup);
+    const shorterDrills = ageGroup === "under13" ? 5 : ageGroup === "16to17" ? 2 : junior ? 3 : 0;
     const starting = routine === "starting";
     const regular = routine === "regular";
     const warmup = practice.warmup + (level === "foundation" ? 2 : level === "analysis" ? -3 : 0);
     const drills = practice.drills + (level === "foundation" ? 6 : level === "analysis" ? -4 : 0)
-      + (starting ? -5 : regular ? 5 : 0) - (junior ? 3 : 0);
+      + (starting ? -5 : regular ? 5 : 0) - shorterDrills;
     const review = practice.review + (level === "analysis" ? 10 : 0) - (starting ? 3 : 0) + Math.min(2, rankGap) * 5;
     const breakMinutes = junior ? 15 : defaults.breakMinutes;
     const matchLength = games[game].matchLength;
     const firstMatch = warmup + drills + review + matchLength + defaults.queue;
-    const suggested = junior || starting || mode === "drills"
-      ? warmup + drills + review + (junior ? 8 : 5)
-      : firstMatch + (regular ? 10 : 0);
+    const suggested = firstMatch + (junior ? 5 : regular ? 10 : 0);
     const suggestedMinutes = Math.min(sessionLimit, Math.ceil(suggested / 5) * 5);
     return {
       config: { ...preset(game, skill, suggestedMinutes), mode, warmup, drills, review, matchLength, breakMinutes, profiled: true },
+      minimumMinutes: firstMatch,
       suggestedMinutes,
       notes: [
         level === "foundation" ? "Більше уваги до базових повторів." : level === "analysis" ? "Більше часу на розбір рішень." : "",
         junior ? "Для вікової групи до 18 років орієнтир коротший. Якщо є вільний час, спочатку закладаємо паузу." : "",
-        starting ? "Для тих, хто починає тренуватися, орієнтир — коротша практика без обов’язкового матчу." : regular ? "Регулярна практика додає час на цільові вправи." : "",
+        starting ? "Для тих, хто починає тренуватися, блоки вправ і розбору коротші; один матч залишається." : regular ? "Регулярна практика додає час на цільові вправи." : "",
         rankGap > 0 ? `Для цілі додано до ${Math.min(2, rankGap) * 5} хв на розбір рішень.` : ""
       ].filter(Boolean)
     };
   }
-  const sessionLimit = 180;
+  const sessionLimit = 240;
   const ranges = { days: [1, 7], matches: [1, sessionLimit / 5], budget: [1, sessionLimit],
     warmup: [0, sessionLimit], drills: [0, sessionLimit], matchLength: [5, sessionLimit],
     queue: [0, 120], review: [0, 180], breakMinutes: [0, 120] };
@@ -95,8 +102,8 @@
       Math.floor(available / (config.matchLength + config.queue + config.breakMinutes))));
   }
   const lessonFormats = {
-    individual: { title: 'Індивідуально', prices: [1380, 4780, 8780], extensionPrice: 170 },
-    group: { title: 'Мала група', prices: [620, 2220, 4140], extensionPrice: 80 }
+    individual: { title: 'Індивідуально', prices: [690, 2390, 4390], extensionPrice: 85 },
+    group: { title: 'Мала група', prices: [310, 1110, 2070], extensionPrice: 40 }
   };
   const lessonPackages = {
     intro: { title: 'Пробне', count: 1, index: 0 },
@@ -105,19 +112,21 @@
   };
   const standardLessonMinutes = 120;
   const extensionStepMinutes = 15;
-  const lessonDurations = Object.freeze(Array.from({ length: (sessionLimit - standardLessonMinutes) / extensionStepMinutes + 1 },
-    (_, i) => standardLessonMinutes + i * extensionStepMinutes));
+  const lessonDurations = Object.freeze(Array.from({ length: sessionLimit }, (_, i) => i + 1));
   function suggestLessonDuration(minutes) {
     return lessonDurations.findLast(duration => duration <= minutes) ?? lessonDurations[0];
   }
-  function lessonQuote(format, pack, minutes) {
-    if (!Object.hasOwn(lessonFormats, format) || !Object.hasOwn(lessonPackages, pack) || !lessonDurations.includes(minutes)) return null;
+  function lessonQuote(format, pack, minutes, initialMinutes = Math.min(minutes, standardLessonMinutes)) {
+    if (!Object.hasOwn(lessonFormats, format) || !Object.hasOwn(lessonPackages, pack) ||
+        !lessonDurations.includes(minutes) || !lessonDurations.includes(initialMinutes) || initialMinutes > minutes) return null;
     const rate = lessonFormats[format];
     const selectedPackage = lessonPackages[pack];
-    const base = rate.prices[selectedPackage.index];
-    const extraMinutes = minutes - standardLessonMinutes;
-    const extension = (extraMinutes / extensionStepMinutes) * rate.extensionPrice * selectedPackage.count;
-    return { base, extension, extraMinutes, total: base + extension };
+    const totalAt = time => Math.round(time <= standardLessonMinutes
+      ? rate.prices[selectedPackage.index] * time / standardLessonMinutes
+      : rate.prices[selectedPackage.index] + (time - standardLessonMinutes) * rate.extensionPrice * selectedPackage.count / extensionStepMinutes);
+    const base = totalAt(initialMinutes);
+    const total = totalAt(minutes);
+    return { base, extension: total - base, extraMinutes: minutes - initialMinutes, total };
   }
   const lessonPrice = (format, pack, minutes) => lessonQuote(format, pack, minutes)?.total ?? null;
   const priceFormat = new Intl.NumberFormat('uk-UA', { maximumFractionDigits: 2 });
@@ -152,6 +161,10 @@
     let { warmup, drills, review } = config;
     let matches = config.matches;
     const base = warmup + drills + review;
+    const firstMatchMinutes = base + config.matchLength + config.queue;
+    if (config.profiled && (config.mode === "drills" || (config.mode === "budget" && config.budget < firstMatchMinutes))) {
+      throw new Error(`Для заняття з повним матчем потрібно щонайменше ${firstMatchMinutes} хв.`);
+    }
     if (config.mode !== "matches") {
       matches = config.mode === "drills" ? 0 : Math.min(ranges.matches[1], Math.max(0,
         Math.floor((config.budget - base + config.breakMinutes) /
@@ -196,7 +209,7 @@
     const active = coreActive + extraMinutes - extraBreaks;
     const total = coreTotal + extraMinutes;
     return { config, warmup, drills, review, matches, matchTime, queueTime, breaks,
-      firstMatchMinutes: base + config.matchLength + config.queue,
+      firstMatchMinutes,
       active, total, coreTotal, extra, earlyPause, extraMinutes, extraBreaks, weeklyTotal: total * config.days,
       weeklyActive: active * config.days, weeklyMatches: matches * config.days,
       shortened: warmup !== config.warmup || drills !== config.drills || review !== config.review };
@@ -244,11 +257,12 @@
     if (config.profiled) params.set("profiled", "1");
     return params.toString();
   }
-  function bookingFromCalculator(config, format, duration) {
+  function bookingFromCalculator(config, format, duration, pack) {
     const params = new URLSearchParams(serialize(config));
     params.set("from", "calculator");
     if (Object.hasOwn(lessonFormats, format)) params.set("format", format);
     if (lessonDurations.includes(duration)) params.set("duration", duration);
+    if (Object.hasOwn(lessonPackages, pack)) params.set("package", pack);
     return `register.html?${params}#booking-options`;
   }
   const uniqueFields = new Set(["mode", "game", "focus", ...Object.keys(ranges), "profiled", "example",

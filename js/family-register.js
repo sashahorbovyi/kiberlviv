@@ -36,6 +36,11 @@
   const choices = [...form.querySelectorAll('[name="package"]')];
   let params = new URLSearchParams();
   let calculation;
+  function showLinkWarning(message) {
+    const warning = booking('link-warning');
+    warning.textContent = message;
+    warning.hidden = false;
+  }
   try {
     const incoming = model.parse(location.search);
     if ((incoming.game !== undefined && !Object.hasOwn(games, incoming.game)) ||
@@ -46,12 +51,23 @@
         (incoming.from !== undefined && incoming.from !== 'calculator')) {
       throw new Error('Посилання містить недопустимий вибір.');
     }
-    if (incoming.from === 'calculator') calculation = model.calculate(incoming);
+    if (incoming.from === 'calculator') {
+      try {
+        const estimate = model.calculate(incoming);
+        if (!estimate.matches) throw new Error('У заняття має вміщатися повний матч.');
+        calculation = estimate;
+      } catch {
+        showLinkWarning('Деталі старого розрахунку недоступні. Перевірте вибраний час і ціну нижче.');
+      }
+    }
+    const minimum = calculation?.total ?? model.standardLessonMinutes;
+    if (incoming.duration !== undefined && Number(incoming.duration) < minimum) {
+      delete incoming.duration;
+      showLinkWarning(`Час у посиланні менший за допустимий. Показуємо ${model.format(minimum)} та відповідну ціну.`);
+    }
     params = new URLSearchParams(incoming);
   } catch {
-    const warning = booking('link-warning');
-    warning.textContent = 'Не вдалося відновити параметри з посилання. Відкрито стандартний варіант; перевірте гру, формат і пакет.';
-    warning.hidden = false;
+    showLinkWarning('Не вдалося відновити параметри з посилання. Відкрито стандартний варіант; перевірте гру, формат і пакет.');
   }
   const isLive = location.origin === form.dataset.liveOrigin;
   const hryvnias = model.formatPrice;
@@ -59,9 +75,9 @@
   const choice = key => choices.find(input => input.value === key) || choices[0];
   game.value = Object.hasOwn(games, params.get('game')) ? params.get('game') : 'CS2';
   format.value = Object.hasOwn(formats, params.get('format')) ? params.get('format') : 'individual';
-  duration.min = model.standardLessonMinutes;
+  duration.min = calculation?.total ?? model.standardLessonMinutes;
   duration.max = model.sessionLimit;
-  duration.step = model.extensionStepMinutes;
+  duration.step = 1;
   const chosenDuration = model.lessonDurations.find(minutes => String(minutes) === params.get('duration'));
   duration.value = String(chosenDuration ?? (calculation ? model.suggestLessonDuration(calculation.total) : model.standardLessonMinutes));
   choice(params.get('package')).checked = true;
@@ -69,14 +85,16 @@
 
   function selection() {
     const gameName = game.value;
+    const currentCalculation = calculation?.config.game === gameName ? calculation : null;
+    const minimum = currentCalculation?.total ?? model.standardLessonMinutes;
     const mode = formats[format.value];
     const selected = choices.filter(input => input.checked);
     const packId = selected[0]?.value;
     const pack = packages[packId];
     const minutes = Number(duration.value);
-    const quote = model.lessonQuote(format.value, packId, minutes);
+    const quote = model.lessonQuote(format.value, packId, minutes, minimum);
     if (!Object.hasOwn(games, gameName) || selected.length !== 1 || !quote || !['adult', 'parent'].includes(applicant.value)) return null;
-    return { gameName, mode, pack, minutes, quote };
+    return { gameName, mode, pack, minutes, quote, currentCalculation, minimum };
   }
 
   function refresh() {
@@ -84,6 +102,7 @@
     const submit = form.querySelector('button[type="submit"]');
     if (!selected) {
       submit.disabled = true;
+      booking('handoff').hidden = true;
       booking('inline-total').textContent = 'Перевірте параметри';
       field('submit-error').textContent = 'Оберіть одну гру, один формат та один пакет із допустимою тривалістю.';
       field('submit-error').dataset.selectionError = 'true';
@@ -95,14 +114,19 @@
       field('submit-error').hidden = true;
       delete field('submit-error').dataset.selectionError;
     }
-    const { gameName, mode, pack, minutes, quote } = selected;
+    const { gameName, mode, pack, minutes, quote, currentCalculation, minimum } = selected;
+    booking('min-duration').textContent = model.format(minimum) + (currentCalculation ? ' · розраховано' : ' · стандарт');
     const { base, extension, extraMinutes, total } = quote;
-    const durationLabel = model.format(minutes) + (extraMinutes ? ' · +' + extraMinutes + ' хв' : '');
+    booking('handoff').hidden = false;
+    booking('handoff-selection').textContent = `${gameName} · ${mode.title} · ${pack.title} (${countLabel(pack.count)})`;
+    const durationLabel = model.format(minutes);
+    booking('handoff-duration').textContent = durationLabel;
+    booking('handoff-price').textContent = hryvnias(total);
     booking('lesson-duration-value').textContent = durationLabel;
-    duration.setAttribute('aria-valuetext', model.format(minutes));
+    duration.setAttribute('aria-valuetext', durationLabel);
     const program = games[gameName];
     booking('format-note').textContent = formatNotes[format.value];
-    booking('duration-help').textContent = `+${hryvnias(mode.extensionPrice)} за кожні додаткові ${model.extensionStepMinutes} хв одного заняття${format.value === 'group' ? ' за учасника' : ''}. У пакеті додатковий час застосовується до всіх занять.`;
+    booking('duration-help').textContent = `Вартість залежить від тривалості. Понад 2 год тариф — ${hryvnias(mode.extensionPrice)} за 15 хв пропорційно хвилинам${format.value === 'group' ? ' за учасника' : ''}. Додатковий час застосовується до всіх занять пакета.`;
     for (const key of Object.keys(packages)) {
       form.querySelector('[data-price="' + key + '"]').textContent = hryvnias(model.lessonPrice(format.value, key, minutes));
     }
@@ -122,11 +146,10 @@
     booking('duration').textContent = countLabel(pack.count) + ' × ' + model.format(minutes);
     booking('price-breakdown').hidden = !extension;
     booking('price-breakdown').textContent = extension
-      ? `${hryvnias(base)} за стандартний пакет + ${hryvnias(extension)} за додаткові ${extraMinutes} хв до кожного заняття.`
+      ? `${hryvnias(base)} за ${currentCalculation ? 'розрахований' : 'стандартний'} пакет + ${hryvnias(extension)} за додаткові ${extraMinutes} хв до кожного заняття.`
       : '';
     booking('unit').textContent = hryvnias(total / pack.count);
     for (const key of ['total', 'inline-total']) booking(key).textContent = hryvnias(total);
-    const currentCalculation = calculation?.config.game === gameName ? calculation : null;
     const calculator = 'calculator.html?' + (currentCalculation
       ? model.serialize(currentCalculation.config)
       : new URLSearchParams({ game: gameName, focus: program.focus }));
@@ -135,15 +158,15 @@
     booking('calculation').hidden = !currentCalculation;
     booking('time-fit').hidden = true;
     if (currentCalculation) {
-      const { config, total } = currentCalculation;
+      const { config } = currentCalculation;
       const focus = model.games[gameName].focuses[config.focus][0];
-      booking('calculation-text').textContent = `${gameName} · ${focus} · ${model.format(total)} на самостійну практику`;
+      booking('calculation-text').textContent = `${gameName} · ${focus} · ${durationLabel}`;
       booking('edit-calculation').setAttribute('href', calculator);
       if (config.mode !== 'matches') {
         booking('time-fit').hidden = false;
         booking('time-fit').textContent = minutes <= config.budget
           ? `Ця тривалість вміщується у ваш ліміт ${model.format(config.budget)}.`
-          : `Вибрано ${minutes} хв. Ваш ліміт — ${model.format(config.budget)}.`;
+          : `Додано ${minutes - config.budget} хв до розрахованого часу ${model.format(config.budget)}.`;
       }
     }
     if (model) {
@@ -167,6 +190,11 @@
 
   let sending = false;
   let submitted = false;
+  game.addEventListener('change', () => {
+    const minimum = calculation?.config.game === game.value ? calculation.total : model.standardLessonMinutes;
+    duration.min = minimum;
+    duration.value = String(minimum);
+  });
   for (const input of [game, format, duration, applicant, ...choices]) input.addEventListener('change', refresh);
   duration.addEventListener('input', refresh);
   refresh();

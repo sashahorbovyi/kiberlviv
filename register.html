@@ -122,9 +122,17 @@
         <div hidden><label for="family-trap">Залиште поле порожнім</label><input id="family-trap" name="bot-field" tabindex="-1" autocomplete="off"></div>
         <fieldset class="booking-builder" id="booking-options">
           <legend>Ціни та пакети занять</legend>
+          <div class="booking-handoff" id="booking-handoff" hidden>
+            <p class="booking-handoff-label">Вибраний варіант</p>
+            <p id="booking-handoff-selection"></p>
+            <dl>
+              <div><dt>Час одного заняття</dt><dd id="booking-handoff-duration"></dd></div>
+              <div><dt>Орієнтовна ціна</dt><dd id="booking-handoff-price" aria-live="polite"></dd></div>
+            </dl>
+          </div>
           <p class="training-notice" id="booking-link-warning" role="status" hidden></p>
           <div class="booking-calculation" id="booking-calculation" hidden>
-            <p><strong>З калькулятора</strong> · <span id="booking-calculation-text"></span></p>
+            <p><strong>Заняття з тренером</strong> · <span id="booking-calculation-text"></span></p>
             <a class="text-link" id="booking-edit-calculation" href="calculator.html">Змінити розрахунок</a>
           </div>
           <div class="booking-selects">
@@ -132,20 +140,20 @@
             <div class="page-field"><label for="booking-format">Формат</label><select class="page-input" id="booking-format" name="format" aria-describedby="booking-format-note"><option value="individual">Індивідуально</option><option value="group">Мала група</option></select></div>
             <div class="training-time-slider">
               <div class="training-slider-heading"><label for="booking-lesson-duration">Тривалість одного заняття</label><output id="booking-lesson-duration-value" for="booking-lesson-duration" aria-live="off">2 год</output></div>
-              <input id="booking-lesson-duration" name="duration" type="range" min="120" max="180" step="15" value="120" aria-describedby="booking-duration-help">
-              <div class="training-slider-scale" aria-hidden="true"><span>2 год · стандарт</span><span>3 год</span></div>
+              <input id="booking-lesson-duration" name="duration" type="range" min="120" max="240" step="1" value="120" aria-describedby="booking-duration-help">
+              <div class="training-slider-scale" aria-hidden="true"><span id="booking-min-duration">2 год · стандарт</span><span>4 год</span></div>
               <p class="page-field-help" id="booking-duration-help"></p>
             </div>
           </div>
           <p class="page-field-help" id="booking-format-note">Заняття один на один: розбір ваших рішень, вправи та зворотний зв’язок.</p>
           <p class="page-field-help" id="booking-time-fit" aria-live="polite" hidden></p>
           <fieldset class="booking-packages"><legend>Пакет занять</legend>
-            <label class="booking-option"><input type="radio" name="package" value="intro" checked><strong>Пробне</strong><span>1 заняття</span><b data-price="intro">1 380 грн</b></label>
-            <label class="booking-option"><input type="radio" name="package" value="base"><strong>Основа</strong><span>4 заняття</span><b data-price="base">4 780 грн</b></label>
-            <label class="booking-option"><input type="radio" name="package" value="progress"><strong>Прогрес</strong><span>8 занять</span><b data-price="progress">8 780 грн</b></label>
+            <label class="booking-option"><input type="radio" name="package" value="intro" checked><strong>Пробне</strong><span>1 заняття</span><b data-price="intro">690 грн</b></label>
+            <label class="booking-option"><input type="radio" name="package" value="base"><strong>Основа</strong><span>4 заняття</span><b data-price="base">2 390 грн</b></label>
+            <label class="booking-option"><input type="radio" name="package" value="progress"><strong>Прогрес</strong><span>8 занять</span><b data-price="progress">4 390 грн</b></label>
           </fieldset>
           <p class="page-field-help" id="booking-price-breakdown" hidden></p>
-          <p class="booking-inline-total">Орієнтовно разом: <strong id="booking-inline-total" aria-live="polite">1 380 грн</strong></p>
+          <p class="booking-inline-total">Орієнтовно разом: <strong id="booking-inline-total" aria-live="polite">690 грн</strong></p>
           <details class="booking-program">
             <summary id="booking-plan-title">Що входить у пакет «Пробне»</summary>
             <ol id="booking-plan"><li>Оцінка виходів з укриття й коротка серія вправ на зупинку перед пострілом.</li><li>Оберете один показник для самостійної роботи: кількість вчасних зупинок із десяти спроб.</li></ol>
@@ -197,9 +205,9 @@
           <dl>
             <div><dt>Гра та формат</dt><dd id="booking-selection">CS2 · Індивідуально</dd></div>
             <div><dt>Тривалість</dt><dd id="booking-duration">1 заняття × 2 год</dd></div>
-            <div><dt>За заняття</dt><dd id="booking-unit">1 380 грн</dd></div>
+            <div><dt>За заняття</dt><dd id="booking-unit">690 грн</dd></div>
           </dl>
-          <p class="booking-total"><span>Орієнтовно разом</span><strong id="booking-total" aria-live="polite">1 380 грн</strong></p>
+          <p class="booking-total"><span>Орієнтовно разом</span><strong id="booking-total" aria-live="polite">690 грн</strong></p>
         </div>
         <div class="booking-related">
           <a class="text-link" id="booking-practice-link" href="training.html#cs2">Переглянути самостійну програму CS2</a>

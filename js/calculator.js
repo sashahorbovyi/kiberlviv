@@ -22,6 +22,10 @@
   const prices = document.getElementById("calculator-prices");
   const priceGame = document.getElementById("calculator-prices-game");
   const lessonDuration = document.getElementById("calculator-lesson-duration");
+  const extension = document.getElementById("calculator-extra-minutes");
+  const extensionValue = document.getElementById("calculator-extra-value");
+  let lastCalculation;
+  const quoteDuration = plan => plan.total + Math.min(Number(extension.value), model.sessionLimit - plan.total);
   const priceCards = [...prices.querySelectorAll("[data-lesson-format]")];
   for (const card of priceCards) {
     const key = card.dataset.lessonFormat;
@@ -31,7 +35,12 @@
       const row = document.createElement("div");
       const label = document.createElement("dt");
       const value = document.createElement("dd");
-      label.textContent = `${pack.title} · ${model.count(pack.count, "заняття", "заняття", "занять")}`;
+      const link = document.createElement("a");
+      link.className = "text-link";
+      link.dataset.packLink = packId;
+      link.textContent = `${pack.title} · ${model.count(pack.count, "заняття", "заняття", "занять")}`;
+      link.setAttribute("aria-label", `Обрати пакет «${pack.title}», формат «${format.title}»`);
+      label.append(link);
       value.dataset.lessonPack = packId;
       row.append(label, value);
       card.querySelector("dl").append(row);
@@ -105,11 +114,14 @@
     updateTarget(target);
     document.getElementById("training-rank-help").textContent = game === "CS2"
       ? "Числовий CS Rating у Premier. Діапазони потрібні лише для оцінки."
-      : "Оберіть поточний ранг без підрівня.";
+      : "Оберіть ранг зі своїм підрівнем.";
   }
   function adjustBudget() {
     profile = model.trainingProfile({ game: control("game").value, focus: control("focus").value,
       mode: control("mode").value, ...currentProfile() });
+    budget.min = profile.minimumMinutes;
+    budget.max = model.sessionLimit;
+    document.getElementById("budget-min").textContent = model.format(profile.minimumMinutes);
     if (!manualBudget) budget.value = profile.suggestedMinutes;
     const max = model.maxMatches(profile.config);
     control("matches").max = max;
@@ -164,24 +176,29 @@
         throw new Error(`Перевірте поле «${label}»: потрібне ціле число від ${invalidInput.min} до ${invalidInput.max}.`);
       }
       const plan = calculate();
+      const signature = model.serialize(plan.config);
+      const fields = currentProfile();
+      const calculationKey = JSON.stringify([signature, fields]);
+      if (calculationKey !== lastCalculation) extension.value = "0";
+      lastCalculation = calculationKey;
       try {
-        window.sessionStorage.setItem(profileKey, JSON.stringify({
-          signature: model.serialize(plan.config), fields: currentProfile()
-        }));
+        window.sessionStorage.setItem(profileKey, JSON.stringify({ signature, fields }));
       } catch { /* The calculator also works without browser storage. */ }
-      const duration = model.suggestLessonDuration(plan.total);
+      extension.max = model.sessionLimit - plan.total;
+      extension.disabled = Number(extension.max) === 0;
+      const duration = quoteDuration(plan);
+      extensionValue.textContent = `+${model.format(duration - plan.total)}`;
+      extension.setAttribute("aria-valuetext", model.format(duration - plan.total) + " додатково");
+      document.getElementById("calculator-extra-max").textContent = `+${model.format(Number(extension.max))}`;
       bookingLink.href = model.bookingFromCalculator(plan.config, undefined, duration);
       priceGame.textContent = plan.config.game;
-      lessonDuration.textContent = duration > plan.total
-        ? `Стандартне заняття з наставником триває ${model.format(duration)}. Ваш розрахунок коротший: ${model.format(plan.total)}.`
-        : duration === model.standardLessonMinutes
-          ? `Показуємо ціни на стандартне заняття — ${model.format(duration)}.`
-          : `Показуємо ціни на ${model.format(duration)}: стандартні ${model.format(model.standardLessonMinutes)} і додаткові ${model.format(duration - model.standardLessonMinutes)}.`;
+      lessonDuration.textContent = `Розраховано ${model.format(plan.total)} за заняття${duration > plan.total
+        ? `; з додатковим часом — ${model.format(duration)}.` : "."}`;
       for (const card of priceCards) {
         const key = card.dataset.lessonFormat;
-        card.querySelector("[data-lesson-duration]").textContent = `+${model.formatPrice(model.lessonFormats[key].extensionPrice)} за кожні додаткові ${model.extensionStepMinutes} хв одного заняття${key === "group" ? " · за учасника" : ""}.`;
+        card.querySelector("[data-lesson-duration]").textContent = `До 2 год — пропорційно хвилинам. Після 2 год — тариф ${model.formatPrice(model.lessonFormats[key].extensionPrice)} за ${model.extensionStepMinutes} хв${key === "group" ? " · за учасника" : ""}.`;
         for (const value of card.querySelectorAll("[data-lesson-pack]")) {
-          const { base, extension, total } = model.lessonQuote(key, value.dataset.lessonPack, duration);
+          const { base, extension, total } = model.lessonQuote(key, value.dataset.lessonPack, duration, plan.total);
           value.textContent = model.formatPrice(total);
           if (extension) {
             const breakdown = document.createElement("small");
@@ -189,7 +206,10 @@
             value.append(breakdown);
           }
         }
-        card.querySelector("a").href = model.bookingFromCalculator(plan.config, key, duration);
+        for (const link of card.querySelectorAll("[data-pack-link]")) {
+          link.href = model.bookingFromCalculator(plan.config, key, duration, link.dataset.packLink);
+        }
+        card.querySelector("[data-format-booking]").href = model.bookingFromCalculator(plan.config, key, duration, "intro");
       }
       prices.hidden = false;
       session.textContent = model.format(plan.total);
@@ -219,13 +239,11 @@
       warning.hidden = !warning.textContent;
       note.textContent = plan.config.mode === "matches"
         ? "Орієнтовна тривалість із очікуванням та перервами."
-        : plan.config.mode === "drills" ? "Практика без матчів."
-        : plan.matches
-          ? `Заняття вміщується у ${model.format(plan.config.budget)}.`
-          : `Заняття без матчу: для повного матчу з цими налаштуваннями потрібно ${model.format(plan.firstMatchMinutes)}.`;
+        : `Заняття з повним матчем вміщується у ${model.format(plan.config.budget)}.`;
       values.hidden = false;
       submit.disabled = false;
     } catch (problem) {
+      lastCalculation = undefined;
       note.textContent = problem.message;
       values.hidden = true;
       guide.textContent = "";
@@ -242,6 +260,7 @@
       const game = restored.game ?? control("game").value;
       const firstFocus = Object.hasOwn(model.games, game) ? Object.keys(model.games[game].focuses)[0] : undefined;
       const saved = Object.fromEntries(choices.filter(key => Object.hasOwn(restored, key)).map(key => [key, restored[key]]));
+      if (saved.mode === "drills") saved.mode = "budget";
       let localProfile = {};
       if (restored.profiled === "1") {
         try {
@@ -256,6 +275,8 @@
       for (const key of ["ageGroup", "routine"]) {
         if ([...control(key).options].some(option => option.value === localProfile[key])) control(key).value = localProfile[key];
       }
+      // Restore the time after setting the selected game's minimum.
+      budget.min = 1;
       for (const key of choices) control(key).value = config[key];
       manualBudget = Object.hasOwn(restored, "budget") && config.mode !== "matches";
     }
@@ -284,7 +305,7 @@
     if (!form.reportValidity()) return;
     try {
       const result = calculate();
-      window.location.assign(model.bookingFromCalculator(result.config, undefined, model.suggestLessonDuration(result.total)));
+      window.location.assign(model.bookingFromCalculator(result.config, undefined, quoteDuration(result)));
     } catch (problem) {
       error.textContent = problem.message; error.hidden = false; error.focus();
     }
